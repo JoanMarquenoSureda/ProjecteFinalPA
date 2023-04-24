@@ -125,7 +125,7 @@ public class Crear {
                             Restaurant restaurant = llistaRestaurant.get(idZona);
                             idZona = restaurant.getId();
                             horari = new Horari(fecha_inici, fecha_fin, 0, idZona);
-                            ok = gestioDades.afegeixHorariAtraccio(horari);
+                            ok = gestioDades.afegeixHorariRestaurant(horari);
                         }
 
                         if (ok) {
@@ -225,11 +225,6 @@ public class Crear {
         alerta.show();
     }
 
-    @FXML
-    private void switchToPrimary() throws IOException {
-        App.setRoot("");
-    }
-
     public void getOpcion(javafx.event.ActionEvent event) {
 
         if (opcionAtraccion.isSelected()) {
@@ -283,6 +278,11 @@ public class Crear {
         }
         desplegableZona.setItems(nomRestaurant);
 
+    }
+    
+        @FXML
+    private void cambiarPantallaAsignar() throws IOException {
+        App.setRoot("Asignar");
     }
 
 }

@@ -1,0 +1,185 @@
+
+@font-face {
+    font-family: 'Montserrat';
+    src: url('fuente_letra/Montserrat/static/Montserrat-Bold.ttf');
+}
+@font-face {
+    font-family: 'Montserrat Thin';
+    src: url('fuente_letra/Montserrat/static/Montserrat-Thin.ttf');
+}
+
+* {
+    -fx-font-family: "Montserrat";
+}
+
+.label {
+    -fx-font-family: 'Montserrat';
+    -fx-font-size: 16px;
+    -fx-text-fill: #323392;
+   
+}
+
+#labelPuntos {
+    -fx-font-family: 'Montserrat';
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+}
+.radio-button {
+    -fx-font-family: 'Montserrat';
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+}
+
+
+#boton1 {
+    -fx-background-color: #323392;
+    -fx-background-radius: 5px;
+    -fx-border-color: #323392;
+    -fx-border-radius: 5px;
+    -fx-border-width: 1px;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+#boton1:pressed {
+    -fx-background-color: #FFA500;
+    -fx-background-insets: 2px;
+    -fx-border-color: #FFA500;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+}
+
+#boton2 {
+    -fx-background-color: #BDBDBD;
+    -fx-background-radius: 5px;
+    -fx-border-color: #BDBDBD;
+    -fx-border-radius: 5px;
+    -fx-border-width: 1px;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+#boton2:pressed {
+    -fx-background-color: #FFA500;
+    -fx-background-insets: 2px;
+    -fx-border-color: #FFA500;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+}
+
+.combo-box {
+    -fx-background-color: #f1642b;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    
+
+}
+.combo-box .list-view .list-cell {-fx-text-fill: #323392;
+}
+
+.text-field {
+    -fx-font-family: 'Montserrat';
+    -fx-background-color: #f1642b;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: normal;
+   
+
+}
+
+.button {
+    -fx-background-color: #323392; /* color de fondo sólido */
+    -fx-border-color: #323392; /* color del borde */
+ 
+}
+
+
+
+
+.date-picker {
+    -fx-background-color: #f1642b; 
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+}
+
+#botonuno {
+    -fx-background-image: url('imagenes/botonuno.png');
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-text-fill: transparent;
+}
+
+#botondos {
+    -fx-background-image: url('imagenes/botondos.png');
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-text-fill: transparent;
+
+}
+#botontres {
+    -fx-background-image: url('imagenes/botontres.png');
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-text-fill: transparent;
+
+}
+
+#botoncuatro {
+    -fx-background-image: url('imagenes/botoncuatro.png');
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-text-fill: transparent;
+}
+
+#botonuno:pressed {
+    -fx-background-image: url('imagenes/botonuno_hoover.png');
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-text-fill: transparent;
+}
+
+#botondos:pressed {
+    -fx-background-image: url('imagenes/botondos_hoover.png');
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-text-fill: transparent;
+}
+#botontres:pressed {
+    -fx-background-image: url('imagenes/botontres_hoover.png');
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-text-fill: transparent;
+}
+
+#botoncuatro:pressed {
+    -fx-background-image: url('imagenes/botoncuatro_hoover.png');
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-text-fill: transparent;
+}
+#gridpaneBotones{
+    -fx-background-color: #323392;
+
+}
+#grid{
+    -fx-background-image: url('imagenes/fondo.png');
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+}
+
+
+
+

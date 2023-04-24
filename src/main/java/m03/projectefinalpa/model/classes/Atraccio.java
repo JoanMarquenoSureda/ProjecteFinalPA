@@ -22,6 +22,8 @@ public class Atraccio  extends ZonaTrabajo{
         this.tipo = tipo;
         this.alturaminima = alturaminima;
     }
+    
+    
 
                         
     public String getDescripcion() {
@@ -47,6 +49,8 @@ public class Atraccio  extends ZonaTrabajo{
     public void setAlturaminima(double alturaminima) {
         this.alturaminima = alturaminima;
     }
+    
+    
 
     @Override
     public String toString() {

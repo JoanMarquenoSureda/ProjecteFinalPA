@@ -4,10 +4,278 @@
  */
 package m03.projectefinalpa;
 
-/**
- *
- * @author joanm
- */
-class Asignar {
-    
+import java.io.IOException;
+import java.net.URL;
+import java.sql.Connection;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
+import m03.projectefinalpa.model.Connexio;
+import m03.projectefinalpa.model.GestioDades;
+import m03.projectefinalpa.model.classes.Atraccio;
+import m03.projectefinalpa.model.classes.Horari;
+import m03.projectefinalpa.model.classes.Restaurant;
+
+import java.awt.event.ActionEvent;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.URL;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Month;
+import static java.time.temporal.TemporalQueries.localDate;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
+import javax.crypto.AEADBadTagException;
+import m03.projectefinalpa.model.classes.Atraccio;
+import m03.projectefinalpa.model.Connexio;
+import m03.projectefinalpa.model.GestioDades;
+import m03.projectefinalpa.model.classes.Empleados;
+import m03.projectefinalpa.model.classes.Horari;
+import m03.projectefinalpa.model.classes.Restaurant;
+
+public class Asignar {
+
+    GestioDades gestioDades = new GestioDades();
+    Connection conecta;
+    Connexio connexio = new Connexio();
+
+    @FXML
+    RadioButton opcionAtraccion;
+    @FXML
+    RadioButton opcionRestaurante;
+    @FXML
+    Label labelZona;
+    @FXML
+    ComboBox<String> desplegableZona = new ComboBox<>();
+    @FXML
+    DatePicker calendario;
+    @FXML
+    ListView listViewHorarios;
+    @FXML
+    ListView listViewEmpleados;
+
+    @FXML
+    GridPane gridPane;
+
+    ObservableList<Horari> horariRestaurant = FXCollections.observableArrayList(); //llistem tots els horaris d'un restaurant
+    ObservableList<Horari> horariAtraccio = FXCollections.observableArrayList();//llistem tots els horaris d'una atraccio
+    ArrayList<String> llistaHoraris = new ArrayList<>();
+
+    ObservableList<Atraccio> llistaAtraccions = gestioDades.llistaAtraccio(); //llistem totes les atraccions quan iniciem
+    ObservableList<Restaurant> llistaRestaurant = gestioDades.llistaRestaurants();//llistem tots els restaurants quan iniciem
+    ObservableList<Empleados> llistaEmpleatsSQL = gestioDades.llistaEmpleatsHoraris(); //llistem tots els empleats que son "Aprendiz" y "Trabajador"
+    ObservableList<String> dadesEmpleats = FXCollections.observableArrayList();//Llista on guardarem les dades dels Empleats del metode ToString
+    ObservableList<String> dadesHoraris = FXCollections.observableArrayList(); // Llista on guardarem les dades del horaris del metode ToSring
+
+    private LocalDate diaCalendario;
+    private Horari horari;
+    int idZona;
+    int indice;
+    private String nombreZona;
+    private ObservableList<String> opcionesDesplegable;
+
+    public void buscar() {
+
+        //comprobar si hay alguna zona seleccionada 
+        if (desplegableZona.getSelectionModel().getSelectedIndex() >= 0 && calendario.getValue() != null) {
+
+            //reiniciamos la lista de horarios y limpiamos los dos ListView
+            llistaHoraris.clear();
+            dadesHoraris.clear();
+            listViewEmpleados.getItems().clear();
+            listViewHorarios.getItems().clear();
+            horariAtraccio.clear();
+            horariRestaurant.clear();
+
+            //miramos el indice de la zona seleccionada
+            indice = desplegableZona.getSelectionModel().getSelectedIndex();
+
+            //Listamos los empleados con los nombres
+            for (Empleados llistaEmpleats : llistaEmpleatsSQL) {
+
+                dadesEmpleats.add(llistaEmpleats.getNombre());
+
+                listViewEmpleados.setItems(dadesEmpleats);
+            }
+
+            diaCalendario = calendario.getValue();
+
+         
+// Convertir el objeto LocalDate a un objeto LocalDateTime de Java, agregando una hora fija (por ejemplo, a las 00:00:00)
+            LocalDateTime fechaHora = diaCalendario.atStartOfDay();
+
+// Convertir el objeto LocalDateTime de Java a un objeto Timestamp de Java que se pueda utilizar en la consulta SQL de MySQL
+            Timestamp fechaHoraSQL = Timestamp.valueOf(fechaHora);
+
+            if (opcionAtraccion.isSelected()) {
+
+                idZona = llistaAtraccions.get(indice).getId();
+                System.out.println(idZona);
+                horariAtraccio = gestioDades.llistaHorarisAtraccions(idZona, fechaHoraSQL);
+                for (Horari horari : horariAtraccio) {
+
+                    dadesHoraris.add(horari.toString());
+
+                }
+
+            } else if (opcionRestaurante.isSelected()) {
+
+                idZona = llistaRestaurant.get(indice).getId();
+                horariRestaurant = gestioDades.llistaHorarisRestaurants(idZona, fechaHoraSQL);
+                for (Horari horari : horariRestaurant) {
+
+                    dadesHoraris.add(horari.toString());
+
+                }
+
+            }
+
+            listViewHorarios.setItems(dadesHoraris);
+
+        }
+
+    }
+
+    private int buscarAtraccion(String nombreZona) {
+        int id = 0;
+        int i = 0;
+        boolean trobat = false;
+
+        while (i < llistaAtraccions.size() && !trobat) {
+            if (llistaAtraccions.get(i).getNombre().equals(nombreZona)) {
+                id = llistaAtraccions.get(i).getId();
+                trobat = true;
+            }
+
+            i++;
+
+        }
+
+        return id;
+    }
+
+    private int buscarRestaurante(String nombreZona) {
+        int id = 0;
+        int i = 0;
+        boolean trobat = false;
+
+        while (i < llistaRestaurant.size() && !trobat) {
+            if (llistaRestaurant.get(i).getNombre().equals(nombreZona)) {
+                id = llistaRestaurant.get(i).getId();
+                trobat = true;
+            }
+            i++;
+
+        }
+
+        return id;
+    }
+
+    public void esborrar() {
+        opcionAtraccion.setSelected(false);
+        opcionRestaurante.setSelected(false);
+        desplegableZona.getItems().clear();
+        calendario.setValue(null);
+
+        deshabilitarBotones();
+
+    }
+
+    public void initialize(URL url, ResourceBundle rb) {
+
+        try {
+            conecta = connexio.connecta();
+
+        } catch (Exception ex) {
+            alerta(ex + "");
+
+        }
+
+    }
+
+    private void alerta(String text) {
+        Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+        alerta.setHeaderText(null);
+        alerta.setTitle("Informació");
+        alerta.setContentText(text);
+        alerta.show();
+    }
+
+    public void getOpcion(javafx.event.ActionEvent event) {
+
+        if (opcionAtraccion.isSelected()) {
+            habilitarBotones();
+            cargarAtracciones();
+        }
+        if (opcionRestaurante.isSelected()) {
+            habilitarBotones();
+            cargarRestaurantes();
+        }
+
+    }
+
+    private void cargarAtracciones() {
+
+        ObservableList<String> nombresAtraccions = FXCollections.observableArrayList();
+
+        for (Atraccio atraccio : llistaAtraccions) {
+            nombresAtraccions.add(atraccio.getNombre());
+
+        }
+        desplegableZona.setItems(nombresAtraccions);
+
+    }
+
+    private void habilitarBotones() {
+        desplegableZona.setDisable(false);
+        calendario.setDisable(false);
+
+    }
+
+    private void deshabilitarBotones() {
+        desplegableZona.setDisable(true);
+        calendario.setDisable(true);
+
+    }
+
+    private void cargarRestaurantes() {
+
+        ObservableList<String> nomRestaurant = FXCollections.observableArrayList();
+
+        for (Restaurant restaurant : llistaRestaurant) {
+            nomRestaurant.add(restaurant.getNombre());
+
+        }
+        desplegableZona.setItems(nomRestaurant);
+
+    }
+
 }

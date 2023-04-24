@@ -8,19 +8,22 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 
 /**
  *
  * @author joanm
  */
 public class Horari {
-
+    
+    
+    private int id;
     private LocalDateTime fecha_inici;
     private LocalDateTime fecha_fin;
     private int idAtraccion;
     private int idRestaurante;
-    private Atraccio atraccio;
-    private Restaurant restaurant;
+    private ZonaTrabajo zona;
+    
    
 
     public Horari(LocalDateTime fecha_inici, LocalDateTime fecha_fin, int idAtraccion, int idRestaurante) {
@@ -29,12 +32,26 @@ public class Horari {
         this.idAtraccion = idAtraccion;
         this.idRestaurante = idRestaurante;
     }
+    
+    
+     public Horari(int id, LocalDateTime fecha_inici, LocalDateTime fecha_fin, ZonaTrabajo zona) {
+         this.id = id;
+        this.fecha_inici = fecha_inici;
+        this.fecha_fin = fecha_fin;
+        this.zona = zona;
+    }
 
     public Horari(Date fecha_inici, Date fecha_fin, int idAtraccion, int idRestaurante) {
         this.fecha_inici = fecha_inici.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
         this.fecha_fin = fecha_fin.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
         this.idAtraccion = idAtraccion;
         this.idRestaurante = idRestaurante;
+    }
+     public Horari(int id, Date fecha_inici, Date fecha_fin, ZonaTrabajo zona) {
+         this.id = id;
+        this.fecha_inici = fecha_inici.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+        this.fecha_fin = fecha_fin.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+        this.zona = zona;
     }
 
     private LocalDateTime convertToLocalDateTime(java.util.Date dateToConvert) {
@@ -79,10 +96,35 @@ public class Horari {
         this.idRestaurante = idRestaurante;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public ZonaTrabajo getZona() {
+        return zona;
+    }
+
+    public void setZona(ZonaTrabajo zona) {
+        this.zona = zona;
+    }
+
+    
+ 
+
     @Override
     public String toString() {
-        return "Horari{" + "fecha_inici=" + fecha_inici + ", fecha_fin=" + fecha_fin + ", idAtraccion=" + idAtraccion + ", idRestaurante=" + idRestaurante + '}';
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        String fecha_inicio = this.fecha_inici.format(formatter);
+        String fecha_fin = this.fecha_fin.format(formatter);
+        
+        return "Entrada: "+fecha_inicio + ", Salida: "+fecha_fin;
     }
+    
+    
 
     
 

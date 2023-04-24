@@ -24,6 +24,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
+import m03.projectefinalpa.model.classes.Empleados;
+import m03.projectefinalpa.model.classes.ZonaTrabajo;
 
 /**
  *
@@ -55,7 +57,75 @@ public class GestioDades {
         } catch (SQLException throwables) {
             System.out.println("Error:" + throwables.getMessage());
         }
-        return llistaHoraris();
+        return horaris;
+    }
+
+    public ObservableList<Horari> llistaHorarisRestaurants(int id, Timestamp fechaHoraSQL) {
+
+         ObservableList<Horari> horaris = FXCollections.observableArrayList();
+        String sql = "SELECT horario.id, fecha_inicio, fecha_fin, restaurante.id, restaurante.nombre, restaurante.ubicacion\n"
+                + "FROM horario\n"
+                + "INNER JOIN restaurante ON restaurante.id = horario.idRestaurante\n"
+                + "WHERE fecha_inicio >= ? AND fecha_inicio < ? AND restaurante.id = ? ORDER BY fecha_inicio ASC;";
+
+        Connection connection = new Connexio().connecta();
+        try {
+            LocalDate fechaSinTiempo = fechaHoraSQL.toLocalDateTime().toLocalDate();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setDate(1, Date.valueOf(fechaSinTiempo));
+            statement.setDate(2, Date.valueOf(fechaSinTiempo.plusDays(1)));
+            statement.setInt(3, id);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                horaris.add(
+                        new Horari(
+                                resultSet.getInt(1),
+                                resultSet.getTimestamp(2).toLocalDateTime(),
+                                resultSet.getTimestamp(3).toLocalDateTime(),
+                                new ZonaTrabajo(resultSet.getInt(4), resultSet.getString(5), resultSet.getString(6))
+                        )
+                );
+            }
+            connection.close();
+
+        } catch (SQLException throwables) {
+            System.out.println("Error:" + throwables.getMessage());
+        }
+        return horaris;
+    }
+
+    public ObservableList<Horari> llistaHorarisAtraccions(int id, Timestamp fechaHoraSQL) {
+
+        ObservableList<Horari> horaris = FXCollections.observableArrayList();
+        String sql = "SELECT horario.id, fecha_inicio, fecha_fin, atraccion.id, atraccion.nombre, atraccion.ubicacion\n"
+                + "FROM horario\n"
+                + "INNER JOIN atraccion ON atraccion.id = horario.idAtraccion\n"
+                + "WHERE fecha_inicio >= ? AND fecha_inicio < ? AND atraccion.id = ? ORDER BY fecha_inicio ASC;";
+
+        Connection connection = new Connexio().connecta();
+        try {
+            LocalDate fechaSinTiempo = fechaHoraSQL.toLocalDateTime().toLocalDate();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setDate(1, Date.valueOf(fechaSinTiempo));
+            statement.setDate(2, Date.valueOf(fechaSinTiempo.plusDays(1)));
+            statement.setInt(3, id);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                horaris.add(
+                        new Horari(
+                                resultSet.getInt(1),
+                                resultSet.getTimestamp(2).toLocalDateTime(),
+                                resultSet.getTimestamp(3).toLocalDateTime(),
+                                new ZonaTrabajo(resultSet.getInt(4), resultSet.getString(5), resultSet.getString(6))
+                        )
+                );
+            }
+            connection.close();
+
+        } catch (SQLException throwables) {
+            System.out.println("Error:" + throwables.getMessage());
+        }
+        return horaris;
     }
 
     public ObservableList<Atraccio> llistaAtraccio() {
@@ -108,7 +178,7 @@ public class GestioDades {
     }
 
     public boolean afegeixHorariAtraccio(Horari horari) throws SQLException, FileNotFoundException, IOException {
-          boolean ok = false;   
+        boolean ok = false;
         Connection connection = new Connexio().connecta();
         String sql = "INSERT INTO horario (fecha_inicio, fecha_fin, idAtraccion) VALUES (?,?,?)";
         PreparedStatement ordre = connection.prepareStatement(sql);
@@ -120,13 +190,14 @@ public class GestioDades {
             ok = true;
 
         } catch (SQLException throwables) {
-            System.out.println("Error:"+throwables.getMessage());
+            System.out.println("Error:" + throwables.getMessage());
         }
 
         return ok;
     }
-     public boolean afegeixHorariRestaurant(Horari horari) throws SQLException, FileNotFoundException, IOException {
-          boolean ok = false;   
+
+    public boolean afegeixHorariRestaurant(Horari horari) throws SQLException, FileNotFoundException, IOException {
+        boolean ok = false;
         Connection connection = new Connexio().connecta();
         String sql = "INSERT INTO horario (fecha_inicio, fecha_fin, idRestaurante) VALUES (?,?,?)";
         PreparedStatement ordre = connection.prepareStatement(sql);
@@ -136,12 +207,32 @@ public class GestioDades {
             ordre.setInt(3, horari.getIdRestaurante());
             ordre.executeUpdate();
             ok = true;
-            
 
         } catch (SQLException throwables) {
-            System.out.println("Error:"+throwables.getMessage());
+            System.out.println("Error:" + throwables.getMessage());
         }
 
         return ok;
+    }
+
+    public ObservableList<Empleados> llistaEmpleatsHoraris() {
+        ObservableList<Empleados> llistaEmpleats = FXCollections.observableArrayList();
+        String sql = "SELECT id, nombre FROM empleado WHERE categoria = 'Aprendiz' or categoria = 'Trabajador'";
+        Connection connection = new Connexio().connecta();
+        try {
+            Statement ordre = connection.createStatement();
+            ResultSet resultSet = ordre.executeQuery(sql);
+            while (resultSet.next()) {
+                Empleados empleado = new Empleados(
+                        resultSet.getInt("id"),
+                        resultSet.getString("nombre")
+                );
+                llistaEmpleats.add(empleado);
+            }
+            connection.close();
+        } catch (SQLException throwables) {
+            System.out.println("Error:" + throwables.getMessage());
+        }
+        return llistaEmpleats;
     }
 }

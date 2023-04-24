@@ -2,7 +2,7 @@ package m03.projectefinalpa.model.classes;
 
 import java.util.ArrayList;
 
-public abstract class ZonaTrabajo {
+public class ZonaTrabajo {
 
     private int id;
     private String nombre;
