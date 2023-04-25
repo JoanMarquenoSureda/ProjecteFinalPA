@@ -1,15 +1,11 @@
 package m03.projectefinalpa;
 
-import java.awt.event.ActionEvent;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,8 +16,6 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import m03.projectefinalpa.model.classes.Atraccio;
 import m03.projectefinalpa.model.Connexio;
@@ -72,7 +66,10 @@ public class Crear {
     private int año;
     private ObservableList<String> opcionesDesplegable;
 
+    
+    @FXML
     public void guardar() {
+        
         boolean errores = false;
         boolean errorHoras = false;
         boolean errorMinutos = false;
@@ -149,6 +146,20 @@ public class Crear {
             alerta(mensaje);
         }
     }
+    
+    
+    
+     @FXML
+    public void esborrar() {
+        opcionAtraccion.setSelected(false);
+        opcionRestaurante.setSelected(false);
+        desplegableZona.getItems().clear();
+        calendario.setValue(null);
+
+        deshabilitarBotones();
+
+    }
+
 
     private int buscarAtraccion(String nombreZona) {
         int id = 0;
@@ -185,17 +196,9 @@ public class Crear {
         return id;
     }
 
-    public void esborrar() {
-        opcionAtraccion.setSelected(false);
-        opcionRestaurante.setSelected(false);
-        desplegableZona.getItems().clear();
-        calendario.setValue(null);
-
-        deshabilitarBotones();
-
-    }
-
-    public void esborrarHores() {
+   
+    
+    private void esborrarHores() {
         horasE.setText("");
         horasS.setText("");
         minutosE.setText("");
@@ -280,7 +283,7 @@ public class Crear {
 
     }
     
-        @FXML
+     @FXML
     private void cambiarPantallaAsignar() throws IOException {
         App.setRoot("Asignar");
     }

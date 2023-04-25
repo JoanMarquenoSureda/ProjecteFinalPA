@@ -112,7 +112,6 @@ public class Horari {
         this.zona = zona;
     }
 
-    
  
 
     @Override

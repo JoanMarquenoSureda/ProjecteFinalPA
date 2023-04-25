@@ -214,6 +214,43 @@ public class GestioDades {
 
         return ok;
     }
+    
+    public boolean esborraHorari(Horari horari) throws SQLException, FileNotFoundException, IOException {
+        boolean ok = false;
+        Connection connection = new Connexio().connecta();
+        String sql = "DELETE FROM horario WHERE id = ?";
+        PreparedStatement ordre = connection.prepareStatement(sql);
+        try {
+            ordre.setInt(1, horari.getId());
+            ordre.executeUpdate();
+            ok = true;
+
+        } catch (SQLException throwables) {
+            System.out.println("Error:" + throwables.getMessage());
+        }
+
+        return ok;
+    }
+    
+    public String assignarHoraris(Horari horari, Empleados empleat) throws SQLException, FileNotFoundException, IOException {
+        boolean ok = false;
+        String missatge="";
+        Connection connection = new Connexio().connecta();
+        String sql = "INSERT INTO asignacion (idHorario, idEmpleado) VALUES (?, ?);";
+        PreparedStatement ordre = connection.prepareStatement(sql);
+        try {
+            ordre.setInt(1, horari.getId());
+            ordre.setInt(2, empleat.getId());
+            ordre.executeUpdate();
+            ok = true;
+
+        } catch (SQLException throwables) {
+            missatge = throwables.getMessage()+"";
+           
+        }
+
+        return missatge;
+    }
 
     public ObservableList<Empleados> llistaEmpleatsHoraris() {
         ObservableList<Empleados> llistaEmpleats = FXCollections.observableArrayList();

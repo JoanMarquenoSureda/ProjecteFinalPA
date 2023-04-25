@@ -7,53 +7,27 @@ package m03.projectefinalpa;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.Month;
-import java.util.ResourceBundle;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
-import m03.projectefinalpa.model.Connexio;
-import m03.projectefinalpa.model.GestioDades;
-import m03.projectefinalpa.model.classes.Atraccio;
-import m03.projectefinalpa.model.classes.Horari;
-import m03.projectefinalpa.model.classes.Restaurant;
-
-import java.awt.event.ActionEvent;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.net.URL;
-import java.sql.Connection;
 import java.sql.SQLException;
+
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.Month;
-import static java.time.temporal.TemporalQueries.localDate;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.layout.GridPane;
-import javax.crypto.AEADBadTagException;
 import m03.projectefinalpa.model.classes.Atraccio;
 import m03.projectefinalpa.model.Connexio;
 import m03.projectefinalpa.model.GestioDades;
@@ -71,8 +45,7 @@ public class Asignar {
     RadioButton opcionAtraccion;
     @FXML
     RadioButton opcionRestaurante;
-    @FXML
-    Label labelZona;
+
     @FXML
     ComboBox<String> desplegableZona = new ComboBox<>();
     @FXML
@@ -82,8 +55,7 @@ public class Asignar {
     @FXML
     ListView listViewEmpleados;
 
-    @FXML
-    GridPane gridPane;
+    Timestamp fechaHoraSQL;
 
     ObservableList<Horari> horariRestaurant = FXCollections.observableArrayList(); //llistem tots els horaris d'un restaurant
     ObservableList<Horari> horariAtraccio = FXCollections.observableArrayList();//llistem tots els horaris d'una atraccio
@@ -92,24 +64,26 @@ public class Asignar {
     ObservableList<Atraccio> llistaAtraccions = gestioDades.llistaAtraccio(); //llistem totes les atraccions quan iniciem
     ObservableList<Restaurant> llistaRestaurant = gestioDades.llistaRestaurants();//llistem tots els restaurants quan iniciem
     ObservableList<Empleados> llistaEmpleatsSQL = gestioDades.llistaEmpleatsHoraris(); //llistem tots els empleats que son "Aprendiz" y "Trabajador"
-    ObservableList<String> dadesEmpleats = FXCollections.observableArrayList();//Llista on guardarem les dades dels Empleats del metode ToString
-    ObservableList<String> dadesHoraris = FXCollections.observableArrayList(); // Llista on guardarem les dades del horaris del metode ToSring
+
+    ObservableList<String> dadesHorarisSenseAssignar = FXCollections.observableArrayList(); // Llista on guardarem les dades del horaris del metode ToSring
 
     private LocalDate diaCalendario;
-    private Horari horari;
     int idZona;
     int indice;
-    private String nombreZona;
-    private ObservableList<String> opcionesDesplegable;
 
     public void buscar() {
+
+        listViewHorarios.setDisable(false);
+
+        //para hacer seleccion multiple de empleados
+        listViewEmpleados.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         //comprobar si hay alguna zona seleccionada 
         if (desplegableZona.getSelectionModel().getSelectedIndex() >= 0 && calendario.getValue() != null) {
 
             //reiniciamos la lista de horarios y limpiamos los dos ListView
             llistaHoraris.clear();
-            dadesHoraris.clear();
+            dadesHorarisSenseAssignar.clear();
             listViewEmpleados.getItems().clear();
             listViewHorarios.getItems().clear();
             horariAtraccio.clear();
@@ -118,94 +92,79 @@ public class Asignar {
             //miramos el indice de la zona seleccionada
             indice = desplegableZona.getSelectionModel().getSelectedIndex();
 
-            //Listamos los empleados con los nombres
-            for (Empleados llistaEmpleats : llistaEmpleatsSQL) {
+            //Introducimos la lista de empleados en el listView
+            listViewEmpleados.getItems().addAll(llistaEmpleatsSQL);
 
-                dadesEmpleats.add(llistaEmpleats.getNombre());
-
-                listViewEmpleados.setItems(dadesEmpleats);
-            }
-
+            //Devolvemos el valor del calendario con fecha
             diaCalendario = calendario.getValue();
 
-         
-// Convertir el objeto LocalDate a un objeto LocalDateTime de Java, agregando una hora fija (por ejemplo, a las 00:00:00)
+            // Convertir el objeto LocalDate a un objeto LocalDateTime de Java, agregando una hora fija (00:00:00)
             LocalDateTime fechaHora = diaCalendario.atStartOfDay();
 
-// Convertir el objeto LocalDateTime de Java a un objeto Timestamp de Java que se pueda utilizar en la consulta SQL de MySQL
-            Timestamp fechaHoraSQL = Timestamp.valueOf(fechaHora);
+            // Convertir el objeto LocalDateTime de Java a un objeto Timestamp de Java que se pueda utilizar en la consulta MySQL
+            fechaHoraSQL = Timestamp.valueOf(fechaHora);
 
-            if (opcionAtraccion.isSelected()) {
+            cargarListasView(fechaHoraSQL);
 
-                idZona = llistaAtraccions.get(indice).getId();
-                System.out.println(idZona);
-                horariAtraccio = gestioDades.llistaHorarisAtraccions(idZona, fechaHoraSQL);
-                for (Horari horari : horariAtraccio) {
+        }
 
-                    dadesHoraris.add(horari.toString());
+    }
+    // revisar metodo para que salga mensaje de mysql
+    @FXML
+    public void assignar() throws SQLException, IOException  {
+        boolean assignats = false;
+        String missatge="";
+        
 
+            
+            if (listViewHorarios.getSelectionModel().getSelectedIndex() != -1 && listViewEmpleados.getSelectionModel().getSelectedIndex() != -1) {
+
+            ObservableList<Horari> horaris = listViewHorarios.getSelectionModel().getSelectedItems();
+            ObservableList<Empleados> empleados = listViewEmpleados.getSelectionModel().getSelectedItems();
+
+            for (int i = 0; i < horaris.size(); i++) {
+                for (int j = 0; j < empleados.size(); j++) {
+                   missatge = gestioDades.assignarHoraris(horaris.get(i), empleados.get(j));
                 }
 
-            } else if (opcionRestaurante.isSelected()) {
+            }
+            
+            if (missatge.equals("")) {
+                alerta("Horari assignat correctament");
+            }  else {
+                alerta(missatge);
+            }
 
-                idZona = llistaRestaurant.get(indice).getId();
-                horariRestaurant = gestioDades.llistaHorarisRestaurants(idZona, fechaHoraSQL);
-                for (Horari horari : horariRestaurant) {
+        } else {
+            alerta("Selecciona un horario y una persona");
+        }
+            
+        
 
-                    dadesHoraris.add(horari.toString());
+    }
 
+    @FXML
+    public void esborrar() throws SQLException, IOException {
+
+        if (listViewHorarios.getSelectionModel().getSelectedIndex() != -1) {
+
+            int confirmacion = Confirmacion("");
+
+            if (confirmacion == 1) {
+
+                ObservableList<Horari> horaris = listViewHorarios.getSelectionModel().getSelectedItems();
+
+                for (int i = 0; i < horaris.size(); i++) {
+                    gestioDades.esborraHorari(horaris.get(i));
                 }
+                listViewHorarios.getItems().clear();
+                cargarListasView(fechaHoraSQL);
 
             }
 
-            listViewHorarios.setItems(dadesHoraris);
-
+        } else {
+            alerta("Selecciona un horario para borrarlo");
         }
-
-    }
-
-    private int buscarAtraccion(String nombreZona) {
-        int id = 0;
-        int i = 0;
-        boolean trobat = false;
-
-        while (i < llistaAtraccions.size() && !trobat) {
-            if (llistaAtraccions.get(i).getNombre().equals(nombreZona)) {
-                id = llistaAtraccions.get(i).getId();
-                trobat = true;
-            }
-
-            i++;
-
-        }
-
-        return id;
-    }
-
-    private int buscarRestaurante(String nombreZona) {
-        int id = 0;
-        int i = 0;
-        boolean trobat = false;
-
-        while (i < llistaRestaurant.size() && !trobat) {
-            if (llistaRestaurant.get(i).getNombre().equals(nombreZona)) {
-                id = llistaRestaurant.get(i).getId();
-                trobat = true;
-            }
-            i++;
-
-        }
-
-        return id;
-    }
-
-    public void esborrar() {
-        opcionAtraccion.setSelected(false);
-        opcionRestaurante.setSelected(false);
-        desplegableZona.getItems().clear();
-        calendario.setValue(null);
-
-        deshabilitarBotones();
 
     }
 
@@ -227,6 +186,24 @@ public class Asignar {
         alerta.setTitle("Informació");
         alerta.setContentText(text);
         alerta.show();
+    }
+
+    private int Confirmacion(String text) {
+        int valor;
+        Alert alerta = new Alert(AlertType.CONFIRMATION);
+        alerta.setContentText("¿Desea eliminar este horario?");
+        ButtonType buttonTypeAceptar = new ButtonType("Aceptar");
+        ButtonType buttonTypeCancelar = new ButtonType("Cancelar");
+        alerta.getButtonTypes().setAll(buttonTypeAceptar, buttonTypeCancelar);
+
+        Optional<ButtonType> result = alerta.showAndWait();
+        if (result.get() == buttonTypeAceptar) {
+            valor = 1;
+        } else {
+            valor = 0;
+        }
+
+        return valor;
     }
 
     public void getOpcion(javafx.event.ActionEvent event) {
@@ -276,6 +253,37 @@ public class Asignar {
         }
         desplegableZona.setItems(nomRestaurant);
 
+    }
+
+    private void cargarListasView(Timestamp fechaHoraSQL) {
+
+        if (opcionAtraccion.isSelected()) {
+
+            idZona = llistaAtraccions.get(indice).getId();
+
+            horariAtraccio = gestioDades.llistaHorarisAtraccions(idZona, fechaHoraSQL);
+
+            listViewHorarios.getItems().addAll(horariAtraccio);
+
+        } else if (opcionRestaurante.isSelected()) {
+
+            idZona = llistaRestaurant.get(indice).getId();
+
+            horariRestaurant = gestioDades.llistaHorarisRestaurants(idZona, fechaHoraSQL);
+
+            listViewHorarios.getItems().addAll(horariRestaurant);
+
+        }
+
+        if (listViewHorarios.getItems().isEmpty()) {
+            listViewHorarios.setDisable(true);
+            listViewHorarios.getItems().addAll("Sin horarios planificados");
+        }
+    }
+
+    @FXML
+    private void cambiarPantallaAsignar() throws IOException {
+        App.setRoot("Crear");
     }
 
 }

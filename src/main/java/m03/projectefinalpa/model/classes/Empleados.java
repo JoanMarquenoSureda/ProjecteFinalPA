@@ -110,6 +110,13 @@ public class Empleados {
     public void setListaHorario(ArrayList<Horari> listaHorario) {
         this.listaHorario = listaHorario;
     }
+
+    @Override
+    public String toString() {
+        return  nombre;
+    }
+    
+    
     
     
     

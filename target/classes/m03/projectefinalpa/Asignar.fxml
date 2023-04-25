@@ -34,9 +34,9 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <Button id="botonuno" mnemonicParsing="false" prefHeight="133.0" prefWidth="173.0" />
+                        <Button id="botonuno" mnemonicParsing="false" onAction="#cambiarPantallaAsignar" prefHeight="133.0" prefWidth="173.0" />
                         <Button id="botondos" mnemonicParsing="false" prefHeight="133.0" prefWidth="175.0" text="Button" GridPane.rowIndex="1" />
-                        <Button id="botontres" mnemonicParsing="false" prefHeight="137.0" prefWidth="174.0" stylesheets="@Estilos.css" text="Button" GridPane.rowIndex="2" />
+                        <Button id="botontres" mnemonicParsing="false" prefHeight="137.0" prefWidth="174.0" text="Button" GridPane.rowIndex="2" />
                         <Button id="botoncuatro" mnemonicParsing="false" prefHeight="134.0" prefWidth="180.0" text="Button" GridPane.rowIndex="3" />
                      </children>
                   </GridPane>
@@ -63,7 +63,7 @@
                         <RowConstraints maxHeight="320.79998779296875" minHeight="10.0" prefHeight="54.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <Button id="boton1" fx:id="boton1" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="115.0" text="ASIGNAR" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="8">
+                        <Button id="boton1" fx:id="boton1" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#assignar" prefHeight="30.0" prefWidth="115.0" text="ASIGNAR" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="8">
                            <font>
                               <Font name="Gill Sans MT Bold" size="12.0" />
                            </font>
