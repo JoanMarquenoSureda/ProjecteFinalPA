@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="530.0" prefWidth="700.0" stylesheets="@Estilos.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="m03.projectefinalpa.Asignar">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="530.0" prefWidth="700.0" stylesheets="@Estilos.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="m03.projectefinalpa.Visualizar">
    <children>
       <SplitPane dividerPositions="0.24766042780748657" layoutX="-1.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
@@ -63,21 +63,13 @@
                         <RowConstraints maxHeight="320.79998779296875" minHeight="10.0" prefHeight="54.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <Button id="boton1" fx:id="boton1" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#assignar" prefHeight="30.0" prefWidth="115.0" text="ASIGNAR" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="8">
+                        <Button id="boton1" fx:id="boton1" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#buscar" prefHeight="30.0" prefWidth="115.0" text="BUSCAR" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="8">
                            <font>
                               <Font name="Gill Sans MT Bold" size="12.0" />
                            </font>
                            <GridPane.margin>
-                              <Insets bottom="20.0" left="110.0" />
+                              <Insets bottom="20.0" left="187.0" />
                            </GridPane.margin>
-                        </Button>
-                        <Button id="boton2" mnemonicParsing="false" onAction="#esborrar" prefHeight="30.0" prefWidth="115.0" text="BORRAR" GridPane.columnIndex="2" GridPane.rowIndex="8">
-                           <GridPane.margin>
-                              <Insets bottom="20.0" left="20.0" />
-                           </GridPane.margin>
-                           <font>
-                              <Font name="Gill Sans MT Bold" size="12.0" />
-                           </font>
                         </Button>
                         <ImageView fitHeight="23.0" fitWidth="444.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <GridPane.margin>
@@ -95,30 +87,12 @@
                               <Insets top="40.0" />
                            </GridPane.margin>
                         </Label>
-                        <ListView fx:id="listViewHorarios" prefHeight="188.0" prefWidth="214.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                        <ListView fx:id="listViewHorarios" prefHeight="188.0" prefWidth="214.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="7">
                            <GridPane.margin>
-                              <Insets bottom="20.0" left="10.0" right="10.0" top="10.0" />
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </GridPane.margin>
                         </ListView>
-                        <ListView fx:id="listViewEmpleados" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="7">
-                           <GridPane.margin>
-                              <Insets bottom="20.0" left="10.0" right="10.0" top="10.0" />
-                           </GridPane.margin>
-                        </ListView>
-                        <Label alignment="CENTER" prefHeight="21.0" prefWidth="227.0" text="Horarios" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                        <Label alignment="CENTER" prefHeight="21.0" prefWidth="289.0" text="Empleados" GridPane.columnIndex="2" GridPane.rowIndex="6">
-                           <GridPane.margin>
-                              <Insets />
-                           </GridPane.margin>
-                        </Label>
-                        <Button id="boton1" fx:id="boton11" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#buscar" prefHeight="30.0" prefWidth="100.0" text="BUSCAR" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="5">
-                           <font>
-                              <Font name="Gill Sans MT Bold" size="12.0" />
-                           </font>
-                           <GridPane.margin>
-                              <Insets left="195.0" />
-                           </GridPane.margin>
-                        </Button>
+                        <Label alignment="CENTER" prefHeight="21.0" prefWidth="494.0" text="Horaris y empleados" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="6" />
                         <Label contentDisplay="CENTER" prefHeight="70.0" prefWidth="199.0" text="Seleccionar zona:" textAlignment="JUSTIFY" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <padding>
                               <Insets left="20.0" />
@@ -150,7 +124,7 @@
                               <Insets left="10.0" />
                            </padding>
                         </ComboBox>
-                        <Label prefHeight="72.0" prefWidth="226.0" text="Día / mes / año:" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                        <Label prefHeight="72.0" prefWidth="226.0" text="Desde:" GridPane.columnIndex="1" GridPane.rowIndex="4">
                            <padding>
                               <Insets left="20.0" />
                            </padding>
@@ -158,7 +132,16 @@
                               <Font name="Gill Sans MT Bold" size="12.0" />
                            </font>
                         </Label>
-                        <DatePicker fx:id="calendario" disable="true" prefHeight="28.0" prefWidth="174.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                        <DatePicker fx:id="calendarioDesde" disable="true" prefHeight="28.0" prefWidth="174.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                        <Label prefHeight="72.0" prefWidth="226.0" text="Hasta:" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                           <padding>
+                              <Insets left="20.0" />
+                           </padding>
+                           <font>
+                              <Font name="Gill Sans MT Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <DatePicker fx:id="calendarioHasta" disable="true" prefHeight="28.0" prefWidth="174.0" GridPane.columnIndex="2" GridPane.rowIndex="5" />
                      </children>
                   </GridPane>
                </children>

@@ -148,7 +148,7 @@ public class Asignar {
 
         if (listViewHorarios.getSelectionModel().getSelectedIndex() != -1) {
 
-            int confirmacion = Confirmacion("");
+            int confirmacion = Confirmacion();
 
             if (confirmacion == 1) {
 
@@ -188,9 +188,9 @@ public class Asignar {
         alerta.show();
     }
 
-    private int Confirmacion(String text) {
+    private int Confirmacion() {
         int valor;
-        Alert alerta = new Alert(AlertType.CONFIRMATION);
+        Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
         alerta.setContentText("¿Desea eliminar este horario?");
         ButtonType buttonTypeAceptar = new ButtonType("Aceptar");
         ButtonType buttonTypeCancelar = new ButtonType("Cancelar");
@@ -282,8 +282,16 @@ public class Asignar {
     }
 
     @FXML
-    private void cambiarPantallaAsignar() throws IOException {
+    private void cambiarPantallaCrear() throws IOException {
         App.setRoot("Crear");
     }
+    
+    @FXML
+    private void cambiarPantallaViusalizar() throws IOException {
+        App.setRoot("Visualizar");
+    }
+    
+    
+     
 
 }

@@ -36,7 +36,7 @@
                      <children>
                         <Button id="botonuno" mnemonicParsing="false" prefHeight="133.0" prefWidth="173.0" />
                         <Button id="botondos" mnemonicParsing="false" onAction="#cambiarPantallaAsignar" prefHeight="133.0" prefWidth="175.0" text="Button" GridPane.rowIndex="1" />
-                        <Button id="botontres" mnemonicParsing="false" prefHeight="137.0" prefWidth="174.0" text="Button" GridPane.rowIndex="2" />
+                        <Button id="botontres" mnemonicParsing="false" onAction="#cambiarPantallaVisualizar" prefHeight="137.0" prefWidth="174.0" text="Button" GridPane.rowIndex="2" />
                         <Button id="botoncuatro" mnemonicParsing="false" prefHeight="134.0" prefWidth="180.0" text="Button" GridPane.rowIndex="3" />
                      </children>
                   </GridPane>

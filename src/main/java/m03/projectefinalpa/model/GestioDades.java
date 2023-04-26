@@ -272,4 +272,5 @@ public class GestioDades {
         }
         return llistaEmpleats;
     }
+    
 }

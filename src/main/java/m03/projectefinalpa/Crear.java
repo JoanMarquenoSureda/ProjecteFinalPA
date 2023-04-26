@@ -287,5 +287,9 @@ public class Crear {
     private void cambiarPantallaAsignar() throws IOException {
         App.setRoot("Asignar");
     }
-
+     
+     @FXML
+    private void cambiarPantallaVisualizar() throws IOException {
+        App.setRoot("Visualizar");
+    }
 }

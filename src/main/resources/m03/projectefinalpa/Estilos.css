@@ -180,6 +180,26 @@
     -fx-background-repeat: no-repeat;
     -fx-background-size: cover;
 }
+#griddos{
+    -fx-background-image: url('imagenes/fondoDos.png');
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+}
+
+#gridtres{
+    -fx-background-image: url('imagenes/fondoTres.png');
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+}
+
+#gridcuatro{
+    -fx-background-image: url('imagenes/fondoCuatro.png');
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+}
 
 
 

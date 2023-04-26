@@ -23,6 +23,7 @@ public class Horari {
     private int idAtraccion;
     private int idRestaurante;
     private ZonaTrabajo zona;
+    private Empleados Empleado;
     
    
 
@@ -31,6 +32,12 @@ public class Horari {
         this.fecha_fin = fecha_fin;
         this.idAtraccion = idAtraccion;
         this.idRestaurante = idRestaurante;
+    }
+    
+     public Horari(LocalDateTime fecha_inici, LocalDateTime fecha_fin, Empleados empleado) {
+        this.fecha_inici = fecha_inici;
+        this.fecha_fin = fecha_fin;
+       this.Empleado = empleado;
     }
     
     
@@ -111,16 +118,24 @@ public class Horari {
     public void setZona(ZonaTrabajo zona) {
         this.zona = zona;
     }
+    
+   
 
  
 
     @Override
     public String toString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String fecha_inicio = this.fecha_inici.format(formatter);
+        String data = this.fecha_inici.format(formatter2);
         String fecha_fin = this.fecha_fin.format(formatter);
+        if (Empleado != null) {
+            return data +  ": In: "+fecha_inicio + ", Out: "+fecha_fin +" "+ Empleado.getNombre() ;
+        } else {
+            return data +  ": In: "+fecha_inicio + ", Out: "+fecha_fin;
+        }
         
-        return "Entrada: "+fecha_inicio + ", Salida: "+fecha_fin;
     }
     
     

@@ -38,6 +38,11 @@ public class Empleados {
         this.id = id;
         this.nombre = nombre;
     }
+    
+     public Empleados(String nombre) {
+       
+        this.nombre = nombre;
+    }
 
     public int getId() {
         return id;
