@@ -39,9 +39,10 @@ public class Empleados {
         this.nombre = nombre;
     }
     
-     public Empleados(String nombre) {
-       
-        this.nombre = nombre;
+     public Empleados(int id, String nombre, String email) {
+       this.id = id;
+       this.nombre = nombre;
+       this.email = email;
     }
 
     public int getId() {
@@ -115,6 +116,30 @@ public class Empleados {
     public void setListaHorario(ArrayList<Horari> listaHorario) {
         this.listaHorario = listaHorario;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 97 * hash + this.id;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Empleados other = (Empleados) obj;
+        return this.id == other.id;
+    }
+    
+    
 
     @Override
     public String toString() {

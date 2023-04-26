@@ -59,7 +59,6 @@ public class Visualizar {
 
     Timestamp fechaHoraSQL_inicio;
     Timestamp fechaHoraSQL_final;
-    
 
     int indice;
     int idZona;
@@ -78,34 +77,42 @@ public class Visualizar {
 
             //miramos el indice de la zona seleccionada
             indice = desplegableZona.getSelectionModel().getSelectedIndex();
-            
 
             //Devolvemos el valor del calendario con fecha
             LocalDate diaDesde = calendarioDesde.getValue();
             LocalDate diaHasta = calendarioHasta.getValue();
 
-            // Convertir el objeto LocalDateTime de Java a un objeto Timestamp de Java que se pueda utilizar en la consulta MySQL
-            fechaHoraSQL_inicio = Timestamp.valueOf(diaDesde.atStartOfDay());
-            fechaHoraSQL_final = Timestamp.valueOf(diaHasta.atTime(00 , 00, 00));
-            
+            if (diaDesde.isBefore(diaHasta) || diaDesde.isEqual(diaHasta)) {
+                // Convertir el objeto LocalDateTime de Java a un objeto Timestamp de Java que se pueda utilizar en la consulta MySQL
+                fechaHoraSQL_inicio = Timestamp.valueOf(diaDesde.atStartOfDay());
+                fechaHoraSQL_final = Timestamp.valueOf(diaHasta.atTime(00, 00, 00));
 
-            if (opcionAtraccion.isSelected()) {
-                
-               idZona = llistaAtraccions.get(indice).getId();
-                System.out.println(indice + " "+fechaHoraSQL_final + " "+fechaHoraSQL_final);
-               horariAtraccions = gestioDadesVisualitzar.llistaHorarisAtraccions(idZona, fechaHoraSQL_inicio, fechaHoraSQL_final);
-               listViewHorarios.getItems().addAll(horariAtraccions);
-               
-                
+                if (opcionAtraccion.isSelected()) {
+
+                    idZona = llistaAtraccions.get(indice).getId();
+                    horariAtraccions = gestioDadesVisualitzar.llistaHorarisAtraccions(idZona, fechaHoraSQL_inicio, fechaHoraSQL_final);
+
+                    if (!horariAtraccions.isEmpty()) {
+                        listViewHorarios.getItems().addAll(horariAtraccions);
+                    } else {
+                        listViewHorarios.getItems().add("Sense Horaris assignats");
+                    }
+
+                } else if (opcionRestaurante.isSelected()) {
+
+                    idZona = llistaRestaurant.get(indice).getId();
+                    horariRestaurants = gestioDadesVisualitzar.llistaHorarisRestaurants(idZona, fechaHoraSQL_inicio, fechaHoraSQL_final);
+
+                    if (!horariRestaurants.isEmpty()) {
+                        listViewHorarios.getItems().addAll(horariRestaurants);
+                    } else {
+                        listViewHorarios.getItems().add("Sense Horaris assignats");
+                    }
+                }
+
+            } else {
+                alerta("Dates erròneas");
             }
-            else if (opcionRestaurante.isSelected()) {
-                
-                idZona = llistaAtraccions.get(indice).getId();
-                horariRestaurants = gestioDadesVisualitzar.llistaHorarisRestaurants(idZona, fechaHoraSQL_inicio, fechaHoraSQL_final);
-                 listViewHorarios.getItems().addAll(horariRestaurants);
-            }
-            
-            
 
         }
 

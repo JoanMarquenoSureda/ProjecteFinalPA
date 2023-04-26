@@ -20,6 +20,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
@@ -34,9 +36,12 @@ import m03.projectefinalpa.model.classes.ZonaTrabajo;
 public class GestioDadesVisualitzar {
 
     public ObservableList<Horari> llistaHorarisRestaurants(int id, Timestamp fechaEntrada, Timestamp fechasalida) {
+        int contador = 0;
+        int identificador;
 
         ObservableList<Horari> horaris = FXCollections.observableArrayList();
-        String sql = "SELECT horario.fecha_inicio, horario.fecha_fin, empleado.nombre \n"
+        ArrayList<Horari> horariosList = new ArrayList<>(); // ArrayList para almacenar los horarios
+        String sql = "SELECT horario.id, horario.fecha_inicio, horario.fecha_fin, empleado.id, empleado.nombre, empleado.email \n"
                 + "from horario\n"
                 + "left join asignacion on asignacion.idHorario = horario.id\n"
                 + "left join empleado on asignacion.idEmpleado = empleado.id\n"
@@ -56,28 +61,55 @@ public class GestioDadesVisualitzar {
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                
-                String nombreEmpleado = resultSet.getString(3) != null ? resultSet.getString(3) : "Sin asignacion";
-                horaris.add(
-                        new Horari(
-                                resultSet.getTimestamp(1).toLocalDateTime(),
-                                resultSet.getTimestamp(2).toLocalDateTime(),
-                                new Empleados(nombreEmpleado)
-                        )
-                );
-            }
-            connection.close();
 
-        } catch (SQLException throwables) {
-            System.out.println("Error:" + throwables.getMessage());
+                int idEmpleado = resultSet.getInt(4);
+                String nombreEmpleado = resultSet.getString(5);
+                String email = resultSet.getString(6);
+                Empleados empleado = null;
+
+                if (nombreEmpleado != null) {
+                    empleado = new Empleados(idEmpleado, nombreEmpleado, email);
+                }
+                identificador = resultSet.getInt(1);
+                LocalDateTime fechaInicio = resultSet.getTimestamp(2).toLocalDateTime();
+                LocalDateTime fechaFin = resultSet.getTimestamp(3).toLocalDateTime();
+                Horari horario = new Horari(identificador, fechaInicio, fechaFin);
+
+                // Comprobar si el horario ya existe en la lista
+                if (!horariosList.contains(horario)) {
+
+                    if (empleado != null) {
+                        horario.añadirEmpleado(empleado);
+                    }
+                    horariosList.add(horario);
+                    contador++;
+
+                } else {
+
+                    Horari horari = horariosList.get(contador - 1);
+                    if (empleado != null) {
+                        horari.añadirEmpleado(empleado);
+                    }
+                }
+
+            }
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
         }
+
+        // Añadir los horarios de la lista a la lista de horarios
+        horaris.addAll(horariosList);
+
         return horaris;
     }
 
     public ObservableList<Horari> llistaHorarisAtraccions(int id, Timestamp fechaEntrada, Timestamp fechasalida) {
+        int contador = 0;
+        int identificador;
 
         ObservableList<Horari> horaris = FXCollections.observableArrayList();
-        String sql = "SELECT horario.fecha_inicio, horario.fecha_fin, empleado.nombre \n"
+        ArrayList<Horari> horariosList = new ArrayList<>(); // ArrayList para almacenar los horarios
+        String sql = "SELECT horario.id, horario.fecha_inicio, horario.fecha_fin, empleado.id, empleado.nombre, empleado.email \n"
                 + "from horario\n"
                 + "left join asignacion on asignacion.idHorario = horario.id\n"
                 + "left join empleado on asignacion.idEmpleado = empleado.id\n"
@@ -97,21 +129,46 @@ public class GestioDadesVisualitzar {
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                String nombreEmpleado = resultSet.getString(3) != null ? resultSet.getString(3) : "Sin asignacion";
-                horaris.add(
-                        new Horari(
-                                resultSet.getTimestamp(1).toLocalDateTime(),
-                                resultSet.getTimestamp(2).toLocalDateTime(),
-                                new Empleados(nombreEmpleado)
-                        )
-                );
-            }
-            connection.close();
 
-        } catch (SQLException throwables) {
-            System.out.println("Error:" + throwables.getMessage());
+                int idEmpleado = resultSet.getInt(4);
+                String nombreEmpleado = resultSet.getString(5);
+                String email = resultSet.getString(6);
+                Empleados empleado = null;
+
+                if (nombreEmpleado != null) {
+                    empleado = new Empleados(idEmpleado, nombreEmpleado, email);
+                }
+                identificador = resultSet.getInt(1);
+                LocalDateTime fechaInicio = resultSet.getTimestamp(2).toLocalDateTime();
+                LocalDateTime fechaFin = resultSet.getTimestamp(3).toLocalDateTime();
+                Horari horario = new Horari(identificador, fechaInicio, fechaFin);
+
+                // Comprobar si el horario ya existe en la lista
+                if (!horariosList.contains(horario)) {
+
+                    if (empleado != null) {
+                        horario.añadirEmpleado(empleado);
+                    }
+                    horariosList.add(horario);
+                    contador++;
+
+                } else {
+
+                    Horari horari = horariosList.get(contador - 1);
+                    if (empleado != null) {
+                        horari.añadirEmpleado(empleado);
+                    }
+                }
+
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
         }
+
+        // Añadir los horarios de la lista a la lista de horarios
+        horaris.addAll(horariosList);
+
         return horaris;
     }
-
 }
