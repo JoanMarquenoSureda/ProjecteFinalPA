@@ -195,8 +195,8 @@ public class Visualizar {
     }
 
     @FXML
-    private void cambiarPantallaViusalizar() throws IOException {
-        App.setRoot("Visualizar");
+    private void cambiarPantallaAsignar() throws IOException {
+        App.setRoot("Asignar");
     }
 
 }
