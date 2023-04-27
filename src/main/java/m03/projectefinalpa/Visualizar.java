@@ -7,32 +7,22 @@ package m03.projectefinalpa;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
-import java.sql.SQLException;
-
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.layout.GridPane;
 import m03.projectefinalpa.model.classes.Atraccio;
 import m03.projectefinalpa.model.Connexio;
 import m03.projectefinalpa.model.GestioDades;
 import m03.projectefinalpa.model.GestioDadesVisualitzar;
-import m03.projectefinalpa.model.classes.Empleados;
 import m03.projectefinalpa.model.classes.Horari;
 import m03.projectefinalpa.model.classes.Restaurant;
 
@@ -57,9 +47,6 @@ public class Visualizar {
     @FXML
     ListView listViewHorarios;
 
-    Timestamp fechaHoraSQL_inicio;
-    Timestamp fechaHoraSQL_final;
-
     int indice;
     int idZona;
     ObservableList<Horari> horariRestaurants = FXCollections.observableArrayList();
@@ -78,20 +65,28 @@ public class Visualizar {
             //miramos el indice de la zona seleccionada
             indice = desplegableZona.getSelectionModel().getSelectedIndex();
 
-            //Devolvemos el valor del calendario con fecha
+            //Devolvemos el valor del calendario con fecha LocalDate
             LocalDate diaDesde = calendarioDesde.getValue();
             LocalDate diaHasta = calendarioHasta.getValue();
 
+            //comparamos si las fechas estan bien introducidas por comparacion. 
             if (diaDesde.isBefore(diaHasta) || diaDesde.isEqual(diaHasta)) {
-                // Convertir el objeto LocalDateTime de Java a un objeto Timestamp de Java que se pueda utilizar en la consulta MySQL
-                fechaHoraSQL_inicio = Timestamp.valueOf(diaDesde.atStartOfDay());
-                fechaHoraSQL_final = Timestamp.valueOf(diaHasta.atTime(00, 00, 00));
+                
+                // Convertir el objeto LocalDate de Java a un objeto LocaldateTime para añadir horas y minutos. 
+                //Añadimos a la fecha la hora del inicio del dia a los dos y al hasta, devolvemos un dia mas. 
+                LocalDateTime diadesdelocal = diaDesde.atStartOfDay();
+                LocalDateTime diahastalocal = diaHasta.atStartOfDay().plusDays(1);
+                
 
+                // si seleccionamos atacciones:
                 if (opcionAtraccion.isSelected()) {
 
+                    //devolvemos el id de la atraccion
                     idZona = llistaAtraccions.get(indice).getId();
-                    horariAtraccions = gestioDadesVisualitzar.llistaHorarisAtraccions(idZona, fechaHoraSQL_inicio, fechaHoraSQL_final);
+                    //pasamos a gestion de dades el id de la zona, la fecha de inicio y final y devolvemos la lista de los horarios juntos los trabajadores asignados. 
+                    horariAtraccions = gestioDadesVisualitzar.llistaHorarisAtraccions(idZona, diadesdelocal, diahastalocal);
 
+                    // si la lista no es vacía, lo añadimos a la listView. Si es vacía añadimos un mensaje de horarios sin asignar. 
                     if (!horariAtraccions.isEmpty()) {
                         listViewHorarios.getItems().addAll(horariAtraccions);
                     } else {
@@ -101,7 +96,7 @@ public class Visualizar {
                 } else if (opcionRestaurante.isSelected()) {
 
                     idZona = llistaRestaurant.get(indice).getId();
-                    horariRestaurants = gestioDadesVisualitzar.llistaHorarisRestaurants(idZona, fechaHoraSQL_inicio, fechaHoraSQL_final);
+                    horariRestaurants = gestioDadesVisualitzar.llistaHorarisRestaurants(idZona, diadesdelocal, diahastalocal);
 
                     if (!horariRestaurants.isEmpty()) {
                         listViewHorarios.getItems().addAll(horariRestaurants);
@@ -122,14 +117,14 @@ public class Visualizar {
 
         try {
             conecta = connexio.connecta();
-
         } catch (Exception ex) {
             alerta(ex + "");
-
         }
-
     }
-
+    
+    
+    //mismos métodos que en las otras clases
+   
     private void alerta(String text) {
         Alert alerta = new Alert(Alert.AlertType.INFORMATION);
         alerta.setHeaderText(null);
@@ -176,7 +171,7 @@ public class Visualizar {
         calendarioHasta.setDisable(true);
 
     }
-
+    
     private void cargarRestaurantes() {
 
         ObservableList<String> nomRestaurant = FXCollections.observableArrayList();

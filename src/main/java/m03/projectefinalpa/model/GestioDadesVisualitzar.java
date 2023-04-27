@@ -33,14 +33,18 @@ import m03.projectefinalpa.model.classes.ZonaTrabajo;
  *
  * @author joanm
  */
-public class GestioDadesVisualitzar {
 
-    public ObservableList<Horari> llistaHorarisRestaurants(int id, Timestamp fechaEntrada, Timestamp fechasalida) {
+
+public class GestioDadesVisualitzar {
+    
+    public ObservableList<Horari> llistaHorarisRestaurants(int id, LocalDateTime fechaEntrada, LocalDateTime fechasalida) {
         int contador = 0;
         int identificador;
 
         ObservableList<Horari> horaris = FXCollections.observableArrayList();
         ArrayList<Horari> horariosList = new ArrayList<>(); // ArrayList para almacenar los horarios
+        
+        //consulta que devuelve todos los horarios y el nombre de los empleados assignados, si no hay assignacion devuelve null en el campo nombre
         String sql = "SELECT horario.id, horario.fecha_inicio, horario.fecha_fin, empleado.id, empleado.nombre, empleado.email \n"
                 + "from horario\n"
                 + "left join asignacion on asignacion.idHorario = horario.id\n"
@@ -50,13 +54,13 @@ public class GestioDadesVisualitzar {
 
         Connection connection = new Connexio().connecta();
         try {
-            LocalDate fechaEntradaSQL = fechaEntrada.toLocalDateTime().toLocalDate();
-            LocalDate fechaSalidaSQL = fechasalida.toLocalDateTime().toLocalDate();
+            LocalDate fechaEntradaSQL = fechaEntrada.toLocalDate();
+            LocalDate fechaSalidaSQL = fechasalida.toLocalDate();
             PreparedStatement statement = connection.prepareStatement(sql);
 
             statement.setInt(1, id);
             statement.setDate(2, Date.valueOf(fechaEntradaSQL));
-            statement.setDate(3, Date.valueOf(fechaSalidaSQL.plusDays(1)));
+            statement.setDate(3, Date.valueOf(fechaSalidaSQL));
 
             ResultSet resultSet = statement.executeQuery();
 
@@ -67,6 +71,7 @@ public class GestioDadesVisualitzar {
                 String email = resultSet.getString(6);
                 Empleados empleado = null;
 
+               // si el nombre es diferente e null, se crea el objeto empleado.
                 if (nombreEmpleado != null) {
                     empleado = new Empleados(idEmpleado, nombreEmpleado, email);
                 }
@@ -103,7 +108,7 @@ public class GestioDadesVisualitzar {
         return horaris;
     }
 
-    public ObservableList<Horari> llistaHorarisAtraccions(int id, Timestamp fechaEntrada, Timestamp fechasalida) {
+    public ObservableList<Horari> llistaHorarisAtraccions(int id, LocalDateTime fechaEntrada, LocalDateTime fechasalida) {
         int contador = 0;
         int identificador;
 
@@ -118,13 +123,13 @@ public class GestioDadesVisualitzar {
 
         Connection connection = new Connexio().connecta();
         try {
-            LocalDate fechaEntradaSQL = fechaEntrada.toLocalDateTime().toLocalDate();
-            LocalDate fechaSalidaSQL = fechasalida.toLocalDateTime().toLocalDate();
+            LocalDate fechaEntradaSQL = fechaEntrada.toLocalDate();
+            LocalDate fechaSalidaSQL = fechasalida.toLocalDate();
             PreparedStatement statement = connection.prepareStatement(sql);
 
             statement.setInt(1, id);
             statement.setDate(2, Date.valueOf(fechaEntradaSQL));
-            statement.setDate(3, Date.valueOf(fechaSalidaSQL.plusDays(1)));
+            statement.setDate(3, Date.valueOf(fechaSalidaSQL));
 
             ResultSet resultSet = statement.executeQuery();
 

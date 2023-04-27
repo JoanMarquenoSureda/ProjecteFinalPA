@@ -3,6 +3,7 @@ package m03.projectefinalpa;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
@@ -47,34 +48,31 @@ public class Crear {
     TextField horasS;
     @FXML
     TextField minutosS;
-    @FXML
-    GridPane gridPane;
+    
 
+    //lista de los datos de la zona para los desplegables.  
     ObservableList<Atraccio> llistaAtraccions = gestioDades.llistaAtraccio();
     ObservableList<Restaurant> llistaRestaurant = gestioDades.llistaRestaurants();
+
+    //variables para guardar los datos de los usuarios introducidos por teclado. 
     private Horari horari;
     private int horasTextoE;
     private int minutosTextoE;
     private int horasTextoS;
     private int minutosTextoS;
     private int idZona;
-    private String nombreZona;
     private LocalDateTime fecha_inici;
     private LocalDateTime fecha_fin;
     private int dia;
     private Month mes;
     private int año;
-    private ObservableList<String> opcionesDesplegable;
 
-    
     @FXML
     public void guardar() {
-        
+
         boolean errores = false;
-        boolean errorHoras = false;
-        boolean errorMinutos = false;
-        boolean errorFecha = false;
         String mensaje = "";
+
         try {
             LocalDate data = calendario.getValue();
 
@@ -84,11 +82,11 @@ public class Crear {
                 mensaje = "Campos vacíos";
 
             } else {
-
-                int horasTextoE = Integer.parseInt(horasE.getText());
-                int minutosTextoE = Integer.parseInt(minutosE.getText());
-                int horasTextoS = Integer.parseInt(horasS.getText());
-                int minutosTextoS = Integer.parseInt(minutosS.getText());
+                // guardamos el texto introducido por el usuario
+                horasTextoE = Integer.parseInt(horasE.getText());
+                minutosTextoE = Integer.parseInt(minutosE.getText());
+                horasTextoS = Integer.parseInt(horasS.getText());
+                minutosTextoS = Integer.parseInt(minutosS.getText());
 
                 //comprueba que los valores en el campo de horas y minutos sea correcto
                 if (horasTextoE < 0 || horasTextoE > 23 || horasTextoS < 0 || horasTextoS > 23 || minutosTextoE < 0 || minutosTextoE > 59 || minutosTextoS < 0 || minutosTextoS > 59) {
@@ -98,12 +96,12 @@ public class Crear {
 
                 } else {
 
-                    int idZona = desplegableZona.getSelectionModel().getSelectedIndex();
-                    int dia = data.getDayOfMonth();
-                    Month mes = data.getMonth();
-                    int año = data.getYear();
-                    LocalDateTime fecha_inici = LocalDateTime.of(año, mes, dia, horasTextoE, minutosTextoE);
-                    LocalDateTime fecha_fin = LocalDateTime.of(año, mes, dia, horasTextoS, minutosTextoS);
+                    int indiceLista = desplegableZona.getSelectionModel().getSelectedIndex();
+                    dia = data.getDayOfMonth();
+                    mes = data.getMonth();
+                    año = data.getYear();
+                    fecha_inici = LocalDateTime.of(año, mes, dia, horasTextoE, minutosTextoE);
+                    fecha_fin = LocalDateTime.of(año, mes, dia, horasTextoS, minutosTextoS);
 
                     //comprueba que el horario de entrada sea anterior al de salida
                     if (fecha_inici.isAfter(fecha_fin)) {
@@ -113,21 +111,29 @@ public class Crear {
 
                     } else {
                         boolean ok = false;
+
+                        // si la attraccion es seleccionada, guardamos la atraccion, conseguimos su id y lo creamos mediante el metodo afegeixHorariAtraccio, de la clase
+                        //gestio de dades
                         if (opcionAtraccion.isSelected()) {
-                            Atraccio atraccion = llistaAtraccions.get(idZona);
+                            Atraccio atraccion = llistaAtraccions.get(indiceLista);
                             idZona = atraccion.getId();
                             horari = new Horari(fecha_inici, fecha_fin, idZona, 0);
-                            ok = gestioDades.afegeixHorariAtraccio(horari);
+                            ok = gestioDades.afegeixHorariAtraccio(horari); //nos devuelve si se ha guardado o no,
+
+                            //mismo metodo pero paralos restaurantes. 
                         } else if (opcionRestaurante.isSelected()) {
-                            Restaurant restaurant = llistaRestaurant.get(idZona);
+                            Restaurant restaurant = llistaRestaurant.get(indiceLista);
                             idZona = restaurant.getId();
                             horari = new Horari(fecha_inici, fecha_fin, 0, idZona);
                             ok = gestioDades.afegeixHorariRestaurant(horari);
                         }
 
+                        // si se ha añadido, mensaje de alerta y borramos las horas, para seguir añadiendo. 
                         if (ok) {
                             alerta("Afegit correctament");
                             esborrarHores();
+
+                            //si no se ha añadido, ponemos los mensajes de error como true, y guardos un mensaje en la variable mensaje. 
                         } else {
                             errores = true;
                             mensaje = "No afegit correctament";
@@ -135,21 +141,21 @@ public class Crear {
                     }
                 }
             }
-        } catch (Exception e) {
+            //si encuentra la excepcion, enviara un mensaje de que no se ha podido convertir el texto a valores. 
+        } catch (IOException | NumberFormatException | SQLException e) {
 
             errores = false;
             alerta("Valores numericos, no texto");
 
-        }
+        } // si hay otros errores, se envia el mensaje específico de cada error.
         if (errores) {
 
             alerta(mensaje);
         }
     }
-    
-    
-    
-     @FXML
+
+    // inicializamos la apliacion como un reset. 
+    @FXML
     public void esborrar() {
         opcionAtraccion.setSelected(false);
         opcionRestaurante.setSelected(false);
@@ -160,44 +166,6 @@ public class Crear {
 
     }
 
-
-    private int buscarAtraccion(String nombreZona) {
-        int id = 0;
-        int i = 0;
-        boolean trobat = false;
-
-        while (i < llistaAtraccions.size() && !trobat) {
-            if (llistaAtraccions.get(i).getNombre().equals(nombreZona)) {
-                id = llistaAtraccions.get(i).getId();
-                trobat = true;
-            }
-
-            i++;
-
-        }
-
-        return id;
-    }
-
-    private int buscarRestaurante(String nombreZona) {
-        int id = 0;
-        int i = 0;
-        boolean trobat = false;
-
-        while (i < llistaRestaurant.size() && !trobat) {
-            if (llistaRestaurant.get(i).getNombre().equals(nombreZona)) {
-                id = llistaRestaurant.get(i).getId();
-                trobat = true;
-            }
-            i++;
-
-        }
-
-        return id;
-    }
-
-   
-    
     private void esborrarHores() {
         horasE.setText("");
         horasS.setText("");
@@ -228,6 +196,7 @@ public class Crear {
         alerta.show();
     }
 
+    // metodo que revisa si esta seleccionado el radiobutton atraccion o restaurante, y habilita los botones y carga la lista de la zona en el ComboBox. 
     public void getOpcion(javafx.event.ActionEvent event) {
 
         if (opcionAtraccion.isSelected()) {
@@ -241,6 +210,7 @@ public class Crear {
 
     }
 
+    //metodos para cargar las tracciones en el combobox zona
     private void cargarAtracciones() {
 
         ObservableList<String> nombresAtraccions = FXCollections.observableArrayList();
@@ -253,6 +223,20 @@ public class Crear {
 
     }
 
+    //metodos para cargar las restaurantes en el combobox zona
+    private void cargarRestaurantes() {
+
+        ObservableList<String> nomRestaurant = FXCollections.observableArrayList();
+
+        for (Restaurant restaurant : llistaRestaurant) {
+            nomRestaurant.add(restaurant.getNombre());
+
+        }
+        desplegableZona.setItems(nomRestaurant);
+
+    }
+
+    //metodos para habilitat y deshabilitat botones para que el usuario no interactúe. 
     private void habilitarBotones() {
         desplegableZona.setDisable(false);
         calendario.setDisable(false);
@@ -271,24 +255,12 @@ public class Crear {
         minutosS.setDisable(true);
     }
 
-    private void cargarRestaurantes() {
-
-        ObservableList<String> nomRestaurant = FXCollections.observableArrayList();
-
-        for (Restaurant restaurant : llistaRestaurant) {
-            nomRestaurant.add(restaurant.getNombre());
-
-        }
-        desplegableZona.setItems(nomRestaurant);
-
-    }
-    
-     @FXML
+    @FXML
     private void cambiarPantallaAsignar() throws IOException {
         App.setRoot("Asignar");
     }
-     
-     @FXML
+
+    @FXML
     private void cambiarPantallaVisualizar() throws IOException {
         App.setRoot("Visualizar");
     }
