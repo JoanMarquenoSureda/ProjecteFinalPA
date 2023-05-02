@@ -4,30 +4,19 @@
  */
 package m03.projectefinalpa.model;
 
-import m03.projectefinalpa.model.classes.Restaurant;
-import m03.projectefinalpa.model.classes.Atraccio;
 import m03.projectefinalpa.model.classes.Horari;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.embed.swing.SwingFXUtils;
-import javafx.scene.image.Image;
-import m03.projectefinalpa.model.classes.Empleados;
-import m03.projectefinalpa.model.classes.ZonaTrabajo;
+import m03.projectefinalpa.model.classes.EmpleadosClass;
+
 
 /**
  *
@@ -69,11 +58,11 @@ public class GestioDadesVisualitzar {
                 int idEmpleado = resultSet.getInt(4);
                 String nombreEmpleado = resultSet.getString(5);
                 String email = resultSet.getString(6);
-                Empleados empleado = null;
+                EmpleadosClass empleado = null;
 
                // si el nombre es diferente e null, se crea el objeto empleado.
                 if (nombreEmpleado != null) {
-                    empleado = new Empleados(idEmpleado, nombreEmpleado, email);
+                    empleado = new EmpleadosClass(idEmpleado, nombreEmpleado, email);
                 }
                 identificador = resultSet.getInt(1);
                 LocalDateTime fechaInicio = resultSet.getTimestamp(2).toLocalDateTime();
@@ -138,10 +127,10 @@ public class GestioDadesVisualitzar {
                 int idEmpleado = resultSet.getInt(4);
                 String nombreEmpleado = resultSet.getString(5);
                 String email = resultSet.getString(6);
-                Empleados empleado = null;
+                EmpleadosClass empleado = null;
 
                 if (nombreEmpleado != null) {
-                    empleado = new Empleados(idEmpleado, nombreEmpleado, email);
+                    empleado = new EmpleadosClass(idEmpleado, nombreEmpleado, email);
                 }
                 identificador = resultSet.getInt(1);
                 LocalDateTime fechaInicio = resultSet.getTimestamp(2).toLocalDateTime();

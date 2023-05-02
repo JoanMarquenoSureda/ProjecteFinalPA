@@ -5,7 +5,6 @@
 package m03.projectefinalpa;
 
 import java.io.IOException;
-import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -14,7 +13,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Optional;
-import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -26,17 +24,15 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.SelectionMode;
 import m03.projectefinalpa.model.classes.Atraccio;
-import m03.projectefinalpa.model.Connexio;
 import m03.projectefinalpa.model.GestioDades;
-import m03.projectefinalpa.model.classes.Empleados;
+import m03.projectefinalpa.model.classes.EmpleadosClass;
 import m03.projectefinalpa.model.classes.Horari;
 import m03.projectefinalpa.model.classes.Restaurant;
+import javafx.scene.image.Image;
 
 public class Asignar {
 
     GestioDades gestioDades = new GestioDades();
-    Connection conecta;
-    Connexio connexio = new Connexio();
 
     @FXML
     RadioButton opcionAtraccion;
@@ -57,7 +53,7 @@ public class Asignar {
 
     ObservableList<Atraccio> llistaAtraccions = gestioDades.llistaAtraccio(); //llistem totes les atraccions quan iniciem
     ObservableList<Restaurant> llistaRestaurant = gestioDades.llistaRestaurants();//llistem tots els restaurants quan iniciem
-    ObservableList<Empleados> llistaEmpleatsSQL = gestioDades.llistaEmpleatsHoraris(); //llistem tots els empleats que son "Aprendiz" y "Trabajador"
+    ObservableList<EmpleadosClass> llistaEmpleatsSQL = gestioDades.llistaEmpleatsHoraris(); //llistem tots els empleats que son "Aprendiz" y "Trabajador"
 
     ObservableList<String> dadesHorarisSenseAssignar = FXCollections.observableArrayList(); // Llista on guardarem les dades del horaris del metode ToSring
     private Timestamp fechaHoraSQL;
@@ -103,7 +99,7 @@ public class Asignar {
     //metodo para asignar con el button asignar
     @FXML
     public void assignar() throws SQLException, IOException {
-       
+
         String missatge = "";
 
         //revisamos que hay algun elemento seleccionado de la listview horarios y de la listView empleados. 
@@ -111,7 +107,7 @@ public class Asignar {
 
             //Añadimos los horarios y los empleados seleccionados en una lista. 
             ObservableList<Horari> horaris = listViewHorarios.getSelectionModel().getSelectedItems();
-            ObservableList<Empleados> empleados = listViewEmpleados.getSelectionModel().getSelectedItems();
+            ObservableList<EmpleadosClass> empleados = listViewEmpleados.getSelectionModel().getSelectedItems();
 
             //reccorremos los horarios y los empleados, para asignar cada horario a cada persona seleccionada. 
             for (int i = 0; i < horaris.size(); i++) {
@@ -160,26 +156,14 @@ public class Asignar {
 
             }
 
-        // Si no hay nada seleccionado enviamos una alerta
+            // Si no hay nada seleccionado enviamos una alerta
         } else {
             alerta("Selecciona un horario para borrarlo");
         }
 
     }
 
-    public void initialize(URL url, ResourceBundle rb) {
-
-        try {
-            conecta = connexio.connecta();
-
-        } catch (Exception ex) {
-            alerta(ex + "");
-
-        }
-
-    }
     //alerta general de errores. 
-
     private void alerta(String text) {
         Alert alerta = new Alert(Alert.AlertType.INFORMATION);
         alerta.setHeaderText(null);
@@ -234,16 +218,16 @@ public class Asignar {
         calendario.setDisable(true);
 
     }
-    
+
     //reiniciamos la lista de horarios y limpiamos los dos ListView
-    private void inicializarvistas(){
-        
-            llistaHoraris.clear();
-            dadesHorarisSenseAssignar.clear();
-            listViewEmpleados.getItems().clear();
-            listViewHorarios.getItems().clear();
-            horariAtraccio.clear();
-            horariRestaurant.clear();
+    private void inicializarvistas() {
+
+        llistaHoraris.clear();
+        dadesHorarisSenseAssignar.clear();
+        listViewEmpleados.getItems().clear();
+        listViewHorarios.getItems().clear();
+        horariAtraccio.clear();
+        horariRestaurant.clear();
     }
 
     // Carga la lista de restaurantes en el ComboBox de desplegableZona
@@ -313,6 +297,11 @@ public class Asignar {
     @FXML
     private void cambiarPantallaViusalizar() throws IOException {
         App.setRoot("Visualizar");
+    }
+
+    @FXML
+    private void cambiarPantallaEmpleados() throws IOException {
+        App.setRoot("Empleados");
     }
 
 }

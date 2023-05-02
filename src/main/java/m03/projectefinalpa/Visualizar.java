@@ -23,15 +23,18 @@ import m03.projectefinalpa.model.classes.Atraccio;
 import m03.projectefinalpa.model.Connexio;
 import m03.projectefinalpa.model.GestioDades;
 import m03.projectefinalpa.model.GestioDadesVisualitzar;
+import m03.projectefinalpa.model.Usuario;
 import m03.projectefinalpa.model.classes.Horari;
 import m03.projectefinalpa.model.classes.Restaurant;
+import javafx.scene.image.Image;
 
 public class Visualizar {
 
     GestioDadesVisualitzar gestioDadesVisualitzar = new GestioDadesVisualitzar();
     GestioDades gestioDades = new GestioDades();
+    Connexio connexio;
+    Usuario usuario;
     Connection conecta;
-    Connexio connexio = new Connexio();
 
     @FXML
     RadioButton opcionAtraccion;
@@ -193,5 +196,8 @@ public class Visualizar {
     private void cambiarPantallaAsignar() throws IOException {
         App.setRoot("Asignar");
     }
+     
+      @FXML private void cambiarPantallaEmpleados() throws IOException {
+      App.setRoot("Empleados"); }
 
 }

@@ -23,7 +23,7 @@ public class Horari {
     private int idAtraccion;
     private int idRestaurante;
     private ZonaTrabajo zona;
-    private ArrayList<Empleados> Empleado;
+    private ArrayList<EmpleadosClass> Empleado;
 
     public Horari(LocalDateTime fecha_inici, LocalDateTime fecha_fin, int idAtraccion, int idRestaurante) {
         this.fecha_inici = fecha_inici;
@@ -31,6 +31,14 @@ public class Horari {
         this.idAtraccion = idAtraccion;
         this.idRestaurante = idRestaurante;
     }
+
+    public Horari(LocalDateTime fecha_inici, LocalDateTime fecha_fin, ZonaTrabajo zona) {
+        this.fecha_inici = fecha_inici;
+        this.fecha_fin = fecha_fin;
+        this.zona = zona;
+    }
+    
+    
 
     public Horari(int id, LocalDateTime fecha_inici, LocalDateTime fecha_fin) {
         this.id = id;
@@ -114,15 +122,15 @@ public class Horari {
         this.zona = zona;
     }
 
-    public ArrayList<Empleados> getEmpleado() {
+    public ArrayList<EmpleadosClass> getEmpleado() {
         return Empleado;
     }
 
-    public void setEmpleado(ArrayList<Empleados> Empleado) {
+    public void setEmpleado(ArrayList<EmpleadosClass> Empleado) {
         this.Empleado = Empleado;
     }
 
-    public void añadirEmpleado(Empleados empleado) {
+    public void añadirEmpleado(EmpleadosClass empleado) {
 
         if (!this.Empleado.contains(empleado)) {
             this.Empleado.add(empleado);
@@ -160,6 +168,8 @@ public class Horari {
         String fecha_final = convertirHoras(fecha_fin);
 
         String result;
+        
+        
 
         if (Empleado != null && !Empleado.isEmpty()) {
 
@@ -172,7 +182,7 @@ public class Horari {
             }
             result = data + " " + fecha_inicio + "-" + fecha_final + " Assignat: " + empleados;
         } else {
-            result = data + " " + fecha_inicio + "-" + fecha_final;
+            result = data + " " + fecha_inicio + "-" + fecha_final + zona.toString();
         }
         return result;
     }

@@ -1,6 +1,10 @@
 package m03.projectefinalpa;
 
+
+import java.awt.Desktop;
+import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -17,18 +21,25 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
 import m03.projectefinalpa.model.classes.Atraccio;
 import m03.projectefinalpa.model.Connexio;
 import m03.projectefinalpa.model.GestioDades;
+import m03.projectefinalpa.model.Usuario;
 import m03.projectefinalpa.model.classes.Horari;
 import m03.projectefinalpa.model.classes.Restaurant;
+import javafx.scene.image.Image;
 
 public class Crear {
 
+    Inici inicio = new Inici();
+    
+    
     GestioDades gestioDades = new GestioDades();
+    Connexio connexio;
+    Usuario usuario;
     Connection conecta;
-    Connexio connexio = new Connexio();
+  
+  
 
     @FXML
     RadioButton opcionAtraccion;
@@ -48,7 +59,6 @@ public class Crear {
     TextField horasS;
     @FXML
     TextField minutosS;
-    
 
     //lista de los datos de la zona para los desplegables.  
     ObservableList<Atraccio> llistaAtraccions = gestioDades.llistaAtraccio();
@@ -68,8 +78,10 @@ public class Crear {
     private int año;
 
     @FXML
-    public void guardar() {
+    public void guardar() throws MalformedURLException {
 
+       
+       
         boolean errores = false;
         String mensaje = "";
 
@@ -154,7 +166,7 @@ public class Crear {
         }
     }
 
-    // inicializamos la apliacion como un reset. 
+// inicializamos la apliacion como un reset. 
     @FXML
     public void esborrar() {
         opcionAtraccion.setSelected(false);
@@ -175,14 +187,6 @@ public class Crear {
     }
 
     public void initialize(URL url, ResourceBundle rb) {
-
-        try {
-            conecta = connexio.connecta();
-
-        } catch (Exception ex) {
-            alerta(ex + "");
-
-        }
 
         labelZona.setVisible(false);
 
@@ -209,6 +213,8 @@ public class Crear {
         }
 
     }
+    
+    
 
     //metodos para cargar las tracciones en el combobox zona
     private void cargarAtracciones() {
@@ -264,4 +270,19 @@ public class Crear {
     private void cambiarPantallaVisualizar() throws IOException {
         App.setRoot("Visualizar");
     }
+     @FXML private void cambiarPantallaEmpleados() throws IOException {
+      App.setRoot("Empleados"); }
+    
+     @FXML
+    private void mandarAyuda()  {
+        File file = new File("src\\main\\resources\\m03\\projectefinalpa\\web\\ayuda.html");
+        try {
+            Desktop.getDesktop().browse(file.toURI());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+   
+    
 }

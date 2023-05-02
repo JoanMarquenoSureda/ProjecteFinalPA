@@ -4,13 +4,15 @@
  */
 package m03.projectefinalpa.model.classes;
 
+import java.awt.Image;
+import java.sql.Blob;
 import java.util.ArrayList;
 
 /**
  *
  * @author User
  */
-public class Empleados {
+public class EmpleadosClass {
     
     private int id;
     private String nombre;
@@ -20,9 +22,10 @@ public class Empleados {
     private double decimal;
     private String categoria;
     private int jornada;
+    private Blob foto;
     private ArrayList<Horari> listaHorario;
 
-    public Empleados(int id, String nombre, String direccion, String telefono, String email, double decimal, String categoria, int jornada) {
+    public EmpleadosClass(int id, String nombre, String direccion, String telefono, String email, double decimal, String categoria, int jornada) {
         this.id = id;
         this.nombre = nombre;
         this.direccion = direccion;
@@ -34,12 +37,22 @@ public class Empleados {
         this.listaHorario = new ArrayList<>();
     }
 
-    public Empleados(int id, String nombre) {
+    public EmpleadosClass(String nombre, String direccion, String telefono, String email, Blob foto) {
+        this.nombre = nombre;
+        this.direccion = direccion;
+        this.telefono = telefono;
+        this.email = email;
+        this.foto = foto;
+    }
+    
+    
+
+    public EmpleadosClass(int id, String nombre) {
         this.id = id;
         this.nombre = nombre;
     }
     
-     public Empleados(int id, String nombre, String email) {
+     public EmpleadosClass(int id, String nombre, String email) {
        this.id = id;
        this.nombre = nombre;
        this.email = email;
@@ -80,10 +93,20 @@ public class Empleados {
     public String getEmail() {
         return email;
     }
+    
 
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public Blob getFoto() {
+        return foto;
+    }
+
+    public void setFoto(Blob foto) {
+        this.foto = foto;
+    }
+    
 
     public double getDecimal() {
         return decimal;
@@ -117,6 +140,10 @@ public class Empleados {
         this.listaHorario = listaHorario;
     }
 
+ 
+    
+    
+
     @Override
     public int hashCode() {
         int hash = 5;
@@ -135,7 +162,7 @@ public class Empleados {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Empleados other = (Empleados) obj;
+        final EmpleadosClass other = (EmpleadosClass) obj;
         return this.id == other.id;
     }
     

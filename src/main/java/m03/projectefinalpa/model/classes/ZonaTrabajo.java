@@ -16,6 +16,13 @@ public class ZonaTrabajo {
         this.listaHorarios = new ArrayList<>();
     }
 
+    public ZonaTrabajo(String nombre, String ubicacion) {
+        this.nombre = nombre;
+        this.ubicacion = ubicacion;
+      
+    }
+    
+
     public int getId() {
         return id;
     }
@@ -51,7 +58,7 @@ public class ZonaTrabajo {
     @Override
     public String toString() {
 
-        return "Nombre=" + nombre + " Ubicacion=" + ubicacion;
+        return " (" + nombre + " en " + ubicacion+")";
     }
 
 }

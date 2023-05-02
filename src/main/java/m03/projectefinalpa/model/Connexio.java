@@ -16,16 +16,25 @@ public class Connexio {
 
     private final String URL = "jdbc:mysql://127.0.0.1:3306/bd_portaventura";//nom bd
     private final String DRIVER = "com.mysql.cj.jdbc.Driver";
-    private final String USER = "Administrador";
-    private final String PASSWD = "Administrador";   
-   
+    private String user = "Administrador";
+    private String password = "Administrador";
 
+    public Connexio(String user, String password) {
+        this.user = user;
+        this.password = password;
+    }
+
+    public Connexio() {
+    }
+
+   
     public Connection connecta() {
+        
         Connection connexio = null;
         try {
             //Carreguem el driver          
             Class.forName(DRIVER); 
-            connexio = DriverManager.getConnection(URL, USER, PASSWD); 
+            connexio = DriverManager.getConnection(URL,user, password); 
         } catch (SQLException | ClassNotFoundException throwables) {
             System.out.println(throwables.getLocalizedMessage());
         }    

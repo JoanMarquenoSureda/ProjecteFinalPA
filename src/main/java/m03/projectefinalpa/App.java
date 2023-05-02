@@ -7,8 +7,11 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.Connection;
 import javafx.scene.control.Spinner;
 import javafx.scene.layout.VBox;
+import m03.projectefinalpa.model.Connexio;
+import m03.projectefinalpa.model.Usuario;
 
 /**
  * JavaFX App
@@ -16,10 +19,12 @@ import javafx.scene.layout.VBox;
 public class App extends Application {
 
     private static Scene scene;
-
+    public static Connection conexion;
+   
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("Crear"), 700, 513);
+ 
+       scene = new Scene(loadFXML("Inici"), 700, 513);
         stage.setScene(scene);
         stage.show();
     }
@@ -29,9 +34,13 @@ public class App extends Application {
     }
 
     private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
+        
+        
+         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
+          
         return fxmlLoader.load();
-    }
+        }
+    
 
     public static void main(String[] args) {
         launch();

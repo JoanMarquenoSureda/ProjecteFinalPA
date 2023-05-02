@@ -85,10 +85,8 @@
 .text-field {
     -fx-font-family: 'Montserrat';
     -fx-background-color: #f1642b;
-    -fx-text-fill: white;
     -fx-font-size: 14px;
     -fx-font-weight: normal;
-   
 
 }
 
@@ -99,12 +97,23 @@
 }
 
 
-
-
 .date-picker {
     -fx-background-color: #f1642b; 
     -fx-text-fill: white;
     -fx-font-size: 14px;
+}
+#ayuda {
+    -fx-background-image: url('../imagenes/ayuda.png');
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-text-fill: transparent;
+    -fx-background-radius: 5em;
+    -fx-min-width: 40px;
+    -fx-min-height: 40px;
+    -fx-max-width: 40px;
+    -fx-max-height: 40px;
+    -fx-border-color: transparent;
 }
 
 #botonuno {
@@ -200,7 +209,48 @@
     -fx-background-repeat: no-repeat;
     -fx-background-size: cover;
 }
+#bienvenido{
+    -fx-font-size: 30px;
+}
 
+#iniciosesion{
+    
+    
+}
 
+#iniciosesion {
+    -fx-background-color: white;
+    -fx-text-fill: black;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+    -fx-border-width: 1;
+    -fx-border-color: gray;
+    -fx-background-color: white;
+    -fx-background-color: transparent;
+}
 
+#iniciosesion:focused {
+    -fx-border-color: blue;
+    -fx-border-width: 2;
+    -fx-border-radius: 5;
+    -fx-background-color: white;
+    -fx-background-radius: 5;
+}
+#dades{
+     -fx-border-color: #F1642B;
+    -fx-border-width: 2;
+    -fx-border-radius: 5;
+    -fx-background-color: white;
+    -fx-background-radius: 5;
+}
 
+.text-field {
+   -fx-prompt-text-fill:  #F1642B;
+}
+
+.text-field:focused{
+   -fx-prompt-text-fill: white;
+    -fx-text-fill:black;
+   
+  
+}

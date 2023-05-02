@@ -1,0 +1,64 @@
+/* Estilos para el encabezado del menú */
+.menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #fff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    display: flex;
+  justify-content: center; /* centra horizontalmente el menú */
+  background-color: #fff; /* color de fondo del menú */
+  padding: 10px; /* añade un poco de espacio alrededor del menú */
+  }
+  
+  /* Estilos para los elementos de la lista */
+  .menu ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .menu li {
+    margin-right: 10px;
+  }
+  
+  .menu a {
+    color: #000;
+    text-decoration: none;
+    padding: 10px;
+  }
+  
+  .menu a:hover {
+    background-color: #f2f2f2;
+  }
+  
+  /* Estilos para el contenido principal */
+  #texto {
+    max-width: 800px;
+    margin: 150px auto 50px;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    line-height: 1.5;
+  }
+  
+  #texto h3, #texto h4 {
+    font-weight: bold;
+    margin-top: 30px;
+  }
+  
+  #texto h4 img {
+    vertical-align: middle;
+    margin-right: 10px;
+  }
+  
+  #texto p {
+    margin-top: 10px;
+  }
+  

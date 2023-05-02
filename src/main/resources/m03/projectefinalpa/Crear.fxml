@@ -38,7 +38,7 @@
                         <Button id="botonuno" mnemonicParsing="false" prefHeight="133.0" prefWidth="173.0" />
                         <Button id="botondos" mnemonicParsing="false" onAction="#cambiarPantallaAsignar" prefHeight="133.0" prefWidth="175.0" text="Button" GridPane.rowIndex="1" />
                         <Button id="botontres" mnemonicParsing="false" onAction="#cambiarPantallaVisualizar" prefHeight="137.0" prefWidth="174.0" text="Button" GridPane.rowIndex="2" />
-                        <Button id="botoncuatro" mnemonicParsing="false" prefHeight="134.0" prefWidth="180.0" text="Button" GridPane.rowIndex="3" />
+                        <Button id="botoncuatro" mnemonicParsing="false" onAction="#cambiarPantallaEmpleados" prefHeight="134.0" prefWidth="180.0" text="Button" GridPane.rowIndex="3" />
                      </children>
                   </GridPane>
                </children>
@@ -208,6 +208,11 @@
                               <Insets top="59.0" />
                            </GridPane.margin>
                         </Label>
+                        <Button fx:id="ayuda" alignment="CENTER" maxHeight="48.0" maxWidth="35.0" mnemonicParsing="false" onAction="#mandarAyuda" prefHeight="40.0" prefWidth="238.0" text="Button" GridPane.columnIndex="2">
+                           <GridPane.margin>
+                              <Insets left="200.0" />
+                           </GridPane.margin>
+                        </Button>
                      </children>
                   </GridPane>
                </children>

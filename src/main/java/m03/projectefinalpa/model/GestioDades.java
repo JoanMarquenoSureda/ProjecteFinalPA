@@ -7,11 +7,8 @@ package m03.projectefinalpa.model;
 import m03.projectefinalpa.model.classes.Restaurant;
 import m03.projectefinalpa.model.classes.Atraccio;
 import m03.projectefinalpa.model.classes.Horari;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -22,9 +19,7 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.embed.swing.SwingFXUtils;
-import javafx.scene.image.Image;
-import m03.projectefinalpa.model.classes.Empleados;
+import m03.projectefinalpa.model.classes.EmpleadosClass;
 import m03.projectefinalpa.model.classes.ZonaTrabajo;
 
 /**
@@ -232,7 +227,7 @@ public class GestioDades {
         return ok;
     }
     
-    public String assignarHoraris(Horari horari, Empleados empleat) throws SQLException, FileNotFoundException, IOException {
+    public String assignarHoraris(Horari horari, EmpleadosClass empleat) throws SQLException, FileNotFoundException, IOException {
         boolean ok = false;
         String missatge="";
         Connection connection = new Connexio().connecta();
@@ -252,15 +247,15 @@ public class GestioDades {
         return missatge;
     }
 
-    public ObservableList<Empleados> llistaEmpleatsHoraris() {
-        ObservableList<Empleados> llistaEmpleats = FXCollections.observableArrayList();
+    public ObservableList<EmpleadosClass> llistaEmpleatsHoraris() {
+        ObservableList<EmpleadosClass> llistaEmpleats = FXCollections.observableArrayList();
         String sql = "SELECT id, nombre FROM empleado WHERE categoria = 'Aprendiz' or categoria = 'Trabajador'";
         Connection connection = new Connexio().connecta();
         try {
             Statement ordre = connection.createStatement();
             ResultSet resultSet = ordre.executeQuery(sql);
             while (resultSet.next()) {
-                Empleados empleado = new Empleados(
+                EmpleadosClass empleado = new EmpleadosClass(
                         resultSet.getInt("id"),
                         resultSet.getString("nombre")
                 );
