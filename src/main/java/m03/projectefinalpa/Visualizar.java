@@ -6,8 +6,6 @@ package m03.projectefinalpa;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
@@ -20,21 +18,17 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
 import m03.projectefinalpa.model.classes.Atraccio;
-import m03.projectefinalpa.model.Connexio;
-import m03.projectefinalpa.model.GestioDades;
+import m03.projectefinalpa.model.GestioDadesCrearYAsignar;
 import m03.projectefinalpa.model.GestioDadesVisualitzar;
-import m03.projectefinalpa.model.Usuario;
 import m03.projectefinalpa.model.classes.Horari;
 import m03.projectefinalpa.model.classes.Restaurant;
-import javafx.scene.image.Image;
+
 
 public class Visualizar {
 
     GestioDadesVisualitzar gestioDadesVisualitzar = new GestioDadesVisualitzar();
-    GestioDades gestioDades = new GestioDades();
-    Connexio connexio;
-    Usuario usuario;
-    Connection conecta;
+    GestioDadesCrearYAsignar gestioDades = new GestioDadesCrearYAsignar();
+
 
     @FXML
     RadioButton opcionAtraccion;
@@ -118,11 +112,7 @@ public class Visualizar {
 
     public void initialize(URL url, ResourceBundle rb) {
 
-        try {
-            conecta = connexio.connecta();
-        } catch (Exception ex) {
-            alerta(ex + "");
-        }
+       
     }
     
     

@@ -1,64 +1,106 @@
 /* Estilos para el encabezado del menú */
+
+body{
+    background-color: #629cef;
+}
+.contenedor {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
 .menu {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    background-color: #fff;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    display: flex;
-  justify-content: center; /* centra horizontalmente el menú */
-  background-color: #fff; /* color de fondo del menú */
-  padding: 10px; /* añade un poco de espacio alrededor del menú */
-  }
-  
-  /* Estilos para los elementos de la lista */
-  .menu ul {
-    display: flex;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .menu li {
-    margin-right: 10px;
-  }
-  
-  .menu a {
-    color: #000;
-    text-decoration: none;
-    padding: 10px;
-  }
-  
-  .menu a:hover {
-    background-color: #f2f2f2;
-  }
-  
-  /* Estilos para el contenido principal */
-  #texto {
-    max-width: 800px;
-    margin: 150px auto 50px;
-    padding: 20px;
-    font-family: Arial, sans-serif;
-    line-height: 1.5;
-  }
-  
-  #texto h3, #texto h4 {
-    font-weight: bold;
-    margin-top: 30px;
-  }
-  
-  #texto h4 img {
-    vertical-align: middle;
-    margin-right: 10px;
-  }
-  
-  #texto p {
-    margin-top: 10px;
-  }
-  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background-color: aliceblue;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  max-width: 900px; /* Añade esta propiedad con el ancho máximo deseado */
+  margin: 0 auto; /* Centra horizontalmente el contenedor */
+}
+
+
+#texto {
+  max-width: 900px;
+  margin: 50px auto 50px;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  line-height: 1.5;
+  background-color: aliceblue;
+}
+
+
+.menu img {
+  margin-right: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  height: 42px;
+}
+
+.menu ul {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.menu li {
+  margin-right: 20px;
+}
+
+.menu a {
+ 
+  color: #323392;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 18px;
+  padding: 15px;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.menu a:hover {
+  color: #f1642b;
+}
+
+
+
+#texto h3 {
+  font-size: 28px;
+  font-weight: bold;
+  margin-top: 40px;
+  margin-bottom: 20px;
+  color: #f1642b;
+}
+
+#texto h4 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 30px;
+  margin-bottom: 15px;
+  color: #323392;
+}
+
+#texto h4 img {
+  vertical-align: middle;
+  margin-right: 10px;
+}
+
+#texto p {
+  font-size: 18px;
+  margin-top: 10px;
+  color: #323392;
+}
+
+.contenedor {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}

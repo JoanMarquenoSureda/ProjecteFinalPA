@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -22,24 +21,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import m03.projectefinalpa.model.classes.Atraccio;
-import m03.projectefinalpa.model.Connexio;
-import m03.projectefinalpa.model.GestioDades;
-import m03.projectefinalpa.model.Usuario;
+import m03.projectefinalpa.model.GestioDadesCrearYAsignar;
 import m03.projectefinalpa.model.classes.Horari;
 import m03.projectefinalpa.model.classes.Restaurant;
-import javafx.scene.image.Image;
+
 
 public class Crear {
-
-    Inici inicio = new Inici();
-    
-    
-    GestioDades gestioDades = new GestioDades();
-    Connexio connexio;
-    Usuario usuario;
-    Connection conecta;
-  
-  
 
     @FXML
     RadioButton opcionAtraccion;
@@ -60,6 +47,7 @@ public class Crear {
     @FXML
     TextField minutosS;
 
+     GestioDadesCrearYAsignar gestioDades = new GestioDadesCrearYAsignar();
     //lista de los datos de la zona para los desplegables.  
     ObservableList<Atraccio> llistaAtraccions = gestioDades.llistaAtraccio();
     ObservableList<Restaurant> llistaRestaurant = gestioDades.llistaRestaurants();
@@ -173,6 +161,7 @@ public class Crear {
         opcionRestaurante.setSelected(false);
         desplegableZona.getItems().clear();
         calendario.setValue(null);
+         labelZona.setVisible(false);
 
         deshabilitarBotones();
 
@@ -186,11 +175,7 @@ public class Crear {
 
     }
 
-    public void initialize(URL url, ResourceBundle rb) {
-
-        labelZona.setVisible(false);
-
-    }
+   
 
     private void alerta(String text) {
         Alert alerta = new Alert(Alert.AlertType.INFORMATION);
@@ -204,12 +189,17 @@ public class Crear {
     public void getOpcion(javafx.event.ActionEvent event) {
 
         if (opcionAtraccion.isSelected()) {
+            
             habilitarBotones();
             cargarAtracciones();
+            labelZona.setVisible(true);
+            labelZona.setText("Atracción: ");
         }
         if (opcionRestaurante.isSelected()) {
             habilitarBotones();
             cargarRestaurantes();
+             labelZona.setVisible(true);
+            labelZona.setText("Restaurante: ");
         }
 
     }

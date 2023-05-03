@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package m03.projectefinalpa.model.classes;
 
 import java.sql.Date;
@@ -10,11 +6,6 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-
-/**
- *
- * @author joanm
- */
 public class Horari {
 
     private int id;
@@ -37,8 +28,6 @@ public class Horari {
         this.fecha_fin = fecha_fin;
         this.zona = zona;
     }
-    
-    
 
     public Horari(int id, LocalDateTime fecha_inici, LocalDateTime fecha_fin) {
         this.id = id;
@@ -67,11 +56,6 @@ public class Horari {
         this.fecha_inici = fecha_inici.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
         this.fecha_fin = fecha_fin.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
         this.zona = zona;
-    }
-
-
-    public static java.util.Date convertToDate(LocalDateTime dateTimeToConvert) {
-        return java.util.Date.from(dateTimeToConvert.atZone(ZoneId.systemDefault()).toInstant());
     }
 
     public LocalDateTime getFecha_inici() {
@@ -168,8 +152,6 @@ public class Horari {
         String fecha_final = convertirHoras(fecha_fin);
 
         String result;
-        
-        
 
         if (Empleado != null && !Empleado.isEmpty()) {
 
@@ -182,24 +164,31 @@ public class Horari {
             }
             result = data + " " + fecha_inicio + "-" + fecha_final + " Assignat: " + empleados;
         } else {
-            result = data + " " + fecha_inicio + "-" + fecha_final + zona.toString();
+
+            if (this.zona != null) {
+                result = data + " " + fecha_inicio + "-" + fecha_final + this.zona.toString();
+            } else {
+                result = data + " " + fecha_inicio + "-" + fecha_final;
+
+            }
         }
+
         return result;
     }
-    
-    public String convertirHoras(LocalDateTime fecha){
+
+    public String convertirHoras(LocalDateTime fecha) {
         String hores;
-         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-         hores = fecha.format(formatter);
-        
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        hores = fecha.format(formatter);
+
         return hores;
     }
-    
-     public String convertirDies(LocalDateTime fecha){
+
+    public String convertirDies(LocalDateTime fecha) {
         String dies;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         dies = fecha.format(formatter);
-        
+
         return dies;
     }
 

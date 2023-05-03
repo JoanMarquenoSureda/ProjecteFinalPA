@@ -5,7 +5,6 @@
 package m03.projectefinalpa;
 
 import java.io.IOException;
-import java.sql.Connection;
 import java.sql.SQLException;
 
 import java.sql.Timestamp;
@@ -24,15 +23,14 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.SelectionMode;
 import m03.projectefinalpa.model.classes.Atraccio;
-import m03.projectefinalpa.model.GestioDades;
+import m03.projectefinalpa.model.GestioDadesCrearYAsignar;
 import m03.projectefinalpa.model.classes.EmpleadosClass;
 import m03.projectefinalpa.model.classes.Horari;
 import m03.projectefinalpa.model.classes.Restaurant;
-import javafx.scene.image.Image;
 
 public class Asignar {
 
-    GestioDades gestioDades = new GestioDades();
+    GestioDadesCrearYAsignar gestioDades = new GestioDadesCrearYAsignar();
 
     @FXML
     RadioButton opcionAtraccion;

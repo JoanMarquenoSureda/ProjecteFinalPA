@@ -16,7 +16,7 @@
     -fx-font-family: 'Montserrat';
     -fx-font-size: 16px;
     -fx-text-fill: #323392;
-   
+
 }
 
 #labelPuntos {
@@ -74,12 +74,16 @@
 
 .combo-box {
     -fx-background-color: #f1642b;
-    -fx-text-fill: white;
     -fx-font-size: 14px;
-    
+    -fx-color: white;
 
 }
-.combo-box .list-view .list-cell {-fx-text-fill: #323392;
+.combo-box .list-view .list-cell {
+    -fx-text-fill: #323392;
+}
+
+.combo-box .list-cell{
+    -fx-text-fill: white;
 }
 
 .text-field {
@@ -90,18 +94,39 @@
 
 }
 
+#horas{
+     -fx-prompt-text-fill: white;
+     -fx-text-fill: white;
+     
+}
+#horas:focused{
+     -fx-prompt-text-fill: #F1642B;
+}
+
 .button {
     -fx-background-color: #323392; /* color de fondo sólido */
     -fx-border-color: #323392; /* color del borde */
- 
+
 }
 
 
 .date-picker {
-    -fx-background-color: #f1642b; 
+    -fx-background-color: #f1642b;
     -fx-text-fill: white;
     -fx-font-size: 14px;
+    -fx-prompt-text-fill: white;
 }
+.date-picker > .text-field  {
+    -fx-alignment: center;
+    -fx-text-fill: white;
+    -fx-color: white;
+    
+}
+-date-picker .list-view .list-cell{
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: white;
+}
+
 #ayuda {
     -fx-background-image: url('../imagenes/ayuda.png');
     -fx-background-position: center;
@@ -113,7 +138,14 @@
     -fx-min-height: 40px;
     -fx-max-width: 40px;
     -fx-max-height: 40px;
-    -fx-border-color: transparent;
+    -fx-border-color:transparent;
+    -fx-background-color:#2596be;
+}
+
+#ayuda:pressed {
+    -fx-background-image: url('../imagenes/ayudahoover.png');
+     -fx-background-color:white;
+    
 }
 
 #botonuno {
@@ -213,10 +245,6 @@
     -fx-font-size: 30px;
 }
 
-#iniciosesion{
-    
-    
-}
 
 #iniciosesion {
     -fx-background-color: white;
@@ -237,20 +265,32 @@
     -fx-background-radius: 5;
 }
 #dades{
-     -fx-border-color: #F1642B;
+    -fx-border-color: #F1642B;
     -fx-border-width: 2;
     -fx-border-radius: 5;
     -fx-background-color: white;
     -fx-background-radius: 5;
 }
 
-.text-field {
-   -fx-prompt-text-fill:  #F1642B;
+#nombreEmpleado {
+    
+    -fx-prompt-text-fill:  #F1642B;
+    -fx-border-color: #F1642B;
+    -fx-border-width: 2;
+    -fx-border-radius: 5;
+    -fx-background-color: white;
+    -fx-background-radius: 5;
 }
 
-.text-field:focused{
-   -fx-prompt-text-fill: white;
-    -fx-text-fill:black;
-   
-  
+#nombreEmpleado:focused{
+    -fx-prompt-text-fill: white;
+    -fx-border-color: #F1642B;
+    -fx-border-width: 2;
+    -fx-border-radius: 5;
+    -fx-background-color: white;
+    -fx-background-radius: 5;
+
+
 }
+
+

@@ -4,22 +4,15 @@
  */
 package m03.projectefinalpa.model;
 
-import javafx.scene.image.Image;
-import java.io.ByteArrayInputStream;
 import m03.projectefinalpa.model.classes.Horari;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import m03.projectefinalpa.model.classes.EmpleadosClass;
 import m03.projectefinalpa.model.classes.ZonaTrabajo;
-
 
 /**
  *
@@ -27,6 +20,8 @@ import m03.projectefinalpa.model.classes.ZonaTrabajo;
  */
 public class GestioDadesEmpleados {
 
+    // mètode que retorna les dades de l'horari i el nom més l'ubicació del restaurant o atracció, segons el nom de l'empleat cercat, ordenat els horaris de forma
+    //accendent i desde el día d'avui, obviants els horaris anteriors. 
     public ObservableList<Horari> horariPerEmpleat(String nombre) {
         ObservableList<Horari> horaris = FXCollections.observableArrayList();
 
@@ -50,10 +45,9 @@ public class GestioDadesEmpleados {
             while (resultSet.next()) {
 
                 horaris.add(new Horari(
-                        resultSet.getTimestamp(1).toLocalDateTime(),
+                        resultSet.getTimestamp(1).toLocalDateTime(), //convertim el DateTime de MySQL en un LocalDateTime, 
                         resultSet.getTimestamp(2).toLocalDateTime(),
                         new ZonaTrabajo(resultSet.getString(3), resultSet.getString(4)))
-                
                 );
 
             }
@@ -64,41 +58,40 @@ public class GestioDadesEmpleados {
         return horaris;
     }
 
-   public EmpleadosClass dadesEmpleat(String nombre) {
+    //mètode que retorna les dades d'un empleat segons el nom de l'empleat passat per paràmetres, només retorna un objecte ja que passem per paràmetres el =. 
+    public EmpleadosClass dadesEmpleat(String nombre) {
 
-    EmpleadosClass empleado = null;
+        EmpleadosClass empleado = null;
 
-    String sql = "SELECT empleado.nombre, empleado.direccion, empleado.telefono, empleado.email, empleado.foto\n"
-            + "FROM empleado \n"
-            + "WHERE empleado.nombre = ?;";
+        String sql = "SELECT empleado.nombre, empleado.direccion, empleado.telefono, empleado.email, empleado.foto\n"
+                + "FROM empleado \n"
+                + "WHERE empleado.nombre = ?;";
 
-    Connection connection = new Connexio().connecta();
+        Connection connection = new Connexio().connecta();
 
-    try {
+        try {
 
-        PreparedStatement statement = connection.prepareStatement(sql);
+            PreparedStatement statement = connection.prepareStatement(sql);
 
-        statement.setString(1, nombre);
+            statement.setString(1, nombre);
 
-        ResultSet resultSet = statement.executeQuery();
+            ResultSet resultSet = statement.executeQuery();
 
-        if (resultSet.next()) {
-           
-         
-            
-            empleado = new EmpleadosClass(
-                    resultSet.getString(1),
-                    resultSet.getString(2),
-                    resultSet.getString(3),
-                    resultSet.getString(4),
-                      resultSet.getBlob(5)
-            );
+            if (resultSet.next()) {
+
+                empleado = new EmpleadosClass(
+                        resultSet.getString(1),
+                        resultSet.getString(2),
+                        resultSet.getString(3),
+                        resultSet.getString(4),
+                        resultSet.getBlob(5)
+                );
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
         }
 
-    } catch (SQLException e) {
-        System.out.println("Error: " + e.getMessage());
+        return empleado;
     }
-
-    return empleado;
-   }
 }

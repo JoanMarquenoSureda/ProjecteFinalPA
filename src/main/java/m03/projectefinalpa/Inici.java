@@ -10,7 +10,6 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import m03.projectefinalpa.model.Connexio;
 import m03.projectefinalpa.model.Usuario;
-import javafx.scene.image.Image;
 
 public class Inici {
 

@@ -1,17 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package m03.projectefinalpa.model.classes;
 
-import java.awt.Image;
 import java.sql.Blob;
 import java.util.ArrayList;
 
-/**
- *
- * @author User
- */
+
 public class EmpleadosClass {
     
     private int id;
@@ -45,8 +38,6 @@ public class EmpleadosClass {
         this.foto = foto;
     }
     
-    
-
     public EmpleadosClass(int id, String nombre) {
         this.id = id;
         this.nombre = nombre;
@@ -140,9 +131,6 @@ public class EmpleadosClass {
         this.listaHorario = listaHorario;
     }
 
- 
-    
-    
 
     @Override
     public int hashCode() {
@@ -166,8 +154,7 @@ public class EmpleadosClass {
         return this.id == other.id;
     }
     
-    
-
+ 
     @Override
     public String toString() {
         return  nombre;

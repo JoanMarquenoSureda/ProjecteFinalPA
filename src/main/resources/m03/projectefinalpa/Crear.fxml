@@ -78,7 +78,7 @@
                               <Insets left="10.0" />
                            </GridPane.margin>
                         </ComboBox>
-                        <Label fx:id="labelZona" contentDisplay="CENTER" prefHeight="72.0" prefWidth="226.0" text="Seleccionar nombre: " GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <Label fx:id="labelZona" contentDisplay="CENTER" prefHeight="72.0" prefWidth="226.0" text="Zona: " visible="false" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <padding>
                               <Insets left="20.0" />
                            </padding>

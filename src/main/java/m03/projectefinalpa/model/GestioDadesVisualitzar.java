@@ -97,6 +97,7 @@ public class GestioDadesVisualitzar {
         return horaris;
     }
 
+    //llista tots els horaris de les atraccions, i dins la classe horaris tenim un arrayList d'empleats que anem afegint tots els empleats que fan aquell horari. 
     public ObservableList<Horari> llistaHorarisAtraccions(int id, LocalDateTime fechaEntrada, LocalDateTime fechasalida) {
         int contador = 0;
         int identificador;
@@ -128,26 +129,31 @@ public class GestioDadesVisualitzar {
                 String nombreEmpleado = resultSet.getString(5);
                 String email = resultSet.getString(6);
                 EmpleadosClass empleado = null;
-
+                // si l'empleat no retorna null volem guardar les seves dades creant una instancia d'empleant.
                 if (nombreEmpleado != null) {
                     empleado = new EmpleadosClass(idEmpleado, nombreEmpleado, email);
                 }
+                // guardem les dades de l'horari dins variables
                 identificador = resultSet.getInt(1);
                 LocalDateTime fechaInicio = resultSet.getTimestamp(2).toLocalDateTime();
                 LocalDateTime fechaFin = resultSet.getTimestamp(3).toLocalDateTime();
+                
+                //crem un objecte horari amb les dades donades
                 Horari horario = new Horari(identificador, fechaInicio, fechaFin);
 
-                // Comprobar si el horario ya existe en la lista
+                // comprobem si l'hhorari ja existeix dins la llista horaris, per no tornar a repeteir el mateix horari
                 if (!horariosList.contains(horario)) {
 
+                    // si hi ha un empleat associat a n'aquest horari, el guardem amb el mètode añadirEmpleado, que l'afegeix en cas de que no estigui afegit prèviament. 
                     if (empleado != null) {
                         horario.añadirEmpleado(empleado);
                     }
+                    // una vegada associat l'horari i l'empleat, ho afegim a la llisya de horariosList
                     horariosList.add(horario);
                     contador++;
 
                 } else {
-
+                    // si l'horari ja existeix, retornem l'horari de la llista i si l'empleat no es null, l'afegim a l'arrayllist d'empleados de l'objecte Horari.
                     Horari horari = horariosList.get(contador - 1);
                     if (empleado != null) {
                         horari.añadirEmpleado(empleado);

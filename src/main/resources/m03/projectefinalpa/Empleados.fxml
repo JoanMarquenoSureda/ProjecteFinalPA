@@ -133,7 +133,7 @@
                               <Image url="@imagenes/fotoPersona.png" />
                            </image>
                         </ImageView>
-                        <TextField id="dades" fx:id="nombreEmpleado" promptText="Nombre empleado" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <TextField id="nombreEmpleado" fx:id="nombreEmpleado" promptText="Nombre empleado" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets left="50.0" right="270.0" />
                            </GridPane.margin>

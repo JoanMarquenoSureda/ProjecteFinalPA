@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package m03.projectefinalpa.model.classes;
 
 import java.util.ArrayList;
@@ -22,10 +19,7 @@ public class Atraccio  extends ZonaTrabajo{
         this.tipo = tipo;
         this.alturaminima = alturaminima;
     }
-    
-    
-
-                        
+                      
     public String getDescripcion() {
         return descripcion;
     }
@@ -49,12 +43,10 @@ public class Atraccio  extends ZonaTrabajo{
     public void setAlturaminima(double alturaminima) {
         this.alturaminima = alturaminima;
     }
-    
-    
 
     @Override
     public String toString() {
-        return super.toString()+ "ATRACCIÓN";
+        return super.toString();
     }
  
     

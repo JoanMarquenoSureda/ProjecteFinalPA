@@ -26,35 +26,11 @@ import m03.projectefinalpa.model.classes.ZonaTrabajo;
  *
  * @author joanm
  */
-public class GestioDades {
+public class GestioDadesCrearYAsignar {
 
-    public ObservableList<Horari> llistaHoraris() {
-
-        ObservableList<Horari> horaris = FXCollections.observableArrayList();
-        String sql = "SELECT fecha_inicio, fecha_fin, idAtraccion, idRestaurante FROM horario;";
-        //String sql="select nom from usuaris";
-        Connection connection = new Connexio().connecta();
-        try {
-            Statement ordre = connection.createStatement();
-            ResultSet resultSet = ordre.executeQuery(sql);
-            while (resultSet.next()) {
-                horaris.add(
-                        new Horari(
-                                resultSet.getDate(2),
-                                resultSet.getDate(3),
-                                resultSet.getInt(4),
-                                resultSet.getInt(5)
-                        )
-                );
-            }
-            connection.close();
-
-        } catch (SQLException throwables) {
-            System.out.println("Error:" + throwables.getMessage());
-        }
-        return horaris;
-    }
-
+   
+   // retorna una llista d'horaris amb el nom del restaurant i la seva ubicació, ordenat de forma ascendent per horari. Es busca lhorari entre dues dates concretes enviades
+    // per paràmetre. 
     public ObservableList<Horari> llistaHorarisRestaurants(int id, Timestamp fechaHoraSQL) {
 
          ObservableList<Horari> horaris = FXCollections.observableArrayList();
@@ -89,6 +65,7 @@ public class GestioDades {
         return horaris;
     }
 
+    // igual que la llista d'horaris de ¡restaurant pero només amb atraccions. A les següents consultes, ho he agrupat amb una classe Zona perque sigui més òptim el còdi. 
     public ObservableList<Horari> llistaHorarisAtraccions(int id, Timestamp fechaHoraSQL) {
 
         ObservableList<Horari> horaris = FXCollections.observableArrayList();
@@ -123,6 +100,7 @@ public class GestioDades {
         return horaris;
     }
 
+    // llista totes les atraccions de la taula atraccions, afegint tots els camps. 
     public ObservableList<Atraccio> llistaAtraccio() {
         ObservableList<Atraccio> itemList = FXCollections.observableArrayList();
         String sql = "SELECT id, nombre, descripcion, tipo, alturaminima, ubicacion FROM atraccion";
@@ -133,12 +111,12 @@ public class GestioDades {
             while (resultSet.next()) {
                 itemList.add(
                         new Atraccio(
-                                resultSet.getInt("id"),
-                                resultSet.getString("nombre"),
-                                resultSet.getString("descripcion"),
-                                resultSet.getString("tipo"),
-                                resultSet.getDouble("alturaminima"),
-                                resultSet.getString("ubicacion")
+                                resultSet.getInt(1),
+                                resultSet.getString(2),
+                                resultSet.getString(3),
+                                resultSet.getString(4),
+                                resultSet.getDouble(5),
+                                resultSet.getString(6)
                         )
                 );
             }
@@ -149,6 +127,7 @@ public class GestioDades {
         return itemList;
     }
 
+    // llista tots els restaurant amb tots els camps dels restautants. 
     public ObservableList<Restaurant> llistaRestaurants() {
         ObservableList<Restaurant> llistaRestaurants = FXCollections.observableArrayList();
         String sql = "SELECT id, nombre, tipoComida, ubicacion FROM restaurante";
@@ -158,10 +137,10 @@ public class GestioDades {
             ResultSet resultSet = ordre.executeQuery(sql);
             while (resultSet.next()) {
                 Restaurant restaurante = new Restaurant(
-                        resultSet.getInt("id"),
-                        resultSet.getString("nombre"),
-                        resultSet.getString("tipoComida"),
-                        resultSet.getString("ubicacion")
+                        resultSet.getInt(1),
+                        resultSet.getString(2),
+                        resultSet.getString(3),
+                        resultSet.getString(4)
                 );
                 llistaRestaurants.add(restaurante);
             }
@@ -171,7 +150,7 @@ public class GestioDades {
         }
         return llistaRestaurants;
     }
-
+    // feim un insert d'un horari dins una atracció, segons els valors de l'objecte horari passats per paràmetres, que també té l'id de l'atracció inclòs. 
     public boolean afegeixHorariAtraccio(Horari horari) throws SQLException, FileNotFoundException, IOException {
         boolean ok = false;
         Connection connection = new Connexio().connecta();
@@ -191,6 +170,7 @@ public class GestioDades {
         return ok;
     }
 
+    // feim un insert d'un horari dins un restaurant, segons els valors de l'objecte horari passats per paràmetres, que també té l'id del restaurant inclòs. 
     public boolean afegeixHorariRestaurant(Horari horari) throws SQLException, FileNotFoundException, IOException {
         boolean ok = false;
         Connection connection = new Connexio().connecta();
@@ -210,6 +190,7 @@ public class GestioDades {
         return ok;
     }
     
+    //mètode per esborrar un horari amb un delet, passant per paramatre l'objecte Horari que té el id assignat. 
     public boolean esborraHorari(Horari horari) throws SQLException, FileNotFoundException, IOException {
         boolean ok = false;
         Connection connection = new Connexio().connecta();
@@ -227,6 +208,7 @@ public class GestioDades {
         return ok;
     }
     
+    //mètode que inserta un horari a un empleat, passats per paràmetres, on agafa l'id de cada un i ho afegeix a la taula asignación. 
     public String assignarHoraris(Horari horari, EmpleadosClass empleat) throws SQLException, FileNotFoundException, IOException {
         boolean ok = false;
         String missatge="";
@@ -247,6 +229,7 @@ public class GestioDades {
         return missatge;
     }
 
+    //retorna una llista dels empleats que son "Aprendiz" o "Trabajador", ja que són els que treballen a les zones del parc. 
     public ObservableList<EmpleadosClass> llistaEmpleatsHoraris() {
         ObservableList<EmpleadosClass> llistaEmpleats = FXCollections.observableArrayList();
         String sql = "SELECT id, nombre FROM empleado WHERE categoria = 'Aprendiz' or categoria = 'Trabajador'";
@@ -256,8 +239,8 @@ public class GestioDades {
             ResultSet resultSet = ordre.executeQuery(sql);
             while (resultSet.next()) {
                 EmpleadosClass empleado = new EmpleadosClass(
-                        resultSet.getInt("id"),
-                        resultSet.getString("nombre")
+                        resultSet.getInt(1),
+                        resultSet.getString(2)
                 );
                 llistaEmpleats.add(empleado);
             }
