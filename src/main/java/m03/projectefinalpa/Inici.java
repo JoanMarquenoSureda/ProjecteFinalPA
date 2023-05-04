@@ -1,5 +1,7 @@
 package m03.projectefinalpa;
 
+import java.awt.Desktop;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -71,5 +73,13 @@ public class Inici {
     private void cambiarPantallaCrear() throws IOException {
         App.setRoot("Crear");
     }
-
+    @FXML
+    private void mandarAyuda()  {
+        File file = new File("src\\main\\resources\\m03\\projectefinalpa\\web\\inici.html");
+        try {
+            Desktop.getDesktop().browse(file.toURI());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

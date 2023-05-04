@@ -62,7 +62,7 @@
                         <RowConstraints maxHeight="320.79998779296875" minHeight="10.0" prefHeight="82.40001220703124" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <Label contentDisplay="CENTER" prefHeight="70.0" prefWidth="199.0" text="Seleccionar zona:" textAlignment="JUSTIFY" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <Label contentDisplay="CENTER" prefHeight="70.0" prefWidth="199.0" text="Seleccionar area:" textAlignment="JUSTIFY" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <padding>
                               <Insets left="20.0" />
                            </padding>

@@ -94,7 +94,7 @@
                            </GridPane.margin>
                         </ListView>
                         <Label alignment="CENTER" prefHeight="21.0" prefWidth="494.0" text="Horaris y empleados" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="6" />
-                        <Label contentDisplay="CENTER" prefHeight="70.0" prefWidth="199.0" text="Seleccionar zona:" textAlignment="JUSTIFY" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <Label contentDisplay="CENTER" prefHeight="70.0" prefWidth="199.0" text="Seleccionar area:" textAlignment="JUSTIFY" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <padding>
                               <Insets left="20.0" />
                            </padding>

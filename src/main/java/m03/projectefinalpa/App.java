@@ -15,16 +15,13 @@ public class App extends Application {
 
     private static Scene scene;
     public static Connection conexion;
-    
-    
-    
 
     @Override
     public void start(Stage stage) throws IOException {
-       
-        Image favicon = new Image(getClass().getResourceAsStream("ayuda.png"));
 
-        scene = new Scene(loadFXML("Crear"), 700, 513);
+        Image favicon = new Image(getClass().getResourceAsStream("fav.png"));
+
+        scene = new Scene(loadFXML("Inici"), 700, 513);
         stage.setScene(scene);
         stage.getIcons().add(favicon);
         stage.show();

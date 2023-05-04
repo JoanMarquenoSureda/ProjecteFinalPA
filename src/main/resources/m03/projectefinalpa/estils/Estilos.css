@@ -19,6 +19,11 @@
 
 }
 
+.listview .list-cell:filled:selected {
+    -fx-background-color: #3366CC;
+    -fx-text-fill:white;
+  }
+  
 #labelPuntos {
     -fx-font-family: 'Montserrat';
     -fx-font-size: 14px;

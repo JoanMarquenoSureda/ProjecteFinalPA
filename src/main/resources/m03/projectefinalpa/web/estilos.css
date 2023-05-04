@@ -3,12 +3,7 @@
 body{
     background-color: #629cef;
 }
-.contenedor {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-}
+
 
 .menu {
   display: flex;
@@ -22,14 +17,14 @@ body{
   right: 0;
   z-index: 1;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  max-width: 900px; /* Añade esta propiedad con el ancho máximo deseado */
+  max-width: 1150px; /* Añade esta propiedad con el ancho máximo deseado */
   margin: 0 auto; /* Centra horizontalmente el contenedor */
 }
 
 
 #texto {
-  max-width: 900px;
-  margin: 50px auto 50px;
+  max-width: 1150px;
+  margin: 60px auto 60px;
   padding: 20px;
   font-family: Arial, sans-serif;
   line-height: 1.5;
@@ -84,7 +79,7 @@ body{
   font-weight: bold;
   margin-top: 30px;
   margin-bottom: 15px;
-  color: #323392;
+  color: #f1642b;
 }
 
 #texto h4 img {
@@ -98,9 +93,3 @@ body{
   color: #323392;
 }
 
-.contenedor {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-}

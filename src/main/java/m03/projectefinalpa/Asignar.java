@@ -45,15 +45,23 @@ public class Asignar {
     @FXML
     ListView listViewEmpleados;
 
-    ObservableList<Horari> horariRestaurant = FXCollections.observableArrayList(); //llistem tots els horaris d'un restaurant
-    ObservableList<Horari> horariAtraccio = FXCollections.observableArrayList();//llistem tots els horaris d'una atraccio
+    ObservableList<Horari> horariRestaurant = FXCollections.observableArrayList(); // llistem tots els horaris d'un
+                                                                                   // restaurant
+    ObservableList<Horari> horariAtraccio = FXCollections.observableArrayList();// llistem tots els horaris d'una
+                                                                                // atraccio
     ArrayList<String> llistaHoraris = new ArrayList<>(); //
 
-    ObservableList<Atraccio> llistaAtraccions = gestioDades.llistaAtraccio(); //llistem totes les atraccions quan iniciem
-    ObservableList<Restaurant> llistaRestaurant = gestioDades.llistaRestaurants();//llistem tots els restaurants quan iniciem
-    ObservableList<EmpleadosClass> llistaEmpleatsSQL = gestioDades.llistaEmpleatsHoraris(); //llistem tots els empleats que son "Aprendiz" y "Trabajador"
+    ObservableList<Atraccio> llistaAtraccions = gestioDades.llistaAtraccio(); // llistem totes les atraccions quan
+                                                                              // iniciem
+    ObservableList<Restaurant> llistaRestaurant = gestioDades.llistaRestaurants();// llistem tots els restaurants quan
+                                                                                  // iniciem
+    ObservableList<EmpleadosClass> llistaEmpleatsSQL = gestioDades.llistaEmpleatsHoraris(); // llistem tots els empleats
+                                                                                            // que son "Aprendiz" y
+                                                                                            // "Trabajador"
 
-    ObservableList<String> dadesHorarisSenseAssignar = FXCollections.observableArrayList(); // Llista on guardarem les dades del horaris del metode ToSring
+    ObservableList<String> dadesHorarisSenseAssignar = FXCollections.observableArrayList(); // Llista on guardarem les
+                                                                                            // dades del horaris del
+                                                                                            // metode ToSring
     private Timestamp fechaHoraSQL;
     private LocalDate diaCalendario;
     int idZona;
@@ -62,52 +70,58 @@ public class Asignar {
     public void buscar() {
 
         listViewHorarios.setDisable(false);
+        listViewEmpleados.setDisable(false);
 
-        //para hacer seleccion multiple de empleados y horarios.
+        // para hacer seleccion multiple de empleados y horarios.
         listViewEmpleados.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         listViewHorarios.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
-        //comprobar si hay alguna zona seleccionada 
+        // comprobar si hay alguna zona seleccionada
         if (desplegableZona.getSelectionModel().getSelectedIndex() >= 0 && calendario.getValue() != null) {
 
             inicializarvistas();
 
-            //miramos el indice de la zona seleccionada
+            // miramos el indice de la zona seleccionada
             indice = desplegableZona.getSelectionModel().getSelectedIndex();
 
-            //Introducimos la lista de empleados en el listView
+            // Introducimos la lista de empleados en el listView
             listViewEmpleados.getItems().addAll(llistaEmpleatsSQL);
 
-            //Devolvemos el valor del calendario con fecha
+            // Devolvemos el valor del calendario con fecha
             diaCalendario = calendario.getValue();
 
-            // Convertir el objeto LocalDate a un objeto LocalDateTime de Java, agregando una hora fija (00:00:00)
+            // Convertir el objeto LocalDate a un objeto LocalDateTime de Java, agregando
+            // una hora fija (00:00:00)
             LocalDateTime fechaHora = diaCalendario.atStartOfDay();
 
-            // Convertir el objeto LocalDateTime de Java a un objeto Timestamp de Java que se pueda utilizar en la consulta MySQL
+            // Convertir el objeto LocalDateTime de Java a un objeto Timestamp de Java que
+            // se pueda utilizar en la consulta MySQL
             fechaHoraSQL = Timestamp.valueOf(fechaHora);
 
-            //cargar la lista de horarios en la ListView
+            // cargar la lista de horarios en la ListView
             cargarListasView();
 
         }
 
     }
 
-    //metodo para asignar con el button asignar
+    // metodo para asignar con el button asignar
     @FXML
     public void assignar() throws SQLException, IOException {
 
         String missatge = "";
 
-        //revisamos que hay algun elemento seleccionado de la listview horarios y de la listView empleados. 
-        if (listViewHorarios.getSelectionModel().getSelectedIndex() != -1 && listViewEmpleados.getSelectionModel().getSelectedIndex() != -1) {
+        // revisamos que hay algun elemento seleccionado de la listview horarios y de la
+        // listView empleados.
+        if (listViewHorarios.getSelectionModel().getSelectedIndex() != -1
+                && listViewEmpleados.getSelectionModel().getSelectedIndex() != -1) {
 
-            //Añadimos los horarios y los empleados seleccionados en una lista. 
+            // Añadimos los horarios y los empleados seleccionados en una lista.
             ObservableList<Horari> horaris = listViewHorarios.getSelectionModel().getSelectedItems();
             ObservableList<EmpleadosClass> empleados = listViewEmpleados.getSelectionModel().getSelectedItems();
 
-            //reccorremos los horarios y los empleados, para asignar cada horario a cada persona seleccionada. 
+            // reccorremos los horarios y los empleados, para asignar cada horario a cada
+            // persona seleccionada.
             for (int i = 0; i < horaris.size(); i++) {
                 for (int j = 0; j < empleados.size(); j++) {
                     missatge = gestioDades.assignarHoraris(horaris.get(i), empleados.get(j));
@@ -127,28 +141,31 @@ public class Asignar {
 
     }
 
-    //metodo borrar del button borrar, que borra un horario seleccionado del listView. 
+    // metodo borrar del button borrar, que borra un horario seleccionado del
+    // listView.
     @FXML
     public void esborrar() throws SQLException, IOException {
 
-        //revisamos si hay alguna fila seleccionada
+        // revisamos si hay alguna fila seleccionada
         if (listViewHorarios.getSelectionModel().getSelectedIndex() != -1) {
 
-            //enviamos la alerta de confirmacion y vemos la opcion escogida por el usuario= 1.Borrar, 0.Cancelar
+            // enviamos la alerta de confirmacion y vemos la opcion escogida por el usuario=
+            // 1.Borrar, 0.Cancelar
             int confirmacion = Confirmacion();
 
-            //si el usuario decide borrar, 
+            // si el usuario decide borrar,
             if (confirmacion == 1) {
 
-                //obtenemos el horario seleccionado
+                // obtenemos el horario seleccionado
                 ObservableList<Horari> horaris = listViewHorarios.getSelectionModel().getSelectedItems();
 
-                //enviamos la lista de horrarios al objeto GestioDades, y lo borramos con el metodo esborrarHorari. 
+                // enviamos la lista de horrarios al objeto GestioDades, y lo borramos con el
+                // metodo esborrarHorari.
                 for (int i = 0; i < horaris.size(); i++) {
                     gestioDades.esborraHorari(horaris.get(i));
                 }
 
-                //Limpiamos el listViewHorarios y lo actualizamos con el horario borrado.
+                // Limpiamos el listViewHorarios y lo actualizamos con el horario borrado.
                 listViewHorarios.getItems().clear();
                 cargarListasView();
 
@@ -161,7 +178,11 @@ public class Asignar {
 
     }
 
-    //alerta general de errores. 
+    private void initialize() {
+        calendario.setPromptText("dd/MM/yyyy");
+    }
+
+    // alerta general de errores.
     private void alerta(String text) {
         Alert alerta = new Alert(Alert.AlertType.INFORMATION);
         alerta.setHeaderText(null);
@@ -170,7 +191,7 @@ public class Asignar {
         alerta.show();
     }
 
-    //alerta de confirmación, para eliminar el horario. 
+    // alerta de confirmación, para eliminar el horario.
     private int Confirmacion() {
         int valor;
         Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
@@ -189,7 +210,9 @@ public class Asignar {
         return valor;
     }
 
-    // metodo que revisa si esta seleccionado el radiobutton atraccion o restaurante, y habilita los botones y carga la lista de la zona en el ComboBox. 
+    // metodo que revisa si esta seleccionado el radiobutton atraccion o
+    // restaurante, y habilita los botones y carga la lista de la zona en el
+    // ComboBox.
     public void getOpcion(javafx.event.ActionEvent event) {
 
         if (opcionAtraccion.isSelected()) {
@@ -203,21 +226,21 @@ public class Asignar {
 
     }
 
-    //metodo para habilitat botones del desplegable de zonas y calendario.  
+    // metodo para habilitat botones del desplegable de zonas y calendario.
     private void habilitarBotones() {
         desplegableZona.setDisable(false);
         calendario.setDisable(false);
 
     }
 
-    //método para deshabilitar los botones del desplegable y calendario. 
+    // método para deshabilitar los botones del desplegable y calendario.
     private void deshabilitarBotones() {
         desplegableZona.setDisable(true);
         calendario.setDisable(true);
 
     }
 
-    //reiniciamos la lista de horarios y limpiamos los dos ListView
+    // reiniciamos la lista de horarios y limpiamos los dos ListView
     private void inicializarvistas() {
 
         llistaHoraris.clear();
@@ -254,22 +277,25 @@ public class Asignar {
 
     }
 
-    //metodo que devuelve los horarios de la zona seleccionada con los hora seleccionada. 
+    // metodo que devuelve los horarios de la zona seleccionada con los hora
+    // seleccionada.
     private void cargarListasView() {
 
-        //revisa si las atracciones estan seleccionadas
+        // revisa si las atracciones estan seleccionadas
         if (opcionAtraccion.isSelected()) {
 
-            //devuelve el id de la atraccion sobre la lisya de atracciones. 
+            // devuelve el id de la atraccion sobre la lisya de atracciones.
             idZona = llistaAtraccions.get(indice).getId();
 
-            // devuelve una lista con los horaris de la atraccion , a través de la clase gestioDades. 
+            // devuelve una lista con los horaris de la atraccion , a través de la clase
+            // gestioDades.
             horariAtraccio = gestioDades.llistaHorarisAtraccions(idZona, fechaHoraSQL);
 
-            // cargar los horarios en la listView Horarios, que lo visualiza con el metodo toString de la classe Horarios. 
+            // cargar los horarios en la listView Horarios, que lo visualiza con el metodo
+            // toString de la classe Horarios.
             listViewHorarios.getItems().addAll(horariAtraccio);
 
-            // para la opcio  restaurante
+            // para la opcio restaurante
         } else if (opcionRestaurante.isSelected()) {
 
             idZona = llistaRestaurant.get(indice).getId();
@@ -280,10 +306,14 @@ public class Asignar {
 
         }
 
-        // si la lista está vacía, escribimos un mensaje de horarios no planificados y deshabilitamos para que el usuario no pueda seleccionar filas. 
+        // si la lista está vacía, escribimos un mensaje de horarios no planificados y
+        // deshabilitamos para que el usuario no pueda seleccionar filas.
         if (listViewHorarios.getItems().isEmpty()) {
+            listViewEmpleados.setDisable(true);
             listViewHorarios.setDisable(true);
             listViewHorarios.getItems().addAll("Sin horarios planificados");
+            listViewEmpleados.getItems().clear();
+            listViewEmpleados.getItems().addAll("Sin empleados para assignar");
         }
     }
 

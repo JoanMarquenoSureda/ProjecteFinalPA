@@ -23,12 +23,10 @@ import m03.projectefinalpa.model.GestioDadesVisualitzar;
 import m03.projectefinalpa.model.classes.Horari;
 import m03.projectefinalpa.model.classes.Restaurant;
 
-
 public class Visualizar {
 
     GestioDadesVisualitzar gestioDadesVisualitzar = new GestioDadesVisualitzar();
     GestioDadesCrearYAsignar gestioDades = new GestioDadesCrearYAsignar();
-
 
     @FXML
     RadioButton opcionAtraccion;
@@ -48,42 +46,49 @@ public class Visualizar {
     int idZona;
     ObservableList<Horari> horariRestaurants = FXCollections.observableArrayList();
     ObservableList<Horari> horariAtraccions = FXCollections.observableArrayList();
-    ObservableList<Atraccio> llistaAtraccions = gestioDades.llistaAtraccio(); //llistem totes les atraccions quan iniciem
-    ObservableList<Restaurant> llistaRestaurant = gestioDades.llistaRestaurants();//llistem tots els restaurants quan iniciem
+    ObservableList<Atraccio> llistaAtraccions = gestioDades.llistaAtraccio(); // llistem totes les atraccions quan
+                                                                              // iniciem
+    ObservableList<Restaurant> llistaRestaurant = gestioDades.llistaRestaurants();// llistem tots els restaurants quan
+                                                                                  // iniciem
 
     public void buscar() {
 
-        //comprobar si hay alguna zona seleccionada 
-        if (desplegableZona.getSelectionModel().getSelectedIndex() >= 0 && calendarioDesde.getValue() != null && calendarioHasta.getValue() != null) {
+        // comprobar si hay alguna zona seleccionada
+        if (desplegableZona.getSelectionModel().getSelectedIndex() >= 0 && calendarioDesde.getValue() != null
+                && calendarioHasta.getValue() != null) {
 
-            //reiniciamos la listView de horarios.
+            // reiniciamos la listView de horarios.
             listViewHorarios.getItems().clear();
 
-            //miramos el indice de la zona seleccionada
+            // miramos el indice de la zona seleccionada
             indice = desplegableZona.getSelectionModel().getSelectedIndex();
 
-            //Devolvemos el valor del calendario con fecha LocalDate
+            // Devolvemos el valor del calendario con fecha LocalDate
             LocalDate diaDesde = calendarioDesde.getValue();
             LocalDate diaHasta = calendarioHasta.getValue();
 
-            //comparamos si las fechas estan bien introducidas por comparacion. 
+            // comparamos si las fechas estan bien introducidas por comparacion.
             if (diaDesde.isBefore(diaHasta) || diaDesde.isEqual(diaHasta)) {
-                
-                // Convertir el objeto LocalDate de Java a un objeto LocaldateTime para añadir horas y minutos. 
-                //Añadimos a la fecha la hora del inicio del dia a los dos y al hasta, devolvemos un dia mas. 
+
+                // Convertir el objeto LocalDate de Java a un objeto LocaldateTime para añadir
+                // horas y minutos.
+                // Añadimos a la fecha la hora del inicio del dia a los dos y al hasta,
+                // devolvemos un dia mas.
                 LocalDateTime diadesdelocal = diaDesde.atStartOfDay();
                 LocalDateTime diahastalocal = diaHasta.atStartOfDay().plusDays(1);
-                
 
                 // si seleccionamos atacciones:
                 if (opcionAtraccion.isSelected()) {
 
-                    //devolvemos el id de la atraccion
+                    // devolvemos el id de la atraccion
                     idZona = llistaAtraccions.get(indice).getId();
-                    //pasamos a gestion de dades el id de la zona, la fecha de inicio y final y devolvemos la lista de los horarios juntos los trabajadores asignados. 
-                    horariAtraccions = gestioDadesVisualitzar.llistaHorarisAtraccions(idZona, diadesdelocal, diahastalocal);
+                    // pasamos a gestion de dades el id de la zona, la fecha de inicio y final y
+                    // devolvemos la lista de los horarios juntos los trabajadores asignados.
+                    horariAtraccions = gestioDadesVisualitzar.llistaHorarisAtraccions(idZona, diadesdelocal,
+                            diahastalocal);
 
-                    // si la lista no es vacía, lo añadimos a la listView. Si es vacía añadimos un mensaje de horarios sin asignar. 
+                    // si la lista no es vacía, lo añadimos a la listView. Si es vacía añadimos un
+                    // mensaje de horarios sin asignar.
                     if (!horariAtraccions.isEmpty()) {
                         listViewHorarios.getItems().addAll(horariAtraccions);
                     } else {
@@ -93,7 +98,8 @@ public class Visualizar {
                 } else if (opcionRestaurante.isSelected()) {
 
                     idZona = llistaRestaurant.get(indice).getId();
-                    horariRestaurants = gestioDadesVisualitzar.llistaHorarisRestaurants(idZona, diadesdelocal, diahastalocal);
+                    horariRestaurants = gestioDadesVisualitzar.llistaHorarisRestaurants(idZona, diadesdelocal,
+                            diahastalocal);
 
                     if (!horariRestaurants.isEmpty()) {
                         listViewHorarios.getItems().addAll(horariRestaurants);
@@ -110,14 +116,13 @@ public class Visualizar {
 
     }
 
-    public void initialize(URL url, ResourceBundle rb) {
-
-       
+    private void initialize() {
+        calendarioDesde.setPromptText("dd/MM/yyyy");
+        calendarioHasta.setPromptText("dd/MM/yyyy");
     }
-    
-    
-    //mismos métodos que en las otras clases
-   
+
+    // mismos métodos que en las otras clases
+
     private void alerta(String text) {
         Alert alerta = new Alert(Alert.AlertType.INFORMATION);
         alerta.setHeaderText(null);
@@ -164,7 +169,7 @@ public class Visualizar {
         calendarioHasta.setDisable(true);
 
     }
-    
+
     private void cargarRestaurantes() {
 
         ObservableList<String> nomRestaurant = FXCollections.observableArrayList();
@@ -186,8 +191,10 @@ public class Visualizar {
     private void cambiarPantallaAsignar() throws IOException {
         App.setRoot("Asignar");
     }
-     
-      @FXML private void cambiarPantallaEmpleados() throws IOException {
-      App.setRoot("Empleados"); }
+
+    @FXML
+    private void cambiarPantallaEmpleados() throws IOException {
+        App.setRoot("Empleados");
+    }
 
 }

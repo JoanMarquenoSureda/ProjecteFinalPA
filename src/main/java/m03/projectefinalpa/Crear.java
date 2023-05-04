@@ -1,6 +1,5 @@
 package m03.projectefinalpa;
 
-
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
@@ -25,7 +24,6 @@ import m03.projectefinalpa.model.GestioDadesCrearYAsignar;
 import m03.projectefinalpa.model.classes.Horari;
 import m03.projectefinalpa.model.classes.Restaurant;
 
-
 public class Crear {
 
     @FXML
@@ -38,6 +36,7 @@ public class Crear {
     ComboBox<String> desplegableZona = new ComboBox<>();
     @FXML
     DatePicker calendario;
+
     @FXML
     TextField horasE;
     @FXML
@@ -47,12 +46,12 @@ public class Crear {
     @FXML
     TextField minutosS;
 
-     GestioDadesCrearYAsignar gestioDades = new GestioDadesCrearYAsignar();
-    //lista de los datos de la zona para los desplegables.  
+    GestioDadesCrearYAsignar gestioDades = new GestioDadesCrearYAsignar();
+    // lista de los datos de la zona para los desplegables.
     ObservableList<Atraccio> llistaAtraccions = gestioDades.llistaAtraccio();
     ObservableList<Restaurant> llistaRestaurant = gestioDades.llistaRestaurants();
 
-    //variables para guardar los datos de los usuarios introducidos por teclado. 
+    // variables para guardar los datos de los usuarios introducidos por teclado.
     private Horari horari;
     private int horasTextoE;
     private int minutosTextoE;
@@ -68,16 +67,15 @@ public class Crear {
     @FXML
     public void guardar() throws MalformedURLException {
 
-       
-       
         boolean errores = false;
         String mensaje = "";
 
         try {
             LocalDate data = calendario.getValue();
 
-            //comprueba los campos si estan llenos
-            if (data == null || horasE.getText().isEmpty() || minutosE.getText().isEmpty() || horasS.getText().isEmpty() || minutosS.getText().isEmpty()) {
+            // comprueba los campos si estan llenos
+            if (data == null || horasE.getText().isEmpty() || minutosE.getText().isEmpty() || horasS.getText().isEmpty()
+                    || minutosS.getText().isEmpty()) {
                 errores = true;
                 mensaje = "Campos vacíos";
 
@@ -88,8 +86,9 @@ public class Crear {
                 horasTextoS = Integer.parseInt(horasS.getText());
                 minutosTextoS = Integer.parseInt(minutosS.getText());
 
-                //comprueba que los valores en el campo de horas y minutos sea correcto
-                if (horasTextoE < 0 || horasTextoE > 23 || horasTextoS < 0 || horasTextoS > 23 || minutosTextoE < 0 || minutosTextoE > 59 || minutosTextoS < 0 || minutosTextoS > 59) {
+                // comprueba que los valores en el campo de horas y minutos sea correcto
+                if (horasTextoE < 0 || horasTextoE > 23 || horasTextoS < 0 || horasTextoS > 23 || minutosTextoE < 0
+                        || minutosTextoE > 59 || minutosTextoS < 0 || minutosTextoS > 59) {
 
                     errores = true;
                     mensaje = "Horas (00-23) y Minutos(00-60)";
@@ -103,7 +102,7 @@ public class Crear {
                     fecha_inici = LocalDateTime.of(año, mes, dia, horasTextoE, minutosTextoE);
                     fecha_fin = LocalDateTime.of(año, mes, dia, horasTextoS, minutosTextoS);
 
-                    //comprueba que el horario de entrada sea anterior al de salida
+                    // comprueba que el horario de entrada sea anterior al de salida
                     if (fecha_inici.isAfter(fecha_fin)) {
 
                         errores = true;
@@ -112,15 +111,16 @@ public class Crear {
                     } else {
                         boolean ok = false;
 
-                        // si la attraccion es seleccionada, guardamos la atraccion, conseguimos su id y lo creamos mediante el metodo afegeixHorariAtraccio, de la clase
-                        //gestio de dades
+                        // si la attraccion es seleccionada, guardamos la atraccion, conseguimos su id y
+                        // lo creamos mediante el metodo afegeixHorariAtraccio, de la clase
+                        // gestio de dades
                         if (opcionAtraccion.isSelected()) {
                             Atraccio atraccion = llistaAtraccions.get(indiceLista);
                             idZona = atraccion.getId();
                             horari = new Horari(fecha_inici, fecha_fin, idZona, 0);
-                            ok = gestioDades.afegeixHorariAtraccio(horari); //nos devuelve si se ha guardado o no,
+                            ok = gestioDades.afegeixHorariAtraccio(horari); // nos devuelve si se ha guardado o no,
 
-                            //mismo metodo pero paralos restaurantes. 
+                            // mismo metodo pero paralos restaurantes.
                         } else if (opcionRestaurante.isSelected()) {
                             Restaurant restaurant = llistaRestaurant.get(indiceLista);
                             idZona = restaurant.getId();
@@ -128,12 +128,14 @@ public class Crear {
                             ok = gestioDades.afegeixHorariRestaurant(horari);
                         }
 
-                        // si se ha añadido, mensaje de alerta y borramos las horas, para seguir añadiendo. 
+                        // si se ha añadido, mensaje de alerta y borramos las horas, para seguir
+                        // añadiendo.
                         if (ok) {
                             alerta("Afegit correctament");
                             esborrarHores();
 
-                            //si no se ha añadido, ponemos los mensajes de error como true, y guardos un mensaje en la variable mensaje. 
+                            // si no se ha añadido, ponemos los mensajes de error como true, y guardos un
+                            // mensaje en la variable mensaje.
                         } else {
                             errores = true;
                             mensaje = "No afegit correctament";
@@ -141,7 +143,8 @@ public class Crear {
                     }
                 }
             }
-            //si encuentra la excepcion, enviara un mensaje de que no se ha podido convertir el texto a valores. 
+            // si encuentra la excepcion, enviara un mensaje de que no se ha podido
+            // convertir el texto a valores.
         } catch (IOException | NumberFormatException | SQLException e) {
 
             errores = false;
@@ -154,14 +157,14 @@ public class Crear {
         }
     }
 
-// inicializamos la apliacion como un reset. 
+    // inicializamos la apliacion como un reset.
     @FXML
     public void esborrar() {
         opcionAtraccion.setSelected(false);
         opcionRestaurante.setSelected(false);
         desplegableZona.getItems().clear();
         calendario.setValue(null);
-         labelZona.setVisible(false);
+        labelZona.setVisible(false);
 
         deshabilitarBotones();
 
@@ -175,7 +178,9 @@ public class Crear {
 
     }
 
-   
+    private void initialize() {
+        calendario.setPromptText("dd/MM/yyyy");
+    }
 
     private void alerta(String text) {
         Alert alerta = new Alert(Alert.AlertType.INFORMATION);
@@ -185,11 +190,13 @@ public class Crear {
         alerta.show();
     }
 
-    // metodo que revisa si esta seleccionado el radiobutton atraccion o restaurante, y habilita los botones y carga la lista de la zona en el ComboBox. 
+    // metodo que revisa si esta seleccionado el radiobutton atraccion o
+    // restaurante, y habilita los botones y carga la lista de la zona en el
+    // ComboBox.
     public void getOpcion(javafx.event.ActionEvent event) {
 
         if (opcionAtraccion.isSelected()) {
-            
+
             habilitarBotones();
             cargarAtracciones();
             labelZona.setVisible(true);
@@ -198,15 +205,13 @@ public class Crear {
         if (opcionRestaurante.isSelected()) {
             habilitarBotones();
             cargarRestaurantes();
-             labelZona.setVisible(true);
+            labelZona.setVisible(true);
             labelZona.setText("Restaurante: ");
         }
 
     }
-    
-    
 
-    //metodos para cargar las tracciones en el combobox zona
+    // metodos para cargar las tracciones en el combobox zona
     private void cargarAtracciones() {
 
         ObservableList<String> nombresAtraccions = FXCollections.observableArrayList();
@@ -219,7 +224,7 @@ public class Crear {
 
     }
 
-    //metodos para cargar las restaurantes en el combobox zona
+    // metodos para cargar las restaurantes en el combobox zona
     private void cargarRestaurantes() {
 
         ObservableList<String> nomRestaurant = FXCollections.observableArrayList();
@@ -232,7 +237,8 @@ public class Crear {
 
     }
 
-    //metodos para habilitat y deshabilitat botones para que el usuario no interactúe. 
+    // metodos para habilitat y deshabilitat botones para que el usuario no
+    // interactúe.
     private void habilitarBotones() {
         desplegableZona.setDisable(false);
         calendario.setDisable(false);
@@ -260,19 +266,20 @@ public class Crear {
     private void cambiarPantallaVisualizar() throws IOException {
         App.setRoot("Visualizar");
     }
-     @FXML private void cambiarPantallaEmpleados() throws IOException {
-      App.setRoot("Empleados"); }
-    
-     @FXML
-    private void mandarAyuda()  {
-        File file = new File("src\\main\\resources\\m03\\projectefinalpa\\web\\ayuda.html");
+
+    @FXML
+    private void cambiarPantallaEmpleados() throws IOException {
+        App.setRoot("Empleados");
+    }
+
+    @FXML
+    private void mandarAyuda() {
+        File file = new File("src\\main\\resources\\m03\\projectefinalpa\\web\\inici.html");
         try {
             Desktop.getDesktop().browse(file.toURI());
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    
-   
-    
+
 }

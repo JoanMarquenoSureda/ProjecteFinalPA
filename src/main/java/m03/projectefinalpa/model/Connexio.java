@@ -14,7 +14,7 @@ import java.sql.SQLException;
 
 public class Connexio {
 
-    private final String URL = "jdbc:mysql://127.0.0.1:3306/bd_portaventura";//nom bd
+    private final String URL = "jdbc:mysql://127.0.0.1:3307/bd_portaventura";// nom bd
     private final String DRIVER = "com.mysql.cj.jdbc.Driver";
     private String user = "Administrador";
     private String password = "Administrador";
@@ -27,17 +27,16 @@ public class Connexio {
     public Connexio() {
     }
 
-   
     public Connection connecta() {
-        
+
         Connection connexio = null;
         try {
-            //Carreguem el driver          
-            Class.forName(DRIVER); 
-            connexio = DriverManager.getConnection(URL,user, password); 
+            // Carreguem el driver
+            Class.forName(DRIVER);
+            connexio = DriverManager.getConnection(URL, user, password);
         } catch (SQLException | ClassNotFoundException throwables) {
             System.out.println(throwables.getLocalizedMessage());
-        }    
+        }
         return connexio;
     }
 }

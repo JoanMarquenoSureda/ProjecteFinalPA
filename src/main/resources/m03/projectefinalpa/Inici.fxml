@@ -61,7 +61,7 @@
             </Label>
             <Button id="boton1" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#comprobar" prefHeight="30.0" prefWidth="195.0" text="Iniciar Sesión" GridPane.rowIndex="4">
                <GridPane.margin>
-                  <Insets bottom="70.0" left="250.0" />
+                  <Insets bottom="70.0" left="260.0" />
                </GridPane.margin>
             </Button>
             <PasswordField id="iniciosesion" fx:id="password" GridPane.rowIndex="3">
@@ -69,6 +69,11 @@
                   <Insets left="300.0" right="200.0" />
                </GridPane.margin>
             </PasswordField>
+            <Button fx:id="ayuda" alignment="CENTER" maxHeight="48.0" maxWidth="35.0" mnemonicParsing="false" onAction="#mandarAyuda" prefHeight="40.0" prefWidth="238.0" text="Button">
+               <GridPane.margin>
+                  <Insets bottom="20.0" left="600.0" />
+               </GridPane.margin>
+            </Button>
          </children>
       </GridPane>
    </children>
