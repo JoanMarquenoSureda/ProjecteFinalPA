@@ -14,7 +14,7 @@ import java.sql.SQLException;
 
 public class Connexio {
 
-    private final String URL = "jdbc:mysql://127.0.0.1:3307/bd_portaventura";// nom bd
+    private final String URL = "jdbc:mysql://127.0.0.1:3306/bd_portaventura";// nom bd
     private final String DRIVER = "com.mysql.cj.jdbc.Driver";
     private String user = "Administrador";
     private String password = "Administrador";

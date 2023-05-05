@@ -130,7 +130,12 @@ public class Asignar {
             }
 
             if (missatge.equals("")) {
-                alerta("Horari assignat correctament");
+                alerta("Horario asignado correctamente");
+
+                // limpiamos las celdas seleccionadas, para que así no confunda al usuario una
+                // vez asignado.
+                listViewEmpleados.getSelectionModel().clearSelection();
+                listViewHorarios.getSelectionModel().clearSelection();
             } else {
                 alerta(missatge);
             }
@@ -186,7 +191,7 @@ public class Asignar {
     private void alerta(String text) {
         Alert alerta = new Alert(Alert.AlertType.INFORMATION);
         alerta.setHeaderText(null);
-        alerta.setTitle("Informació");
+        alerta.setTitle("Información");
         alerta.setContentText(text);
         alerta.show();
     }

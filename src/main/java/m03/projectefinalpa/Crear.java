@@ -4,12 +4,10 @@ import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
-import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -131,14 +129,14 @@ public class Crear {
                         // si se ha añadido, mensaje de alerta y borramos las horas, para seguir
                         // añadiendo.
                         if (ok) {
-                            alerta("Afegit correctament");
+                            alerta("Añadido correctamente");
                             esborrarHores();
 
                             // si no se ha añadido, ponemos los mensajes de error como true, y guardos un
                             // mensaje en la variable mensaje.
                         } else {
                             errores = true;
-                            mensaje = "No afegit correctament";
+                            mensaje = "No añadido correctamente";
                         }
                     }
                 }
@@ -148,7 +146,7 @@ public class Crear {
         } catch (IOException | NumberFormatException | SQLException e) {
 
             errores = false;
-            alerta("Valores numericos, no texto");
+            alerta("Sólo valores numéricos en HH:mm");
 
         } // si hay otros errores, se envia el mensaje específico de cada error.
         if (errores) {
@@ -185,7 +183,7 @@ public class Crear {
     private void alerta(String text) {
         Alert alerta = new Alert(Alert.AlertType.INFORMATION);
         alerta.setHeaderText(null);
-        alerta.setTitle("Informació");
+        alerta.setTitle("Información");
         alerta.setContentText(text);
         alerta.show();
     }

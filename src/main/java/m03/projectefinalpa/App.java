@@ -19,7 +19,7 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
-        Image favicon = new Image(getClass().getResourceAsStream("fav.png"));
+        Image favicon = new Image(getClass().getResourceAsStream("imagenes/fav.png"));
 
         scene = new Scene(loadFXML("Inici"), 700, 513);
         stage.setScene(scene);

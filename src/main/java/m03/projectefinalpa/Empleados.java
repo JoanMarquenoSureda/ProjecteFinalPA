@@ -4,6 +4,9 @@ import javafx.scene.image.Image;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
+
+import javax.print.DocFlavor.URL;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -32,10 +35,10 @@ public class Empleados {
     @FXML
     ImageView foto;
 
-    private String nombreE; //guardar el nom de la persona cercada. 
+    private String nombreE; // guardar el nom de la persona cercada.
     GestioDadesEmpleados gestioDades = new GestioDadesEmpleados();
-    ObservableList<Horari> horaris = FXCollections.observableArrayList(); //guardem els horaris de la consulta
-    EmpleadosClass empleado; //guardem les dades de l'empleat de la consulta
+    ObservableList<Horari> horaris = FXCollections.observableArrayList(); // guardem els horaris de la consulta
+    EmpleadosClass empleado; // guardem les dades de l'empleat de la consulta
 
     @FXML
     public void buscar() throws SQLException {
@@ -43,17 +46,18 @@ public class Empleados {
         horarios.getItems().clear();
         // comprobem que el camp no estigui buit
         if (!nombreEmpleado.equals("")) {
-            //guardem el text del nom
+            // guardem el text del nom
             nombreE = nombreEmpleado.getText();
 
-            //feim les dues consultes amb el nom cercat i retornem un empleat i una llista d'horaris. 
+            // feim les dues consultes amb el nom cercat i retornem un empleat i una llista
+            // d'horaris.
             empleado = gestioDades.dadesEmpleat(nombreE);
             horaris = gestioDades.horariPerEmpleat(nombreE);
 
-            //si l'empleat retorna null és que no hi ha empleats amb el nom cercat 
+            // si l'empleat retorna null és que no hi ha empleats amb el nom cercat
             if (empleado != null) {
 
-                //omplim els camps amb les dades de l'empleat
+                // omplim els camps amb les dades de l'empleat
                 rellenarCampos(empleado);
 
                 // si té foto assignada, la convertim en una Image i la posem dins el imageView
@@ -62,13 +66,18 @@ public class Empleados {
                     Image image = new Image(is);
                     foto.setImage(image);
 
-                    // si no té foto, posem una imatge genèrica per defecte. 
+                    // si no té foto, posem una imatge genèrica per defecte.
                 } else {
-                    Image image1 = new Image(getClass().getResourceAsStream("imagenes/fotoPersona.png"));
+                    Image image1 = new Image(
+                            getClass()
+                                    .getResourceAsStream(
+                                            "imagenes/fotoPersona.png"));
                     foto.setImage(image1);
+
                 }
 
-                // si hi ha horaris associats, els posem dins el listView dels horarios. Si no, posem missatge genèric
+                // si hi ha horaris associats, els posem dins el listView dels horarios. Si no,
+                // posem missatge genèric
                 if (horaris != null) {
                     horarios.getItems().addAll(horaris);
                 }
@@ -92,7 +101,7 @@ public class Empleados {
         alerta.show();
     }
 
-    //mètode per rellenar els camps amb les dades de l'empleat. 
+    // mètode per rellenar els camps amb les dades de l'empleat.
     private void rellenarCampos(EmpleadosClass empleado) {
 
         nombre.setText(empleado.getNombre());

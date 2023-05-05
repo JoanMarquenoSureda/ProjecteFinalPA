@@ -92,7 +92,7 @@ public class Visualizar {
                     if (!horariAtraccions.isEmpty()) {
                         listViewHorarios.getItems().addAll(horariAtraccions);
                     } else {
-                        listViewHorarios.getItems().add("Sense Horaris assignats");
+                        listViewHorarios.getItems().add("Sin horarios asignados");
                     }
 
                 } else if (opcionRestaurante.isSelected()) {
@@ -104,12 +104,12 @@ public class Visualizar {
                     if (!horariRestaurants.isEmpty()) {
                         listViewHorarios.getItems().addAll(horariRestaurants);
                     } else {
-                        listViewHorarios.getItems().add("Sense Horaris assignats");
+                        listViewHorarios.getItems().add("Sin horarios asignados");
                     }
                 }
 
             } else {
-                alerta("Dates erròneas");
+                alerta("Datos erróneos");
             }
 
         }
