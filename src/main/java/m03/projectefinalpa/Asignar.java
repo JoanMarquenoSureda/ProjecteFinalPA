@@ -289,7 +289,7 @@ public class Asignar {
         // revisa si las atracciones estan seleccionadas
         if (opcionAtraccion.isSelected()) {
 
-            // devuelve el id de la atraccion sobre la lisya de atracciones.
+            // devuelve el id de la atraccion sobre la lista de atracciones.
             idZona = llistaAtraccions.get(indice).getId();
 
             // devuelve una lista con los horaris de la atraccion , a través de la clase

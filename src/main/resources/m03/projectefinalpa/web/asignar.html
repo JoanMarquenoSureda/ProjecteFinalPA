@@ -2,25 +2,25 @@
 <html lang="en">
     <head>
         <link rel="stylesheet" href="estilos.css">
-        <meta charset="UTF-8">
-        <title>Ayuda</title>
+        <link rel="icon" type="/image/png" href="../imagenes/fav.png" />
+        <title>Asignar</title>
     </head>
     <body>
         <div class="contenedor">
             <div class="menu" id ="menu">
                 <img src="../imagenes/logo.png" alt="TEAM TIME" width="300" height="42">
                 <ul>
-                    <li><a href="inici.html">CREAR</a></li>
+                    <li><a href="inici.html">INICIO</a></li>
                     <li><a href="crear.html">CREAR</a></li>
                     <li><a href="asignar.html">ASIGNAR</a></li>
                     <li><a href="visualizar.html">VISUALIZAR</a></li>
                     <li><a href="empleados.html">EMPLEADOS</a> </li>
-                    <li><a href="Conclusio.html">CREAR</a></li>
+                    <li><a href="Conclusio.html">CONCLUSION</a></li>
                 </ul>
             </div>
 
             <div id="texto">
-                <h3>¡Asigna a un empleado el horario!</h3>
+                <h3>¡Asigna los horarios a los empleados!</h3>
                 <h4>Pasos a seguir para asignar un horario a un empleado</h4>
                 <p>En esta pantalla, puedes asignar un horario o varios a uno o varios trabajadores a la vez. Sólo tendrás que escoger los horarios de una lista mediante un click de ratón y seleccionar las personas que realizarán ese horario con otro click de ratón. </p>
                 <h4>1. Seguir los 3 primeros pasos de la pantalla Crear</h4>
@@ -29,25 +29,43 @@
                 </p>
                 <br>
                 <h4>2. Seleccionar el horario</h4>
-                <img src="imagenesWeb/listaHorario.jpg" alt="seleccionArea"/>
-                <p>Si en esa fecha hay horarios creados previamente, saldrá un listado con todos esos horarios los cuales podrás escoger de forma única o también múltiple. Para hacerlo
-                    de forma múltiple, tendrás que apretar Ctrl+click. De esta forma los horarios seleccionados resaltarán en color azul Team Time, para que puedas visualizarlo
-                    de forma rápida y fácil. <br>Si por otra parte, no hay horarios asignados, aparecerá un mensaje diciendo "Sin horarios asignados".
-                </p>
+                <div>
+                    <img src="imagenesWeb/listaHorario.jpg" alt="seleccionArea" width="250" height="230"/>
+                    <img src="imagenesWeb/horarioSinAsignar.jpg" alt="seleccionArea" width="250" height="230"/>
+                  </div>
+                
+                  <p>Si en la fecha seleccionada hay horarios previamente creados, aparecerá una lista con todos ellos. 
+                    Puedes seleccionar uno o varios horarios haciendo clic en ellos, y para seleccionar varios horarios al mismo tiempo,
+                     puedes mantener presionada la tecla Ctrl mientras haces clic en ellos. Los horarios seleccionados se resaltarán en color azul "TEAM TIME" para que puedas visualizarlo mejor.
+                      Si no hay horarios creados para esa fecha, aparecerá un mensaje indicando que no hay horarios asignados.</p>
 
                 <h4>3. Seleccionar los empleado</h4>
-                <img src="imagenesWeb/listaEmpleados.jpg" alt="seleccionArea"/>
+                <div>
+                    <img src="imagenesWeb/listaEmpleados.jpg" alt="seleccionArea" width="250" height="230"/>
+                    <img src="imagenesWeb/empleadosSinAsignar.jpg" alt="seleccionArea" width="250" height="230"/>
+                  </div>
+              
                 <p>Si hay horarios creados en esa zona de trabajo, te apareceran en la lista de la derecha un listado de todos los trabajadores que son de categoría "Aprendices" o "Trabajadores",
-                    para que puedas seleccionarlos de forma única o múltiple, de la misma forma que los horarios. 
+                    para que puedas seleccionarlos de forma única o múltiple, de la misma forma que los horarios. En caso de que no haya horarios establecidos previamente, 
+                    saldrá un mensaje diciendo "Sin empleados para asignar".
                 </p>
 
                 <h4>4. Asignar</h4>
-                <img src="imagenesWeb/horas.jpg" alt="seleccionArea"/>
-                <p>texto</p>
+                <div>
+                    <img src="imagenesWeb/seleccionHorariosyEmpleados.png" alt="seleccionArea"/>
+                    <img src="imagenesWeb/botonAsignar.png" alt="seleccionArea"/>
+                  </div>
+               
+                  <p>Una vez que hayas seleccionado los horarios y los empleados, podrás asignarlos haciendo clic en el botón "Asignar". 
+                    Si la operación se ha realizado correctamente, aparecerá un mensaje indicándolo. 
+                    Si algún empleado ya está asignado a otro horario que entre en conflicto con el seleccionado, 
+                    se mostrará un mensaje de error para evitar errores de planificación.</p>
 
                 <h4>5. Borrar</h4>
-                <img src="imagenesWeb/guardar.jpg" alt="seleccionArea"/>
-                <p>texto</p>
+                <img src="imagenesWeb/botonBorrar.png" alt="seleccionArea"/>
+                <p>Con este boton podrás borrar un horario que ya no quieras asignar a nadie, o que ya no vayas a utilizar en tu planificación. Asegurate de primero seleccionar un horario antes de poder borrarlo. 
+                    Tendrás un aviso de pantalla antes de borrar, pos si quieres no borrarlo finalmente. 
+                </p>
                 <br>
                 <p>¡Ya puedes asignar los horarios a todos los trabajadores de tu plantilla y así hacer una buena planificación de tu zona!</p>
             </div>

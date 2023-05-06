@@ -2,40 +2,61 @@
 <html lang="en">
     <head>
         <link rel="stylesheet" href="estilos.css">
+        <link rel="icon" type="/image/png" href="../imagenes/fav.png" />
         <meta charset="UTF-8">
-        <title>Ayuda</title>
+        <title>Visualizar</title>
     </head>
     <body>
         <div class="contenedor">
             <div class="menu" id ="menu">
                 <img src="../imagenes/logo.png" alt="TEAM TIME" width="300" height="42">
                 <ul>
-                    <li><a href="inici.html">CREAR</a></li>
+                    <li><a href="inici.html">INICIO</a></li>
                     <li><a href="crear.html">CREAR</a></li>
                     <li><a href="asignar.html">ASIGNAR</a></li>
                     <li><a href="visualizar.html">VISUALIZAR</a></li>
                     <li><a href="empleados.html">EMPLEADOS</a> </li>
-                    <li><a href="Conclusio.html">CREAR</a></li>
+                    <li><a href="Conclusio.html">CONCLUSION</a></li>
                 </ul>
             </div>
 
             <div id="texto">
-                <h3>¡Bienvenido a TEAM TIME!</h3>
-                <h4>Primeros pasos para usar la aplicación</h4>
-                <p>Con esta aplicación podrás crear horarios, asignarlos a los empleados, visualizar los datos de los empleados y muchos más.</p>
-                <h4><img src="imagenesWeb/crear.png" alt="crear" width="100" height="75">Crear un horario para una zona del parque</h4>
-                <p>Texto</p>
+                <h3>¡Visualiza los horarios de tu zona!</h3>
+                <h4>Sigue estos pasos para poder visualizar los horarios y empleados</h4>
+                <p>En esta pantalla podrás ver todos los horarios de una zona específica durante un período que selecciones con los empleados que estén asignados.  
+                </p>
+
+                <h4>1. Seguir los 2 primeros pasos de la pantalla Crear</h4>
+                <img src="imagenesWeb/crear.png" alt="seleccionArea" width="100" height="75"/>
+                <p>En este paso repetimos los 2 primeros pasos del apartado crear. De forma resumida primero tendrás que seleccionar el area de trabajo y luego la zona deseada.
+                </p>
                 <br>
-                <h4><img src="imagenesWeb/asignar.png" alt="asignar" width="100" height="75">Asigna un horario a un empleado</h4>
-               <p>Texto</p>
-                <br>
-                <h4><img src="imagenesWeb/visualizar.png" alt="visualizar" width="100" height="75">Visualiza los horarios de una zona en concreto según una fecha</h4>
-                <p>Texto</p>
-                <br>
-                <h4><img src="imagenesWeb/visualizar.png" alt="empleados" width="100" height="75">Visualiza los datos de un empleado y sus horarios</h4>
-                <p>Texto</p>
-                <br>
-                <p>breve descripcion final!</p> 
+                <h4>2. Seleccionarar las fechas</h4>
+                <img src="imagenesWeb/fechas_visualizar.png" alt="seleccionArea"/>
+ 
+                  <p>Deberás seleccionar 2 fechas que comprenderán el periodo en el cual quieres visualizar todos los horarios de esa zona. Debes indicar el periodo "Desde" que tiene que ser anterior a "Hasta",
+                    sino tendrás un aviso del programa indicando que modifiques las fechas.  
+                    Cuanto más preciso sea el periodo, más fácil será identificar los horarios que quieres viualizar.</p>
+
+                <h4>3. Buscar</h4>
+                <img src="imagenesWeb/botonBuscar.png" alt="seleccionArea"/>
+    
+                <p>Una vez tengas las fechas seleccionadas, ya podrás clicar el botón buscar. </h4>
+
+                    <h4>4. Visualizar</h4>
+                <div>
+                    <img src="imagenesWeb/horarios_visualizar.png" alt="seleccionArea" width="503" height="232"/>
+                    <img src="imagenesWeb/Visualizar_sinHorariosAsignados.png" alt="seleccionArea" width="503" height="232"/>
+
+                </div>
+                
+                <p>Cuando hayas completado el tercer paso, ya podrás visualizar la lista de todos los horarios que comprenden ese periodo ordenados por fecha. La lista indicará el horario en formato texto,
+                    los nombres de los empleados asignados y si no hay asignaciones, verás sólo el horario correspondiente. En caso que durante ese periodo no haya ningún horario creado, 
+                    aparecerá un texto diciendo que no hay horarios asignados. 
+                   
+                </p>
+                <p>¡Ya puedes visualizar todos los horarios de una forma ordenada y clara!
+                     Si quieres hacer cambios en la asignación de los horarios, recuerda que puedes hacerlo en la pantalla de "Asignar".</p> 
             </div>
         </div>
     </body>

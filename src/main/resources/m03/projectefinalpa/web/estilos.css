@@ -20,6 +20,9 @@ body{
   max-width: 1150px; /* Añade esta propiedad con el ancho máximo deseado */
   margin: 0 auto; /* Centra horizontalmente el contenedor */
 }
+div img {
+  display: inline-block;
+}
 
 
 #texto {
