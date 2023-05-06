@@ -65,7 +65,7 @@
                               <Font name="Gill Sans MT Bold" size="12.0" />
                            </font>
                            <GridPane.margin>
-                              <Insets left="280.0" right="50.0" />
+                              <Insets left="250.0" right="90.0" />
                            </GridPane.margin>
                         </Button>
                         <ImageView fitHeight="23.0" fitWidth="444.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
@@ -135,7 +135,7 @@
                         </ImageView>
                         <TextField id="nombreEmpleado" fx:id="nombreEmpleado" promptText="Nombre empleado" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <GridPane.margin>
-                              <Insets left="50.0" right="270.0" />
+                              <Insets left="70.0" right="260.0" />
                            </GridPane.margin>
                         </TextField>
                         <ListView fx:id="horarios" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7">

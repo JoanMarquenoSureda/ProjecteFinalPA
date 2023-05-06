@@ -85,11 +85,24 @@ public class Empleados {
                 // si no troba l'empleat enviem una alerta
             } else {
                 alerta("Empleado no encontrado");
+                borrarCampos();
             }
             // si el camp per cercar està buit, enviem una alerta.
         } else {
             alerta("Introduce el nombre de un empleado");
+
         }
+
+    }
+
+    // en caso de que no haya datos, reiniciamos los campos por defecto.
+    private void borrarCampos() {
+        nombre.setText("");
+        telefono.setText("");
+        direccio.setText("");
+        correo.setText("");
+        Image image1 = new Image(getClass().getResourceAsStream("imagenes/fotoPersona.png"));
+        foto.setImage(image1);
 
     }
 
