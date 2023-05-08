@@ -1,25 +1,23 @@
 
 package m03.projectefinalpa.model.classes;
 
-import java.util.ArrayList;
-
 /**
  *
  * @author joanm
  */
-public class Atraccio  extends ZonaTrabajo{
-   
+public class Atraccio extends ZonaTrabajo {
+
     private String descripcion;
     private String tipo;
     private double alturaminima;
 
-    public Atraccio(int id, String nombre, String descripcion, String tipo, double alturaminima, String ubicacion ) {
+    public Atraccio(int id, String nombre, String descripcion, String tipo, double alturaminima, String ubicacion) {
         super(id, nombre, ubicacion);
         this.descripcion = descripcion;
         this.tipo = tipo;
         this.alturaminima = alturaminima;
     }
-                      
+
     public String getDescripcion() {
         return descripcion;
     }
@@ -48,7 +46,5 @@ public class Atraccio  extends ZonaTrabajo{
     public String toString() {
         return super.toString();
     }
- 
-    
 
 }

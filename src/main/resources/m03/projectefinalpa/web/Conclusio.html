@@ -16,27 +16,72 @@
                     <li><a href="asignar.html">ASIGNAR</a></li>
                     <li><a href="visualizar.html">VISUALIZAR</a></li>
                     <li><a href="empleados.html">EMPLEADOS</a> </li>
-                    <li><a href="Conclusio.html">CONCLUSION</a></li>
+                    <li><a href="Conclusio.html">CONCLUSIÓN</a></li>
                 </ul>
             </div>
 
             <div id="texto">
-                <h3>¡Bienvenido a TEAM TIME!</h3>
-                <h4>Primeros pasos para usar la aplicación</h4>
-                <p>Con esta aplicación podrás crear horarios, asignarlos a los empleados, visualizar los datos de los empleados y muchos más.</p>
-                <h4><img src="imagenesWeb/crear.png" alt="crear" width="100" height="75">Crear un horario para una zona del parque</h4>
-                <p>Texto</p>
-                <br>
-                <h4><img src="imagenesWeb/asignar.png" alt="asignar" width="100" height="75">Asigna un horario a un empleado</h4>
-               <p>Texto</p>
-                <br>
-                <h4><img src="imagenesWeb/visualizar.png" alt="visualizar" width="100" height="75">Visualiza los horarios de una zona en concreto según una fecha</h4>
-                <p>Texto</p>
-                <br>
-                <h4><img src="imagenesWeb/visualizar.png" alt="empleados" width="100" height="75">Visualiza los datos de un empleado y sus horarios</h4>
-                <p>Texto</p>
-                <br>
-                <p>breve descripcion final!</p> 
+                <h3>DOCUMENTACIÓN DEL PROYECTO</h3>
+
+                <h4>CONTEXTUALIZACIÓN</h4>
+
+                <p>La aplicación ha sido desarrollada para facilitar la gestión de los horarios de los trabajadores del parque de atracciones Port Aventura para 
+                así dar solución a una necesidad del departamento de RRHH.
+                El parque cuenta con diferentes zonas de trabajo clasificadas en dos tipos: atracciones y restaurantes.
+                Todos los empleados están bajo la supervisión de RRHH, que necesita conocer datos básicos como el nombre del empleado, el correo electrónico, 
+                telefóno, clasificación del empleado y otros datos de interés.</p>
+                <p>Para gestionar los horarios, la aplicación permite la introducción de fechas y horas de entrada y salida que serán asignadas a una zona. 
+                Estos horarios pueden ser realizados por uno o varios empleados y tendrán una única zona asignada. 
+                Las zonas podrán tener muchos horarios asignados para cubrir todos los turnos que hay que realizar en esa área. De esta forma, 
+                los empleados de las diferentes zonas podrán visualizar sus horarios asignados.</p>
+                <p>Los responsables de cada área podrán asignar y modificar los horarios de su plantilla, así como añadir nuevos horarios y visualizarlos para así
+                poder tener una visión completa de la planificación del parque.</p>
+
+
+                <h4>BASE DE DATOS</h4>
+                <h6>Diagrama entidad-relación</h6>
+                <p>Después de saber las necesidades del cliente, se presenta el diagrama de entidad relación.</p>
+                <img src="imagenesWeb/diagrama.png" alt="diagrama">
+                
+                <h6>Esquema lógico relacional</h6>
+                
+                <p><strong>ATRACCION</strong>(<u>id</u>, nombre, descripción, tipo, alturaminima, ubicacion)</p>
+
+                <p><strong>RESTAURANTE</strong>(<u>id</u>, nombre, tipoComida, ubicacion)</p>
+
+                <p><strong>EMPLEADO</strong>(<u>id</u>, nombre, direccion, telefono, email, salario, categoría,jornada, foto)</p>
+
+                <p><strong>HORARIO</strong>(<u>id</u>, fecha_inicio, fecha_fina, idRestaurante, idAtraccion)</p>
+
+                <p>HORARIO.idRestaurante es la clave aliena a RESTAURANTE.<br>
+                HORARIO.idAtraccion es la clave aliena a ATRACCION</p>
+
+                <p><strong>ASIGNACION</strong>(<u>idHorario</u>, <u>idEmpleado</u>)</p>
+
+                <p>ASIGNACION.idHorario es la clave aliena a HORARIO.<br>
+                ASIGNACION.idEmpleado es la clave aliena a ATRACCION.</p>
+                    
+                <h6>Enlace base de datos</h6>
+                <p>Clica encima de la imagen para descargarte la base de datos para poderla importar en mySQL.</p>
+                <a style="color: #323392; font-weight:700; font-size: 20px; " href="imagenesWeb/bd_portaventura.sql" download="bd_portaventura.sql"><img src="imagenesWeb/botonmysql.png" alt="imagen mysql"></a>
+              
+                
+                <h4>CONCLUSIÓN</h4>
+                <p>Durante el proceso del desarrollo de la aplicación se me han presentado diversos desafíos técnicos. Uno de los retos más importantes ha sido la elección y uso adecuado de los controles,
+                     como la implementación de especificaciones en CSS para la estética final de la app. Además, uno de los controles que quise incorporar 
+                     y al final no realizé fue la implementación de un spinner para las horas y minutos, que después de muchas pruebas fue imposible incluirlo, 
+                     incluso al haber implementado el código correctamente.</p>
+
+                <p>Asimismo, una de las tareas más complejas ha sido la vista de los empleados, ya que con el select de la base de datos he presentado dificultades para incluir todos
+                     los horarios de una persona asignazos a una zona, y que incluyera todos los datos con el método toString. Al tener dos tablas diferentes para zonas (Atracciones y Restaurantes), 
+                     encontrar la lógica para agruparlos ha sido un desafío. Otro obstáculo ha sido la transformación de las fechas de MySQL a JavaFX y viceversa, 
+                     ya que ha sido necesario extraer la fecha del datepicker y transformarla en un valor válido para MySQL.</p>
+
+                <p>Por otro lado, el control de errores ha sido crucial, especialmente en la pantalla de creación, donde ha sido necesario controlar varios errores y asociar un mensaje para cada uno de ellos, para que el usuario comprenda el error que está cometiendo y evitar la corrupción de la aplicación. 
+                    A pesar de estas dificultades, el resultado final ha sido satisfactorio y profesional, y la aplicación da respuesta a las necesidades de empresas que buscan gestionar horarios 
+                    cuando sus empleados rotan mucho y deben gestionarlos según los picos de trabajo existentes. Además, la aplicación ha surgido de una necesidad personal, 
+                    al haber trabajado en una empresa multinacional que aún utilizaba hojas de Excel para la gestión de horarios.
+                </p>
             </div>
         </div>
     </body>

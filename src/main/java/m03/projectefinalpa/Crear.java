@@ -21,6 +21,7 @@ import m03.projectefinalpa.model.classes.Atraccio;
 import m03.projectefinalpa.model.GestioDadesCrearYAsignar;
 import m03.projectefinalpa.model.classes.Horari;
 import m03.projectefinalpa.model.classes.Restaurant;
+import javafx.event.ActionEvent;
 
 public class Crear {
 
@@ -191,7 +192,7 @@ public class Crear {
     // metodo que revisa si esta seleccionado el radiobutton atraccion o
     // restaurante, y habilita los botones y carga la lista de la zona en el
     // ComboBox.
-    public void getOpcion(javafx.event.ActionEvent event) {
+    public void getOpcion(ActionEvent event) {
 
         if (opcionAtraccion.isSelected()) {
 

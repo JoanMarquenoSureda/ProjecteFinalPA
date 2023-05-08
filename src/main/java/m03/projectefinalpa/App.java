@@ -7,7 +7,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.net.URL;
 import java.sql.Connection;
 import javafx.scene.image.Image;
 
@@ -24,6 +23,7 @@ public class App extends Application {
         scene = new Scene(loadFXML("Inici"), 700, 513);
         stage.setScene(scene);
         stage.getIcons().add(favicon);
+        // stage.setResizable(false);
         stage.show();
 
     }
