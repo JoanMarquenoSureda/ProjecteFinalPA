@@ -336,5 +336,9 @@ public class Asignar {
     private void cambiarPantallaEmpleados() throws IOException {
         App.setRoot("Empleados");
     }
+     @FXML
+    private void cambiarPantallaEditar() throws IOException {
+        App.setRoot("Ingresar_Datos");
+    }
 
 }

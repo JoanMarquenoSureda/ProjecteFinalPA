@@ -4,9 +4,6 @@ import javafx.scene.image.Image;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
-
-import javax.print.DocFlavor.URL;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -21,7 +18,7 @@ import m03.projectefinalpa.model.classes.Horari;
 public class Empleados {
 
     @FXML
-    TextField nombreEmpleado;
+    TextField dniEmpleado;
     @FXML
     TextField nombre;
     @FXML
@@ -35,7 +32,7 @@ public class Empleados {
     @FXML
     ImageView foto;
 
-    private String nombreE; // guardar el nom de la persona cercada.
+    private String dni; // guardar el dni de la persona cercada.
     GestioDadesEmpleados gestioDades = new GestioDadesEmpleados();
     ObservableList<Horari> horaris = FXCollections.observableArrayList(); // guardem els horaris de la consulta
     EmpleadosClass empleado; // guardem les dades de l'empleat de la consulta
@@ -45,14 +42,14 @@ public class Empleados {
 
         horarios.getItems().clear();
         // comprobem que el camp no estigui buit
-        if (!nombreEmpleado.equals("")) {
+        if (!dniEmpleado.equals("")) {
             // guardem el text del nom
-            nombreE = nombreEmpleado.getText();
+             dni = dniEmpleado.getText();
 
             // feim les dues consultes amb el nom cercat i retornem un empleat i una llista
             // d'horaris.
-            empleado = gestioDades.dadesEmpleat(nombreE);
-            horaris = gestioDades.horariPerEmpleat(nombreE);
+            empleado = gestioDades.dadesEmpleat(dni);
+            horaris = gestioDades.horariPerEmpleat(dni);
 
             // si l'empleat retorna null és que no hi ha empleats amb el nom cercat
             if (empleado != null) {
@@ -65,6 +62,10 @@ public class Empleados {
                     InputStream is = empleado.getFoto().getBinaryStream();
                     Image image = new Image(is);
                     foto.setImage(image);
+
+                    // Ajustem la image al recuadre del imageView
+                    foto.setPreserveRatio(true);
+                    foto.setFitWidth(161);
 
                     // si no té foto, posem una imatge genèrica per defecte.
                 } else {
@@ -136,6 +137,11 @@ public class Empleados {
     @FXML
     private void cambiarPantallaVisualizar() throws IOException {
         App.setRoot("Visualizar");
+    }
+
+    @FXML
+    private void cambiarPantallaEditar() throws IOException {
+        App.setRoot("Ingresar_Datos");
     }
 
 }

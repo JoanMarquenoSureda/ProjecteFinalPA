@@ -3,40 +3,67 @@ package m03.projectefinalpa.model.classes;
 
 import java.sql.Blob;
 import java.util.ArrayList;
+import javafx.scene.image.Image;
 
 
 public class EmpleadosClass {
     
     private int id;
+    private String dni;
     private String nombre;
     private String direccion;
     private String telefono;
     private String email;
-    private double decimal;
     private String categoria;
-    private int jornada;
-    private Blob foto;
+    private Blob fotoBlob;
+    private Image fotoImage;
+ 
     private ArrayList<Horari> listaHorario;
 
-    public EmpleadosClass(int id, String nombre, String direccion, String telefono, String email, double decimal, String categoria, int jornada) {
-        this.id = id;
+    public EmpleadosClass(String dni, String nombre, String direccion, String telefono, String email, String categoria, Blob foto) {
+        this.dni = dni;
         this.nombre = nombre;
         this.direccion = direccion;
         this.telefono = telefono;
         this.email = email;
-        this.decimal = decimal;
+        this.fotoBlob = foto;
         this.categoria = categoria;
-        this.jornada = jornada;
-        this.listaHorario = new ArrayList<>();
     }
+
+    public EmpleadosClass(String dni, String nombre, String direccion, String telefono, String email, String categoria, Image fotoImage) {
+        this.dni = dni;
+        this.nombre = nombre;
+        this.direccion = direccion;
+        this.telefono = telefono;
+        this.email = email;
+        this.categoria = categoria;
+        this.fotoImage = fotoImage;
+    }
+    
+    
+
+    public EmpleadosClass(String dni, String nombre, String direccion, String telefono, String email, String categoria) {
+        this.dni = dni;
+        this.nombre = nombre;
+        this.direccion = direccion;
+        this.telefono = telefono;
+        this.email = email;
+        this.categoria = categoria;
+    }
+    
+    
+
+    
 
     public EmpleadosClass(String nombre, String direccion, String telefono, String email, Blob foto) {
         this.nombre = nombre;
         this.direccion = direccion;
         this.telefono = telefono;
         this.email = email;
-        this.foto = foto;
+        this.fotoBlob = foto;
     }
+    
+    
     
     public EmpleadosClass(int id, String nombre) {
         this.id = id;
@@ -48,6 +75,24 @@ public class EmpleadosClass {
        this.nombre = nombre;
        this.email = email;
     }
+
+    public String getDni() {
+        return dni;
+    }
+
+    public void setDni(String dni) {
+        this.dni = dni;
+    }
+
+    public Image getFotoImage() {
+        return fotoImage;
+    }
+
+    public void setFotoImage(Image fotoImage) {
+        this.fotoImage = fotoImage;
+    }
+     
+     
 
     public int getId() {
         return id;
@@ -91,22 +136,22 @@ public class EmpleadosClass {
     }
 
     public Blob getFoto() {
-        return foto;
+        return fotoBlob;
     }
 
     public void setFoto(Blob foto) {
-        this.foto = foto;
+        this.fotoBlob = foto;
     }
+
+
+    public void setFotoBlob(Blob fotoBlob) {
+        this.fotoBlob = fotoBlob;
+    }
+
+    
     
 
-    public double getDecimal() {
-        return decimal;
-    }
-
-    public void setDecimal(double decimal) {
-        this.decimal = decimal;
-    }
-
+   
     public String getCategoria() {
         return categoria;
     }
@@ -115,13 +160,7 @@ public class EmpleadosClass {
         this.categoria = categoria;
     }
 
-    public int getJornada() {
-        return jornada;
-    }
-
-    public void setJornada(int jornada) {
-        this.jornada = jornada;
-    }
+   
 
     public ArrayList<Horari> getListaHorario() {
         return listaHorario;

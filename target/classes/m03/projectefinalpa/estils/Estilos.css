@@ -285,6 +285,7 @@
     -fx-border-radius: 5;
     -fx-background-color: white;
     -fx-background-radius: 5;
+      -fx-prompt-text-fill: derive(-fx-control-inner-background,-30%);
 }
 
 #nombreEmpleado:focused{
@@ -294,6 +295,7 @@
     -fx-border-radius: 5;
     -fx-background-color: white;
     -fx-background-radius: 5;
+    -fx-prompt-text-fill: transparent;
 
 
 }

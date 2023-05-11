@@ -22,7 +22,7 @@ public class GestioDadesEmpleados {
 
     // mètode que retorna les dades de l'horari i el nom més l'ubicació del restaurant o atracció, segons el nom de l'empleat cercat, ordenat els horaris de forma
     //accendent i desde el día d'avui, obviants els horaris anteriors. 
-    public ObservableList<Horari> horariPerEmpleat(String nombre) {
+    public ObservableList<Horari> horariPerEmpleat(String dni) {
         ObservableList<Horari> horaris = FXCollections.observableArrayList();
 
         String sql = "SELECT horario.fecha_inicio, horario.fecha_fin,\n"
@@ -33,13 +33,13 @@ public class GestioDadesEmpleados {
                 + "INNER JOIN horario ON asignacion.idHorario = horario.id AND horario.fecha_inicio >= CURRENT_DATE()\n"
                 + "LEFT JOIN restaurante ON restaurante.id = horario.idRestaurante\n"
                 + "LEFT JOIN atraccion ON atraccion.id = horario.idAtraccion\n"
-                + "WHERE empleado.nombre = ? \n"
+                + "WHERE empleado.dni = ? \n"
                 + "ORDER BY horario.fecha_inicio ASC;";
 
         Connection connection = new Connexio().connecta();
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, nombre);
+            statement.setString(1, dni);
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
@@ -59,13 +59,13 @@ public class GestioDadesEmpleados {
     }
 
     //mètode que retorna les dades d'un empleat segons el nom de l'empleat passat per paràmetres, només retorna un objecte ja que passem per paràmetres el =. 
-    public EmpleadosClass dadesEmpleat(String nombre) {
+    public EmpleadosClass dadesEmpleat(String dni) {
 
         EmpleadosClass empleado = null;
 
         String sql = "SELECT empleado.nombre, empleado.direccion, empleado.telefono, empleado.email, empleado.foto\n"
                 + "FROM empleado \n"
-                + "WHERE empleado.nombre = ?;";
+                + "WHERE empleado.dni = ?;";
 
         Connection connection = new Connexio().connecta();
 
@@ -73,7 +73,7 @@ public class GestioDadesEmpleados {
 
             PreparedStatement statement = connection.prepareStatement(sql);
 
-            statement.setString(1, nombre);
+            statement.setString(1, dni);
 
             ResultSet resultSet = statement.executeQuery();
 

@@ -270,6 +270,12 @@ public class Crear {
     private void cambiarPantallaEmpleados() throws IOException {
         App.setRoot("Empleados");
     }
+     @FXML
+    private void cambiarPantallaEditar() throws IOException {
+        App.setRoot("Ingresar_Datos");
+    }
+    
+    
 
     @FXML
     private void mandarAyuda() {
