@@ -103,7 +103,7 @@ public class GestioDadesCrearYAsignar {
     // llista totes les atraccions de la taula atraccions, afegint tots els camps.
     public ObservableList<Atraccio> llistaAtraccio() {
         ObservableList<Atraccio> itemList = FXCollections.observableArrayList();
-        String sql = "SELECT id, nombre, descripcion, tipo, alturaminima, ubicacion FROM atraccion";
+        String sql = "SELECT id, nombre, descripcion, tipo, ubicacion FROM atraccion";
         Connection connection = new Connexio().connecta();
         try {
             Statement statement = connection.createStatement();
@@ -115,8 +115,7 @@ public class GestioDadesCrearYAsignar {
                                 resultSet.getString(2),
                                 resultSet.getString(3),
                                 resultSet.getString(4),
-                                resultSet.getDouble(5),
-                                resultSet.getString(6)));
+                                resultSet.getString(5)));
             }
             connection.close();
         } catch (SQLException throwables) {

@@ -1,13 +1,10 @@
 m03\projectefinalpa\model\classes\Horari.class
 m03\projectefinalpa\model\Connexio.class
-m03\projectefinalpa\model\classes\Atraccio.class
 m03\projectefinalpa\Crear.class
 module-info.class
-m03\projectefinalpa\Asignar.class
 m03\projectefinalpa\App.class
 m03\projectefinalpa\model\classes\Restaurant.class
 m03\projectefinalpa\model\Usuario.class
 m03\projectefinalpa\model\classes\ZonaTrabajo.class
-m03\projectefinalpa\Visualizar.class
 m03\projectefinalpa\model\GestioDadesVisualitzar.class
 m03\projectefinalpa\Inici.class

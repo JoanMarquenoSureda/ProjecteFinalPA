@@ -3,15 +3,17 @@
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="m03.projectefinalpa.CrearAtracciones">
    <children>
@@ -42,37 +44,132 @@
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="417.0" prefWidth="447.0">
                <children>
-                  <GridPane id="grid" fx:id="gridPane" alignment="CENTER" prefHeight="453.6" prefWidth="447.2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <GridPane id="grid" fx:id="gridPane" alignment="CENTER" prefHeight="648.0" prefWidth="522.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="111.20001220703125" minWidth="0.0" prefWidth="0.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="427.0" minWidth="10.0" prefWidth="427.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="306.6" minWidth="0.0" prefWidth="0.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="514.0" minWidth="10.0" prefWidth="507.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="306.6" minWidth="0.0" prefWidth="8.0" />
                      </columnConstraints>
                      <rowConstraints>
-                        <RowConstraints maxHeight="188.0" minHeight="45.4000129699707" prefHeight="157.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="280.19998397827146" minHeight="40.0" prefHeight="63.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="320.79998779296875" minHeight="10.0" prefHeight="39.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="188.0" minHeight="45.4000129699707" prefHeight="104.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="200.0" minHeight="30.0" prefHeight="80.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="200.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="280.19998397827146" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="280.19998397827146" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="320.79998779296875" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="320.79998779296875" minHeight="5.0" prefHeight="21.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="320.79998779296875" minHeight="50.0" prefHeight="113.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="320.79998779296875" minHeight="7.0" prefHeight="29.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="320.79998779296875" minHeight="14.0" prefHeight="65.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="320.79998779296875" minHeight="14.0" prefHeight="39.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
                         <ImageView fitHeight="23.0" fitWidth="222.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
                            <GridPane.margin>
-                              <Insets bottom="30.0" />
+                              <Insets bottom="30.0" left="20.0" />
                            </GridPane.margin>
                            <image>
                               <Image url="@imagenes/logo.png" />
                            </image>
                         </ImageView>
-                        <Label alignment="BASELINE_CENTER" contentDisplay="BOTTOM" prefHeight="27.0" prefWidth="543.0" text="SELECCIONAR DATOS" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
-                           <font>
-                              <Font name="Gill Sans MT Bold" size="12.0" />
-                           </font>
+                        <Label alignment="CENTER" prefHeight="21.0" prefWidth="509.0" text="ATRACCION" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.valignment="BOTTOM">
                            <GridPane.margin>
-                              <Insets />
+                              <Insets bottom="20.0" />
                            </GridPane.margin>
                         </Label>
-                        <Button id="botonuno" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="103.0" prefWidth="127.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" />
-                        <Button id="botonuno" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="103.0" prefWidth="127.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                        <Button id="botonuno" alignment="BASELINE_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" prefHeight="103.0" prefWidth="127.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+                        <Label text="NOMBRE" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <GridPane.margin>
+                              <Insets left="50.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label alignment="TOP_CENTER" prefHeight="112.0" prefWidth="119.0" text="DESCRIPCIÓN" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                           <GridPane.margin>
+                              <Insets left="50.0" top="10.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label text="TIPO" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                           <GridPane.margin>
+                              <Insets left="50.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label text="ALTURA " GridPane.columnIndex="1" GridPane.rowIndex="5">
+                           <GridPane.margin>
+                              <Insets left="50.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label text="UBICACIÓN" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                           <GridPane.margin>
+                              <Insets left="50.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <TextField id="dades" fx:id="nombre" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <GridPane.margin>
+                              <Insets left="180.0" right="60.0" />
+                           </GridPane.margin>
+                        </TextField>
+                        <TextField id="dades" fx:id="altura" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                           <GridPane.margin>
+                              <Insets left="180.0" right="60.0" />
+                           </GridPane.margin>
+                        </TextField>
+                        <TextField id="nombreEmpleado" fx:id="nombreAtraccion" prefHeight="28.0" prefWidth="140.0" promptText="Nombre atracción" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1">
+                           <GridPane.margin>
+                              <Insets left="230.0" right="100.0" />
+                           </GridPane.margin>
+                        </TextField>
+                        <ComboBox fx:id="ubicacion" prefHeight="28.0" prefWidth="270.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                           <GridPane.margin>
+                              <Insets left="180.0" right="60.0" />
+                           </GridPane.margin>
+                        </ComboBox>
+                        <GridPane prefWidth="487.0" GridPane.columnIndex="1" GridPane.rowIndex="9">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                           <children>
+                              <Button id="boton1" fx:id="agregar" mnemonicParsing="false" onAction="#agregarAtraccion" prefHeight="25.0" prefWidth="129.0" text="AGREGAR">
+                                 <GridPane.margin>
+                                    <Insets left="8.0" right="8.0" />
+                                 </GridPane.margin>
+                              </Button>
+                              <Button id="boton1" fx:id="eliminar" disable="true" mnemonicParsing="false" onAction="#eliminarAtraccion" prefHeight="25.0" prefWidth="129.0" text="ELIMINAR" GridPane.columnIndex="2">
+                                 <GridPane.margin>
+                                    <Insets left="8.0" right="8.0" />
+                                 </GridPane.margin>
+                              </Button>
+                              <Button id="boton1" fx:id="modificar" disable="true" mnemonicParsing="false" onAction="#modificarAtraccion" prefHeight="25.0" prefWidth="129.0" text="MODIFICAR" GridPane.columnIndex="1">
+                                 <GridPane.margin>
+                                    <Insets left="8.0" right="8.0" />
+                                 </GridPane.margin>
+                              </Button>
+                              <Button id="boton1" mnemonicParsing="false" onAction="#vaciar" prefHeight="25.0" prefWidth="129.0" text="LIMPIAR" GridPane.columnIndex="3">
+                                 <GridPane.margin>
+                                    <Insets left="8.0" right="8.0" />
+                                 </GridPane.margin>
+                              </Button>
+                           </children>
+                        </GridPane>
+                        <Button id="boton1" mnemonicParsing="false" onAction="#buscarAtraccion" prefHeight="25.0" prefWidth="129.0" text="BUSCAR" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <GridPane.margin>
+                              <Insets left="70.0" />
+                           </GridPane.margin>
+                        </Button>
+                        <ComboBox fx:id="tipo" prefHeight="28.0" prefWidth="270.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                           <GridPane.margin>
+                              <Insets left="180.0" right="60.0" />
+                           </GridPane.margin>
+                        </ComboBox>
+                        <TextArea id="dades" fx:id="descripcion" prefHeight="67.0" prefWidth="264.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                           <GridPane.margin>
+                              <Insets left="180.0" right="60.0" />
+                           </GridPane.margin>
+                        </TextArea>
                      </children>
                   </GridPane>
                </children>

@@ -69,12 +69,10 @@ public class CrearEmpleados {
     EmpleadosClass empleado;
 
     public void agregarEmpleado() {
-        if (dni.getText().isEmpty() || nombre.getText().isEmpty() || direccion.getText().isEmpty() || telefono.getText().isEmpty() || email.getText().isEmpty() || categoria.getValue() == null) {
+        if (dni.getText().equals("") || nombre.getText().equals("") || direccion.getText().equals("") || telefono.getText().equals("") || email.getText().equals("") || categoria.getValue() == null) {
             alerta("Debe completar todos los campos");
 
         } else {
-            
-         
 
             try {
                 // Obtener los datos ingresados por el usuario
@@ -143,11 +141,11 @@ public class CrearEmpleados {
 
     public void modificarEmpleado() {
 
-        if (dni.getText().isEmpty() || nombre.getText().isEmpty() || direccion.getText().isEmpty() || telefono.getText().isEmpty() || email.getText().isEmpty() || categoria.getValue() == null) {
+        if (dni.getText().equals("") || nombre.getText().equals("") || direccion.getText().equals("") || telefono.getText().equals("") || email.getText().equals("") || categoria.getValue() == null) {
             alerta("Debe completar todos los campos");
         } else {
 
-           int conf = Confirmacion("¿Desea modificar al empleado con DNI "+ empleado.getDni()+ "?");
+            int conf = Confirmacion("¿Desea modificar al empleado con DNI " + empleado.getDni() + "?");
             if (conf == 1) {
                 try {
                     // Obtener los datos ingresados por el usuario
@@ -182,23 +180,23 @@ public class CrearEmpleados {
     @FXML
     void eliminarEmpleado() {
 
-        if (dniBuscar.getText().equals("Debe buscar un empleado antes de poder eliminarlo")) {
-            alerta("");
+        if (dniBuscar.getText().equals("")) {
+            alerta("Debe buscar un empleado antes de poder eliminarlo");
         } else {
-             int conf = Confirmacion("¿Desea eliminar al empleado con DNI "+dniBuscar.getText()+ "?");
+            int conf = Confirmacion("¿Desea eliminar al empleado con DNI " + dniBuscar.getText() + "?");
             if (conf == 1) {
-            try {
-                String dniAEliminar = dniBuscar.getText();
-                boolean exito = dades.eliminarEmpleado(dniAEliminar);
-                if (exito) {
-                    alerta("Empleado eliminado con éxito");
-                    vaciar();
-                } else {
-                    alerta("No se pudo eliminar el empleado");
+                try {
+                    String dniAEliminar = dniBuscar.getText();
+                    boolean exito = dades.eliminarEmpleado(dniAEliminar);
+                    if (exito) {
+                        alerta("Empleado eliminado con éxito");
+                        vaciar();
+                    } else {
+                        alerta("No se pudo eliminar el empleado");
+                    }
+                } catch (Exception e) {
+                    alerta(e.getMessage());
                 }
-            } catch (Exception e) {
-                alerta(e.getMessage());
-            }
             }
         }
 
