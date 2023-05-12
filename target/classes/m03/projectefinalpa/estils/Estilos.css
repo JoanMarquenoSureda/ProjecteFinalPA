@@ -1,0 +1,303 @@
+
+@font-face {
+    font-family: 'Montserrat';
+    src: url('../fuente_letra/Montserrat/static/Montserrat-Bold.ttf');
+}
+@font-face {
+    font-family: 'Montserrat Thin';
+    src: url('../fuente_letra/Montserrat/static/Montserrat-Thin.ttf');
+}
+
+* {
+    -fx-font-family: "Montserrat";
+}
+
+.label {
+    -fx-font-family: 'Montserrat';
+    -fx-font-size: 16px;
+    -fx-text-fill: #323392;
+
+}
+
+.listview .list-cell:filled:selected {
+    -fx-background-color: #3366CC;
+    -fx-text-fill:white;
+  }
+  
+#labelPuntos {
+    -fx-font-family: 'Montserrat';
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+}
+.radio-button {
+    -fx-font-family: 'Montserrat';
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+}
+
+
+#boton1 {
+    -fx-background-color: #323392;
+    -fx-background-radius: 5px;
+    -fx-border-color: #323392;
+    -fx-border-radius: 5px;
+    -fx-border-width: 1px;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+#boton1:pressed {
+    -fx-background-color: #FFA500;
+    -fx-background-insets: 2px;
+    -fx-border-color: #FFA500;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+}
+
+#boton2 {
+    -fx-background-color:  white;
+    -fx-background-radius: 5px;
+    -fx-border-color: white;
+    -fx-border-radius: 5px;
+    -fx-border-width: 1px;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #323392;
+}
+
+#boton2:pressed {
+    -fx-background-color: #FFA500;
+    -fx-background-insets: 2px;
+    -fx-border-color: #FFA500;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+}
+
+.combo-box {
+    -fx-background-color: #f1642b;
+    -fx-font-size: 14px;
+    -fx-color: white;
+
+}
+.combo-box .list-view .list-cell {
+    -fx-text-fill: #323392;
+}
+
+.combo-box .list-cell{
+    -fx-text-fill: white;
+}
+
+.text-field {
+    -fx-font-family: 'Montserrat';
+    -fx-background-color: #f1642b;
+    -fx-font-size: 14px;
+    -fx-font-weight: normal;
+
+}
+
+#horas{
+     -fx-prompt-text-fill: white;
+     -fx-text-fill: white;
+     
+}
+#horas:focused{
+     -fx-prompt-text-fill: #F1642B;
+}
+
+.button {
+    -fx-background-color: #323392; /* color de fondo sólido */
+    -fx-border-color: #323392; /* color del borde */
+
+}
+
+
+.date-picker {
+    -fx-background-color: #f1642b;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-prompt-text-fill: white;
+}
+.date-picker > .text-field  {
+    -fx-alignment: center;
+    -fx-text-fill: white;
+    -fx-color: white;
+    
+}
+-date-picker .list-view .list-cell{
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: white;
+}
+
+#ayuda {
+    -fx-background-image: url('../imagenes/ayuda.png');
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-text-fill: transparent;
+    -fx-background-radius: 5em;
+    -fx-min-width: 40px;
+    -fx-min-height: 40px;
+    -fx-max-width: 40px;
+    -fx-max-height: 40px;
+    -fx-border-color:transparent;
+    -fx-background-color:#2596be;
+}
+
+#ayuda:pressed {
+    -fx-background-image: url('../imagenes/ayudahoover.png');
+     -fx-background-color:white;
+    
+}
+
+#botonuno {
+    -fx-background-image: url('../imagenes/botonuno.png');
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-text-fill: transparent;
+}
+
+#botondos {
+    -fx-background-image: url('../imagenes/botondos.png');
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-text-fill: transparent;
+
+}
+#botontres {
+    -fx-background-image: url('../imagenes/botontres.png');
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-text-fill: transparent;
+
+}
+
+#botoncuatro {
+    -fx-background-image: url('../imagenes/botoncuatro.png');
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-text-fill: transparent;
+}
+
+#botonuno:pressed {
+    -fx-background-image: url('../imagenes/botonuno_hoover.png');
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-text-fill: transparent;
+}
+
+#botondos:pressed {
+    -fx-background-image: url('../imagenes/botondos_hoover.png');
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-text-fill: transparent;
+}
+#botontres:pressed {
+    -fx-background-image: url('../imagenes/botontres_hoover.png');
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-text-fill: transparent;
+}
+
+#botoncuatro:pressed {
+    -fx-background-image: url('../imagenes/botoncuatro_hoover.png');
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-text-fill: transparent;
+}
+#gridpaneBotones{
+    -fx-background-color: #323392;
+
+}
+#grid{
+    -fx-background-image: url('../imagenes/fondo.png');
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+}
+#griddos{
+    -fx-background-image: url('../imagenes/fondoDos.png');
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+}
+
+#gridtres{
+    -fx-background-image: url('../imagenes/fondoTres.png');
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+}
+
+#gridcuatro{
+    -fx-background-image: url('../imagenes/fondoCuatro.png');
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+}
+#bienvenido{
+    -fx-font-size: 30px;
+}
+
+
+#iniciosesion {
+    -fx-background-color: white;
+    -fx-text-fill: black;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+    -fx-border-width: 1;
+    -fx-border-color: gray;
+    -fx-background-color: white;
+    -fx-background-color: transparent;
+}
+
+#iniciosesion:focused {
+    -fx-border-color: blue;
+    -fx-border-width: 2;
+    -fx-border-radius: 5;
+    -fx-background-color: white;
+    -fx-background-radius: 5;
+}
+#dades{
+    -fx-border-color: #F1642B;
+    -fx-border-width: 2;
+    -fx-border-radius: 5;
+    -fx-background-color: white;
+    -fx-background-radius: 5;
+}
+
+#nombreEmpleado {
+    
+    -fx-prompt-text-fill:  #F1642B;
+    -fx-border-color: #F1642B;
+    -fx-border-width: 2;
+    -fx-border-radius: 5;
+    -fx-background-color: white;
+    -fx-background-radius: 5;
+      -fx-prompt-text-fill: derive(-fx-control-inner-background,-30%);
+}
+
+#nombreEmpleado:focused{
+    -fx-prompt-text-fill: white;
+    -fx-border-color: #F1642B;
+    -fx-border-width: 2;
+    -fx-border-radius: 5;
+    -fx-background-color: white;
+    -fx-background-radius: 5;
+    -fx-prompt-text-fill: transparent;
+
+
+}
+
+

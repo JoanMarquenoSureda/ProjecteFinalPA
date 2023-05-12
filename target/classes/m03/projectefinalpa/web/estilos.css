@@ -1,0 +1,104 @@
+/* Estilos para el encabezado del menú */
+
+body{
+    background-color: #629cef;
+}
+
+
+.menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background-color: aliceblue;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  max-width: 1150px; /* Añade esta propiedad con el ancho máximo deseado */
+  margin: 0 auto; /* Centra horizontalmente el contenedor */
+}
+div img {
+  display: inline-block;
+}
+
+
+#texto {
+  max-width: 1150px;
+  margin: 60px auto 60px;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  line-height: 1.5;
+  background-color: aliceblue;
+}
+
+
+.menu img {
+  margin-right: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  height: 42px;
+}
+
+.menu ul {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.menu li {
+  margin-right: 20px;
+}
+
+.menu a {
+ 
+  color: #323392;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 18px;
+  padding: 15px;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.menu a:hover {
+  color: #f1642b;
+}
+
+
+
+#texto h3 {
+  font-size: 28px;
+  font-weight: bold;
+  margin-top: 40px;
+  margin-bottom: 20px;
+  color: #f1642b;
+}
+
+#texto h4 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 30px;
+  margin-bottom: 15px;
+  color: #f1642b;
+}
+#texto h6 {
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 30px;
+  margin-bottom: 15px;
+  color: #f1642b;
+}
+#texto h4 img {
+  vertical-align: middle;
+  margin-right: 10px;
+}
+
+#texto p {
+  font-size: 18px;
+  margin-top: 10px;
+  color: #323392;
+}
+
