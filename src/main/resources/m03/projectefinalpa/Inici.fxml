@@ -83,7 +83,6 @@
       </GridPane>
    </children>
    <stylesheets>
-      <URL value="@Estilos.css" />
       <URL value="@estils/Estilos.css" />
    </stylesheets>
 </AnchorPane>

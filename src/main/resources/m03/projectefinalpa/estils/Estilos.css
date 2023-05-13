@@ -18,6 +18,11 @@
     -fx-text-fill: #323392;
 
 }
+#titulo{
+    -fx-font-family: 'Montserrat';
+    -fx-font-size: 20px;
+
+}
 
 #paneuno {
   -fx-background-color: white;
@@ -136,7 +141,7 @@
     -fx-color: white;
     
 }
--date-picker .list-view .list-cell{
+.date-picker .list-view .list-cell{
     -fx-text-fill: white;
     -fx-prompt-text-fill: white;
 }
@@ -179,7 +184,7 @@
 
 #boton_atras:pressed {
     -fx-background-image: url('../imagenes/atras_hoover.png');
-     -fx-background-color:trasnparent;
+     -fx-background-color:transparent;
     
 }
 

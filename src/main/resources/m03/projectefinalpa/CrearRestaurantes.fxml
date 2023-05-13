@@ -71,17 +71,9 @@
                               <Insets left="40.0" right="50.0" />
                            </GridPane.margin>
                         </Pane>
-                        <ImageView fitHeight="23.0" fitWidth="222.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+                        <Label id="titulo" alignment="CENTER" prefHeight="73.0" prefWidth="509.0" text="RESTAURANTE" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.valignment="BOTTOM">
                            <GridPane.margin>
-                              <Insets bottom="30.0" left="20.0" />
-                           </GridPane.margin>
-                           <image>
-                              <Image url="@imagenes/logo.png" />
-                           </image>
-                        </ImageView>
-                        <Label alignment="CENTER" prefHeight="21.0" prefWidth="509.0" text="RESTAURANTE" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.valignment="BOTTOM">
-                           <GridPane.margin>
-                              <Insets bottom="20.0" />
+                              <Insets />
                            </GridPane.margin>
                         </Label>
                         <Label text="NOMBRE" GridPane.columnIndex="1" GridPane.rowIndex="2">
@@ -172,6 +164,14 @@
                               <Insets left="430.0" />
                            </GridPane.margin>
                         </Button>
+                        <ImageView fitHeight="29.0" fitWidth="213.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.valignment="TOP">
+                           <GridPane.margin>
+                              <Insets left="10.0" top="20.0" />
+                           </GridPane.margin>
+                           <image>
+                              <Image url="@imagenes/logo.png" />
+                           </image>
+                        </ImageView>
                      </children>
                   </GridPane>
                </children>
@@ -180,7 +180,6 @@
       </SplitPane>
    </children>
    <stylesheets>
-      <URL value="@Estilos.css" />
       <URL value="@estils/Estilos.css" />
    </stylesheets>
 </AnchorPane>

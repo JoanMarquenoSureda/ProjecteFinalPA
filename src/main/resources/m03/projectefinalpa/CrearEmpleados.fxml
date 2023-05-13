@@ -73,15 +73,15 @@
                               <Insets left="40.0" right="50.0" />
                            </GridPane.margin>
                         </Pane>
-                        <ImageView fitHeight="23.0" fitWidth="222.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+                        <ImageView fitHeight="29.0" fitWidth="213.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.valignment="TOP">
                            <GridPane.margin>
-                              <Insets bottom="30.0" left="20.0" />
+                              <Insets left="10.0" top="20.0" />
                            </GridPane.margin>
                            <image>
                               <Image url="@imagenes/logo.png" />
                            </image>
                         </ImageView>
-                        <Label alignment="CENTER" prefHeight="57.0" prefWidth="509.0" text="EMPLEADO" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.valignment="BOTTOM">
+                        <Label id="titulo" alignment="CENTER" prefHeight="57.0" prefWidth="509.0" text="EMPLEADO" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.valignment="BOTTOM">
                            <GridPane.margin>
                               <Insets />
                            </GridPane.margin>
@@ -206,7 +206,6 @@
       </SplitPane>
    </children>
    <stylesheets>
-      <URL value="@Estilos.css" />
       <URL value="@estils/Estilos.css" />
    </stylesheets>
 </AnchorPane>

@@ -56,8 +56,8 @@
                      </columnConstraints>
                      <rowConstraints>
                         <RowConstraints />
-                        <RowConstraints maxHeight="168.99999389648437" minHeight="45.4000129699707" prefHeight="81.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="280.19998397827146" minHeight="10.0" prefHeight="39.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="168.99999389648437" minHeight="45.4000129699707" prefHeight="111.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="280.19998397827146" minHeight="10.0" prefHeight="37.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="280.19998397827146" minHeight="10.0" prefHeight="39.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="280.19998397827146" minHeight="10.0" prefHeight="39.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="280.19998397827146" minHeight="1.0" prefHeight="47.0" vgrow="SOMETIMES" />
@@ -74,15 +74,15 @@
                               <Insets bottom="20.0" left="175.0" right="175.0" />
                            </GridPane.margin>
                         </Button>
-                        <ImageView fitHeight="23.0" fitWidth="444.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <ImageView fitHeight="29.0" fitWidth="213.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="TOP">
                            <GridPane.margin>
-                              <Insets bottom="30.0" />
+                              <Insets left="10.0" top="20.0" />
                            </GridPane.margin>
                            <image>
                               <Image url="@imagenes/logo.png" />
                            </image>
                         </ImageView>
-                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="56.0" prefWidth="522.0" text="ASIGNAR HORARIOS " GridPane.columnSpan="4" GridPane.rowIndex="1">
+                        <Label id="titulo" alignment="CENTER" contentDisplay="CENTER" prefHeight="58.0" prefWidth="522.0" text="ASIGNAR HORARIOS " GridPane.columnSpan="4" GridPane.rowIndex="1">
                            <font>
                               <Font name="Gill Sans MT Bold" size="12.0" />
                            </font>
@@ -162,7 +162,6 @@
       </SplitPane>
    </children>
    <stylesheets>
-      <URL value="@Estilos.css" />
       <URL value="@estils/Estilos.css" />
    </stylesheets>
 </AnchorPane>

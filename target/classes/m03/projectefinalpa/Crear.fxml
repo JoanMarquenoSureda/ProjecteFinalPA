@@ -49,8 +49,8 @@
                <children>
                   <GridPane id="griduno" fx:id="gridPane" prefHeight="453.6" prefWidth="447.2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="111.20001220703125" minWidth="2.4000244140625" prefWidth="23.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="235.0" minWidth="10.0" prefWidth="205.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="111.20001220703125" minWidth="2.4000244140625" prefWidth="5.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="235.0" minWidth="10.0" prefWidth="228.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="347.8000061035156" minWidth="10.0" prefWidth="274.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="306.6" minWidth="10.0" prefWidth="11.0" />
                      </columnConstraints>
@@ -72,6 +72,9 @@
                            <font>
                               <Font name="Gill Sans MT Bold" size="12.0" />
                            </font>
+                           <GridPane.margin>
+                              <Insets left="40.0" />
+                           </GridPane.margin>
                         </Label>
                         <ComboBox fx:id="desplegableZona" disable="true" prefHeight="23.0" prefWidth="172.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
                            <padding>
@@ -88,6 +91,9 @@
                            <font>
                               <Font name="Gill Sans MT Bold" size="12.0" />
                            </font>
+                           <GridPane.margin>
+                              <Insets left="40.0" />
+                           </GridPane.margin>
                         </Label>
                         <DatePicker fx:id="calendario" disable="true" editable="false" prefHeight="28.0" prefWidth="174.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
                            <GridPane.margin>
@@ -101,6 +107,9 @@
                            <font>
                               <Font name="Gill Sans MT Bold" size="12.0" />
                            </font>
+                           <GridPane.margin>
+                              <Insets left="40.0" />
+                           </GridPane.margin>
                         </Label>
                         <Button id="boton1" fx:id="boton1" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#guardar" prefHeight="30.0" prefWidth="115.0" text="GUARDAR" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="6">
                            <font>
@@ -152,7 +161,7 @@
                               <Insets left="130.0" />
                            </GridPane.margin>
                         </RadioButton>
-                        <Label prefHeight="116.0" prefWidth="194.0" text="SALIDA" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                        <Label prefHeight="116.0" prefWidth="194.0" text="SALIDA:" GridPane.columnIndex="1" GridPane.rowIndex="5">
                            <padding>
                               <Insets left="60.0" />
                            </padding>
@@ -163,7 +172,7 @@
                               <Insets />
                            </opaqueInsets>
                         </Label>
-                        <Label prefHeight="86.0" prefWidth="184.0" text="ENTRADA" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                        <Label prefHeight="86.0" prefWidth="184.0" text="ENTRADA:" GridPane.columnIndex="1" GridPane.rowIndex="4">
                            <padding>
                               <Insets left="60.0" />
                            </padding>
@@ -195,15 +204,7 @@
                               <Font name="Gill Sans MT Bold" size="12.0" />
                            </font>
                         </TextField>
-                        <ImageView fitHeight="23.0" fitWidth="444.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
-                           <GridPane.margin>
-                              <Insets bottom="30.0" />
-                           </GridPane.margin>
-                           <image>
-                              <Image url="@imagenes/logo.png" />
-                           </image>
-                        </ImageView>
-                        <Label alignment="BOTTOM_CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="543.0" text="CREACION HORARIOS" GridPane.columnSpan="4">
+                        <Label id="titulo" alignment="CENTER" contentDisplay="CENTER" prefHeight="108.0" prefWidth="522.0" text="CREACIÓN HORARIOS" GridPane.columnSpan="4">
                            <font>
                               <Font name="Gill Sans MT Bold" size="12.0" />
                            </font>
@@ -216,6 +217,14 @@
                               <Insets left="200.0" />
                            </GridPane.margin>
                         </Button>
+                        <ImageView fitHeight="110.0" fitWidth="213.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.valignment="TOP">
+                           <GridPane.margin>
+                              <Insets left="10.0" top="20.0" />
+                           </GridPane.margin>
+                           <image>
+                              <Image url="@imagenes/logo.png" />
+                           </image>
+                        </ImageView>
                      </children>
                   </GridPane>
                </children>
@@ -224,7 +233,6 @@
       </SplitPane>
    </children>
    <stylesheets>
-      <URL value="@Estilos.css" />
       <URL value="@estils/Estilos.css" />
    </stylesheets>
 </AnchorPane>

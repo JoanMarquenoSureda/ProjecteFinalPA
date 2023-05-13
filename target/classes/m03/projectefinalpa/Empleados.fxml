@@ -70,15 +70,15 @@
                               <Insets left="250.0" right="90.0" />
                            </GridPane.margin>
                         </Button>
-                        <ImageView fitHeight="23.0" fitWidth="444.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+                        <ImageView fitHeight="29.0" fitWidth="213.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.valignment="TOP">
                            <GridPane.margin>
-                              <Insets bottom="30.0" />
+                              <Insets left="10.0" top="20.0" />
                            </GridPane.margin>
                            <image>
                               <Image url="@imagenes/logo.png" />
                            </image>
                         </ImageView>
-                        <Label alignment="BOTTOM_CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="543.0" text="HORARIOS EMPLEADOS" GridPane.columnSpan="4">
+                        <Label id="titulo" alignment="BOTTOM_CENTER" contentDisplay="CENTER" prefHeight="79.0" prefWidth="522.0" text="HORARIOS EMPLEADOS" GridPane.columnSpan="4">
                            <font>
                               <Font name="Gill Sans MT Bold" size="12.0" />
                            </font>
@@ -164,7 +164,6 @@
       </SplitPane>
    </children>
    <stylesheets>
-      <URL value="@Estilos.css" />
       <URL value="@estils/Estilos.css" />
    </stylesheets>
 </AnchorPane>
