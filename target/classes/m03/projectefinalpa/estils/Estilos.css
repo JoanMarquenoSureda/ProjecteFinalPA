@@ -19,6 +19,15 @@
 
 }
 
+#paneuno {
+  -fx-background-color: white;
+-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 10, 0, 0, 0);
+-fx-border-color: white;
+-fx-border-width: 2px;
+-fx-border-radius: 5px;
+
+}
+
 .listview .list-cell:filled:selected {
     -fx-background-color: #3366CC;
     -fx-text-fill:white;
@@ -153,6 +162,27 @@
     
 }
 
+#boton_atras {
+    -fx-background-image: url('../imagenes/atras.png');
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-text-fill: transparent;
+    -fx-background-radius: 5em;
+    -fx-min-width: 40px;
+    -fx-min-height: 40px;
+    -fx-max-width: 40px;
+    -fx-max-height: 40px;
+    -fx-border-color:transparent;
+    -fx-background-color:transparent;
+}
+
+#boton_atras:pressed {
+    -fx-background-image: url('../imagenes/atras_hoover.png');
+     -fx-background-color:trasnparent;
+    
+}
+
 #botonuno {
     -fx-background-image: url('../imagenes/botonuno.png');
     -fx-background-position: center;
@@ -185,7 +215,68 @@
     -fx-background-size: cover;
     -fx-text-fill: transparent;
 }
+#botoncinco {
+    -fx-background-image: url('../imagenes/datos.png');
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-text-fill: transparent;
+}
+#botonseis {
+    -fx-background-image: url('../imagenes/empleado_boton.png');
+     -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-text-fill: transparent;
+    -fx-background-color: transparent; /* color de fondo sólido */
+    -fx-border-color: transparent; /* color del borde */
+}
+#botonsiete {
+    -fx-background-image: url('../imagenes/atraccion_boton.png');
+   -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-text-fill: transparent;
+    -fx-background-color: transparent; /* color de fondo sólido */
+    -fx-border-color: transparent; /* color del borde */
+}
+#botonocho {
+    -fx-background-image: url('../imagenes/restaurante_boton.png');
+    
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-text-fill: transparent;
+    -fx-background-color: transparent; /* color de fondo sólido */
+    -fx-border-color: transparent; /* color del borde */
+}
 
+#botoncinco:pressed {
+    -fx-background-image: url('../imagenes/datos_hoover.png');
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-text-fill: transparent;
+}
+
+#botonseis:pressed {
+    -fx-background-image: url('../imagenes/empleado_hoover.png');
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-text-fill: transparent;
+}
+#botonsiete:pressed {
+    -fx-background-image: url('../imagenes/atraccion_hoover.png');
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-text-fill: transparent;
+}
+#botonocho:pressed {
+    -fx-background-image: url('../imagenes/restaurante_hoover.png');
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-text-fill: transparent;
+}
 #botonuno:pressed {
     -fx-background-image: url('../imagenes/botonuno_hoover.png');
     -fx-background-position: center;
@@ -216,12 +307,21 @@
     -fx-background-size: cover;
     -fx-text-fill: transparent;
 }
+
+
 #gridpaneBotones{
     -fx-background-color: #323392;
 
 }
 #grid{
     -fx-background-image: url('../imagenes/fondo.png');
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+}
+
+#griduno{
+    -fx-background-image: url('../imagenes/fondoCuatro.png');
     -fx-background-position: center;
     -fx-background-repeat: no-repeat;
     -fx-background-size: cover;
@@ -242,6 +342,31 @@
 
 #gridcuatro{
     -fx-background-image: url('../imagenes/fondoCuatro.png');
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+}
+
+#gridcuatro{
+    -fx-background-image: url('../imagenes/imagen_fondo1.png');
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+}
+#gridcinco{
+    -fx-background-image: url('../imagenes/imagen_fondo2.png');
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+}
+#gridseis{
+    -fx-background-image: url('../imagenes/imagen_fondo3.png');
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+}
+#gridsiete{
+    -fx-background-image: url('../imagenes/imagen_fondo4.png');
     -fx-background-position: center;
     -fx-background-repeat: no-repeat;
     -fx-background-size: cover;

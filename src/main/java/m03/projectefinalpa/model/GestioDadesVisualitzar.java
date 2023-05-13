@@ -4,6 +4,8 @@
  */
 package m03.projectefinalpa.model;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import m03.projectefinalpa.model.classes.Horari;
 import java.sql.Connection;
 import java.sql.Date;
@@ -12,7 +14,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import m03.projectefinalpa.model.classes.EmpleadosClass;
@@ -26,12 +27,14 @@ import m03.projectefinalpa.model.classes.EmpleadosClass;
 
 public class GestioDadesVisualitzar {
     
+    //listamos todos los horarios de un restaurante durante un periodo de tiempo entre dos fechas pasadas. 
+    
     public ObservableList<Horari> llistaHorarisRestaurants(int id, LocalDateTime fechaEntrada, LocalDateTime fechasalida) {
         int contador = 0;
         int identificador;
 
-        ObservableList<Horari> horaris = FXCollections.observableArrayList();
-        ArrayList<Horari> horariosList = new ArrayList<>(); // ArrayList para almacenar los horarios
+        ObservableList<Horari> horariosList = FXCollections.observableArrayList();
+        
         
         //consulta que devuelve todos los horarios y el nombre de los empleados assignados, si no hay assignacion devuelve null en el campo nombre
         String sql = "SELECT horario.id, horario.fecha_inicio, horario.fecha_fin, empleado.id, empleado.nombre, empleado.email \n"
@@ -43,6 +46,8 @@ public class GestioDadesVisualitzar {
 
         Connection connection = new Connexio().connecta();
         try {
+            
+            //convertimos las fechas a LocalDate
             LocalDate fechaEntradaSQL = fechaEntrada.toLocalDate();
             LocalDate fechaSalidaSQL = fechasalida.toLocalDate();
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -54,7 +59,7 @@ public class GestioDadesVisualitzar {
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-
+                //revisamos primero los empleados y lo creamos en caso de que el nombre no sea null
                 int idEmpleado = resultSet.getInt(4);
                 String nombreEmpleado = resultSet.getString(5);
                 String email = resultSet.getString(6);
@@ -64,23 +69,32 @@ public class GestioDadesVisualitzar {
                 if (nombreEmpleado != null) {
                     empleado = new EmpleadosClass(idEmpleado, nombreEmpleado, email);
                 }
+                //ahora leemos el horario de entrada y salida, y lo convertimos a un LocalDateTime de la clase java
                 identificador = resultSet.getInt(1);
                 LocalDateTime fechaInicio = resultSet.getTimestamp(2).toLocalDateTime();
                 LocalDateTime fechaFin = resultSet.getTimestamp(3).toLocalDateTime();
+                //Creamos un horario.
                 Horari horario = new Horari(identificador, fechaInicio, fechaFin);
 
-                // Comprobar si el horario ya existe en la lista
+                // Comprobar si el horario ya existe en la lista mediante el metodo contains para que no se duplique la entrada. 
                 if (!horariosList.contains(horario)) {
-
+                    //si el horario no existe revisamos que el empleado no sea null para añadirlo en un nuevo array de empleados dentro del horario
                     if (empleado != null) {
                         horario.añadirEmpleado(empleado);
                     }
+                    // añadimos el horario con el nuevo array de empleados dentro la lista horariosList
                     horariosList.add(horario);
+                    //incrementamos el valor del contador para controlar cuantos elementos hay en la lista de horarios
                     contador++;
 
                 } else {
-
+                    
+                    
+                    // si  existe el horario, vamos a la ultima posicion de la lista mediante el contador y extraemos ese horari. 
                     Horari horari = horariosList.get(contador - 1);
+                    
+                    //volvemos a comprobar que el empleado no sea null para luego poder añadir el empleado con el metodo añadirEmpleado que comprueba que
+                    //no se duplique el empleado en caso de que sea asi (No debería ya que solo se asocia un usuario unico por horario)
                     if (empleado != null) {
                         horari.añadirEmpleado(empleado);
                     }
@@ -91,10 +105,7 @@ public class GestioDadesVisualitzar {
             System.out.println("Error: " + e.getMessage());
         }
 
-        // Añadir los horarios de la lista a la lista de horarios
-        horaris.addAll(horariosList);
-
-        return horaris;
+        return horariosList;
     }
 
     //llista tots els horaris de les atraccions, i dins la classe horaris tenim un arrayList d'empleats que anem afegint tots els empleats que fan aquell horari. 
@@ -102,8 +113,8 @@ public class GestioDadesVisualitzar {
         int contador = 0;
         int identificador;
 
-        ObservableList<Horari> horaris = FXCollections.observableArrayList();
-        ArrayList<Horari> horariosList = new ArrayList<>(); // ArrayList para almacenar los horarios
+        ObservableList<Horari> horariosList = FXCollections.observableArrayList();
+       
         String sql = "SELECT horario.id, horario.fecha_inicio, horario.fecha_fin, empleado.id, empleado.nombre, empleado.email \n"
                 + "from horario\n"
                 + "left join asignacion on asignacion.idHorario = horario.id\n"
@@ -166,9 +177,26 @@ public class GestioDadesVisualitzar {
             System.out.println("Error: " + e.getMessage());
         }
 
-        // Añadir los horarios de la lista a la lista de horarios
-        horaris.addAll(horariosList);
+    
+        return horariosList;
+    }
+    
+     // mètode per esborrar un horari amb un delet, passant per paramatre l'objecte
+    // Horari que té el id assignat.
+    public boolean esborraHorari(Horari horari) throws SQLException, FileNotFoundException, IOException {
+        boolean ok = false;
+        Connection connection = new Connexio().connecta();
+        String sql = "DELETE FROM horario WHERE id = ?";
+        PreparedStatement ordre = connection.prepareStatement(sql);
+        try {
+            ordre.setInt(1, horari.getId());
+            ordre.executeUpdate();
+            ok = true;
 
-        return horaris;
+        } catch (SQLException throwables) {
+            System.out.println("Error:" + throwables.getMessage());
+        }
+
+        return ok;
     }
 }

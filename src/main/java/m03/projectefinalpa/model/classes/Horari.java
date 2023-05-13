@@ -1,8 +1,7 @@
 package m03.projectefinalpa.model.classes;
 
-import java.sql.Date;
+
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
@@ -13,7 +12,8 @@ public class Horari {
     private LocalDateTime fecha_fin;
     private int idAtraccion;
     private int idRestaurante;
-    private ZonaTrabajo zona;
+    private ZonaTrabajo zona;// he trabajado tambien con esta variable, para unificar el idAtraccion e idRestaurante en la clase "GestioDadesEmpleados", ya
+                             // que con la consulta, podia controlar los nulos y que solo devolviera uno de los dos valores. 
     private ArrayList<EmpleadosClass> Empleado;
 
     public Horari(LocalDateTime fecha_inici, LocalDateTime fecha_fin, int idAtraccion, int idRestaurante) {
@@ -41,20 +41,6 @@ public class Horari {
         this.id = id;
         this.fecha_inici = fecha_inici;
         this.fecha_fin = fecha_fin;
-        this.zona = zona;
-    }
-
-    public Horari(Date fecha_inici, Date fecha_fin, int idAtraccion, int idRestaurante) {
-        this.fecha_inici = fecha_inici.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-        this.fecha_fin = fecha_fin.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-        this.idAtraccion = idAtraccion;
-        this.idRestaurante = idRestaurante;
-    }
-
-    public Horari(int id, Date fecha_inici, Date fecha_fin, ZonaTrabajo zona) {
-        this.id = id;
-        this.fecha_inici = fecha_inici.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-        this.fecha_fin = fecha_fin.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
         this.zona = zona;
     }
 
@@ -146,6 +132,8 @@ public class Horari {
 
     @Override
     public String toString() {
+        
+        // convertimos las fechas en texto 
 
         String fecha_inicio = convertirHoras(fecha_inici);
         String data = convertirDies(fecha_inici);
@@ -153,8 +141,10 @@ public class Horari {
 
         String result;
 
+        // si el empleado es diferente a nullo o vacio (he tenido que comprobar las dos, ya que al comprobar solo uno daba errores)
         if (Empleado != null && !Empleado.isEmpty()) {
 
+            // revisamos el array y ponemos todos los nombres de los empleados separados por coma
             String empleados = "";
             for (int i = 0; i < Empleado.size(); i++) {
                 empleados += Empleado.get(i).toString();
@@ -162,11 +152,16 @@ public class Horari {
                     empleados += ", ";
                 }
             }
+            // añadimos las fechas y los empleados assignados. 
             result = data + " " + fecha_inicio + "-" + fecha_final + " Assignat: " + empleados;
         } else {
-
+            // en caso de que no haya empleados asignados hay dos posibilidades
             if (this.zona != null) {
+                
+                // si hay zona asignada e imprimimos su zonas
                 result = data + " " + fecha_inicio + "-" + fecha_final + this.zona.toString();
+                
+                // cuando no hay zona asignada, no la incluimos (eso es para evitar la variable zona que se utiliza en en unas vistas y otras no)
             } else {
                 result = data + " " + fecha_inicio + "-" + fecha_final;
 
@@ -175,7 +170,7 @@ public class Horari {
 
         return result;
     }
-
+//metodos para convertir las horas en texto y dias en texto. 
     public String convertirHoras(LocalDateTime fecha) {
         String hores;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");

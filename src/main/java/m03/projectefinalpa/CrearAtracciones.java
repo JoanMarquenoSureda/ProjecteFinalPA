@@ -5,6 +5,7 @@
 package m03.projectefinalpa;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Optional;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -13,17 +14,9 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import m03.projectefinalpa.model.GestioDadesDatosAtraccion;
-import m03.projectefinalpa.model.GestioDadesDatosEmpleado;
 import m03.projectefinalpa.model.classes.Atraccio;
-import m03.projectefinalpa.model.classes.EmpleadosClass;
 
-/**
- *
- * @author User
- */
 public class CrearAtracciones {
 
     @FXML
@@ -45,55 +38,71 @@ public class CrearAtracciones {
     Button modificar;
     @FXML
     Button eliminar;
+    @FXML
+    Button buscar;
 
-    String nombreDatos;
-    String alturaDatos;
-    String descripcionDatos;
-    String tipoDatos;
-    String ubicacionDatos;
+    String nombreDatos; //guardaremos el nombre de la Atraccion del textfield nombre
+    int alturaDatos; // guardaremos la altura
+    String descripcionDatos; // los datos del campo de descripcion
+    String tipoDatos; // los datos de tipo atraccion
+    String ubicacionDatos; //su ubicacion
 
-    GestioDadesDatosAtraccion dades = new GestioDadesDatosAtraccion();
-    Atraccio atraccion;
+    GestioDadesDatosAtraccion dades = new GestioDadesDatosAtraccion(); // gestionaremos la base de datos desde datosAtraccion
+    Atraccio atraccion; //para guardar el objeto atraccion
 
     @FXML
     public void agregarAtraccion() {
-
-        if (tipo.getValue() == null || ubicacion.getValue() == null || altura.getText().equals("") || descripcion.getText().equals("") || nombre.getText().equals("")) {
-            alerta("Debe completar todos los campos");
-        } else {
-            try {
+        try {
+            // Comprobar que no estén vacíos los campos
+            if (tipo.getValue() == null || ubicacion.getValue() == null || altura.getText().equals("") || descripcion.getText().equals("") || nombre.getText().equals("")) {
+                alerta("Debe completar todos los campos");
+            } else {
                 // Obtener los datos ingresados por el usuario
                 nombreDatos = nombre.getText();
                 tipoDatos = tipo.getValue().toString();
                 ubicacionDatos = ubicacion.getValue().toString();
-                alturaDatos = altura.getText();
-                descripcionDatos = descripcion.getText();
-
-                // Insertar la nueva atracción en la base de datos
-                Atraccio atraccion = new Atraccio(nombreDatos, tipoDatos, ubicacionDatos, alturaDatos, descripcionDatos);
-                boolean exito = dades.insertarAtraccion(atraccion);
-
-                if (exito) {
-                    alerta("Atracción agregada con éxito");
-                    vaciar();
+                alturaDatos = Integer.parseInt(altura.getText());
+                
+                //comprobamos que el dato no sea superior a 200cm
+                if (alturaDatos < 0 || alturaDatos > 200) {
+                    alerta("La altura no puede superar los 200 cm");
                 } else {
-                    alerta("La atracción ya está registrada");
+                    descripcionDatos = descripcion.getText();
+
+                    // Crear el objeto atraccion con los datos ingresados
+                    atraccion = new Atraccio(nombreDatos, tipoDatos, ubicacionDatos, alturaDatos, descripcionDatos);
+
+                    // Insertar la nueva atracción en la base de datos
+                    boolean exito = dades.insertarAtraccion(atraccion);
+
+                    if (exito) {
+                        alerta("Atracción agregada con éxito");
+                        vaciar();
+                    } else {
+                        alerta("La atracción ya está registrada");
+                    }
                 }
-            } catch (Exception e) {
-                alerta(e.getMessage());
             }
+        } catch (NumberFormatException e) {
+            alerta("La altura mínima tiene que ser con valores numéricos");
+        } catch (IOException | SQLException e) {
+            alerta(e.getMessage());
         }
     }
 
     @FXML
     public void modificarAtraccion() {
+
+        //comprobamos que no estén vacios los campos
         if (tipo.getValue() == null || ubicacion.getValue() == null || altura.getText().equals("") || descripcion.getText().equals("") || nombre.getText().equals("")) {
             alerta("Debe completar todos los campos");
         } else {
+            //si no hay texto en el campo buscar, (improbable caso ya que està deshabilitado el boton para que el usuario no pueda borrarlo)
             if (nombreAtraccion.getText().equals("")) {
                 alerta("Debes añadir un valor a buscar para modificarlo");
 
             } else {
+                //confirarmos si quiere modificar los cambios.  
                 int conf = Confirmacion("¿Desea modificar la atracción " + nombreAtraccion.getText() + "?");
                 if (conf == 1) {
                     try {
@@ -102,22 +111,32 @@ public class CrearAtracciones {
                         nombreDatos = nombre.getText();
                         tipoDatos = tipo.getValue().toString();
                         ubicacionDatos = ubicacion.getValue().toString();
-                        alturaDatos = altura.getText();
-                        descripcionDatos = descripcion.getText();
+                        alturaDatos = Integer.parseInt(altura.getText());
+                        //comprobamos que el dato no sea superior a 200cm
+                        if (alturaDatos < 0 || alturaDatos > 200) {
+                            alerta("La altura no puede superar los 200 cm");
 
-                        // Crear el objeto atraccion con los datos actualizados
-                        Atraccio atraccionModificada = new Atraccio(nombreDatos, tipoDatos, ubicacionDatos, alturaDatos, descripcionDatos);
-
-                        // Actualizar la atracción en la base de datos pasando su antiguo nombre para que sea la clave única, y todos los datos modificados.
-                        boolean exito = dades.modificarAtraccion(nombreBuscado, atraccionModificada);
-
-                        if (exito) {
-                            alerta("Atracción modificada con éxito");
-                            vaciar();
                         } else {
-                            alerta("No se ha podido modificar la atracción");
+                            descripcionDatos = descripcion.getText();
+
+                            // Crear el objeto atraccion con los datos actualizados
+                            Atraccio atraccionModificada = new Atraccio(nombreDatos, tipoDatos, ubicacionDatos, alturaDatos, descripcionDatos);
+
+                            // Actualizar la atracción en la base de datos pasando su antiguo nombre por si también quiere modificar el nombre
+                            //, por eso lo extraemos del nombre buscado y no del propio objeto. Tambien pasamos el objeto con los datos nuevos a modificar
+                            boolean exito = dades.modificarAtraccion(nombreBuscado, atraccionModificada);
+
+                            if (exito) {
+                                alerta("Atracción modificada con éxito");
+                                vaciar();
+                            } else {
+                                alerta("No se ha podido modificar la atracción");
+                            }
                         }
-                    } catch (Exception e) {
+                        //comprobamos que el valor en altura sea numérico. 
+                    } catch (NumberFormatException e) {
+                        alerta("La altura mínima tiene que ser con valores numéricos");
+                    } catch (IOException | SQLException e) {
                         alerta(e.getMessage());
                     }
                 }
@@ -125,7 +144,7 @@ public class CrearAtracciones {
         }
     }
 
-    @FXML
+    @FXML //metodo para eliminar una atraccion según el valor del nombre, que es clave única
     public void eliminarAtraccion() {
 
         if (nombreAtraccion.getText().equals("")) {
@@ -142,14 +161,14 @@ public class CrearAtracciones {
                     } else {
                         alerta("No se pudo eliminar la atracción");
                     }
-                } catch (Exception e) {
+                } catch (IOException | SQLException e) {
                     alerta(e.getMessage());
                 }
             }
         }
     }
 
-    @FXML
+    @FXML //buscamos una atracción por el valor buscado, nombre, ya que es clave única
     public void buscarAtraccion() {
 
         if (nombreAtraccion.getText().equals("")) {
@@ -161,11 +180,11 @@ public class CrearAtracciones {
 
                 if (atraccion != null) {
 
-                    // Mostrar los datos de la atracción encontrada en los campos correspondientes
+                    // Mostramos los datos de la atracción encontrada en los campos correspondientes
                     nombre.setText(atraccion.getNombre());
                     tipo.setValue(atraccion.getTipo());
                     ubicacion.setValue(atraccion.getUbicacion());
-                    altura.setText(atraccion.getAlturaminima());
+                    altura.setText(atraccion.getAlturaminima() + "");
                     descripcion.setText(atraccion.getDescripcion());
 
                     ordenBotonesModificar();
@@ -180,7 +199,7 @@ public class CrearAtracciones {
     }
 
     public void initialize() {
-        // Agregar los elementos al ComboBox
+        // Agregamos los elementos a los combo box 
         tipo.getItems().addAll("Adrenalítica", "Infantil", "Acuática", "Familiar", "Infantil");
         ubicacion.getItems().addAll("Sésamo Aventura", "China", "Mediterranea", "Méjico", "Polinesia", "Far West");
 
@@ -194,6 +213,7 @@ public class CrearAtracciones {
         alerta.show();
     }
 
+    //reiniciamos los campos como si volvieramos a recargar la página
     private void reiniciarCampos() {
 
         nombreAtraccion.setText("");
@@ -205,23 +225,32 @@ public class CrearAtracciones {
 
     }
 
+    // a parte de recargar, si pulsamos el boton limpiar, vaciaremos todos los campos y pondremos los botones de crear habilitados. 
     public void vaciar() {
 
         reiniciarCampos();
         ordenBotonesHabilitar();
     }
 
+    // es para habilitar los botones de modificar y eliminar, para deshabilitar el de crear. Así hay un control de errores. 
     private void ordenBotonesModificar() {
         agregar.setDisable(true);
         eliminar.setDisable(false);
         modificar.setDisable(false);
+        nombreAtraccion.setEditable(false);// ponemos que no se pueda editar ya que cuando modifiquemos los campos, se extraera de aqui por
+        //si se quiere tambien modificar el nombre de la atraccion. 
+        buscar.setDisable(true);
 
     }
 
+    // sería al revés de la anterior funcion, habilitamos poder agregar una atraccion, pero dehabilitamos poder modificarla o eliminarla. 
     private void ordenBotonesHabilitar() {
         agregar.setDisable(false);
         eliminar.setDisable(true);
         modificar.setDisable(true);
+        nombreAtraccion.setEditable(true);
+
+        buscar.setDisable(false);
 
     }
 

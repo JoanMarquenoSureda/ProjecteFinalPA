@@ -20,7 +20,6 @@ import java.time.LocalDate;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import m03.projectefinalpa.model.classes.EmpleadosClass;
-import m03.projectefinalpa.model.classes.ZonaTrabajo;
 
 /**
  *
@@ -127,7 +126,7 @@ public class GestioDadesCrearYAsignar {
     // llista tots els restaurant amb tots els camps dels restautants.
     public ObservableList<Restaurant> llistaRestaurants() {
         ObservableList<Restaurant> llistaRestaurants = FXCollections.observableArrayList();
-        String sql = "SELECT id, nombre, tipoComida, ubicacion FROM restaurante";
+        String sql = "SELECT id, nombre, tipoComida, ubicacion, descripcion FROM restaurante";
         Connection connection = new Connexio().connecta();
         try {
             Statement ordre = connection.createStatement();
@@ -137,7 +136,8 @@ public class GestioDadesCrearYAsignar {
                         resultSet.getInt(1),
                         resultSet.getString(2),
                         resultSet.getString(3),
-                        resultSet.getString(4));
+                        resultSet.getString(4),
+                        resultSet.getString(5));
                 llistaRestaurants.add(restaurante);
             }
             connection.close();
@@ -189,25 +189,6 @@ public class GestioDadesCrearYAsignar {
         return ok;
     }
 
-    // mètode per esborrar un horari amb un delet, passant per paramatre l'objecte
-    // Horari que té el id assignat.
-    public boolean esborraHorari(Horari horari) throws SQLException, FileNotFoundException, IOException {
-        boolean ok = false;
-        Connection connection = new Connexio().connecta();
-        String sql = "DELETE FROM horario WHERE id = ?";
-        PreparedStatement ordre = connection.prepareStatement(sql);
-        try {
-            ordre.setInt(1, horari.getId());
-            ordre.executeUpdate();
-            ok = true;
-
-        } catch (SQLException throwables) {
-            System.out.println("Error:" + throwables.getMessage());
-        }
-
-        return ok;
-    }
-
     // mètode que inserta un horari a un empleat, passats per paràmetres, on agafa
     // l'id de cada un i ho afegeix a la taula asignación.
     public String assignarHoraris(Horari horari, EmpleadosClass empleat)
@@ -223,11 +204,13 @@ public class GestioDadesCrearYAsignar {
             ordre.executeUpdate();
             ok = true;
 
-        } catch (SQLException throwables) {
-            missatge = throwables.getMessage() + "";
-
+        } catch (SQLException e) {
+            if ("45000".equals(e.getSQLState())) {
+               missatge = e.getMessage();
+            } else if (e.getMessage().contains("Duplicate entry")) {
+               missatge = e.getMessage();
+            } 
         }
-
         return missatge;
     }
 

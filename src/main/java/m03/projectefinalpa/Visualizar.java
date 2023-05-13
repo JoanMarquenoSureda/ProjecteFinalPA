@@ -5,18 +5,20 @@
 package m03.projectefinalpa;
 
 import java.io.IOException;
-import java.net.URL;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ResourceBundle;
+import java.util.Optional;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.SelectionMode;
 import m03.projectefinalpa.model.classes.Atraccio;
 import m03.projectefinalpa.model.GestioDadesCrearYAsignar;
 import m03.projectefinalpa.model.GestioDadesVisualitzar;
@@ -46,12 +48,14 @@ public class Visualizar {
     int idZona;
     ObservableList<Horari> horariRestaurants = FXCollections.observableArrayList();
     ObservableList<Horari> horariAtraccions = FXCollections.observableArrayList();
-    ObservableList<Atraccio> llistaAtraccions = gestioDades.llistaAtraccio(); // llistem totes les atraccions quan
-                                                                              // iniciem
-    ObservableList<Restaurant> llistaRestaurant = gestioDades.llistaRestaurants();// llistem tots els restaurants quan
-                                                                                  // iniciem
+    ObservableList<Atraccio> llistaAtraccions = gestioDades.llistaAtraccio(); // llistem totes les atraccions quan iniciem
+    ObservableList<Restaurant> llistaRestaurant = gestioDades.llistaRestaurants();// llistem tots els restaurants quan iniciem
 
+    @FXML //metodo para buscar un horario de una zona entre varias fechas. 
     public void buscar() {
+        
+         // para hacer seleccion multiple de horarios.        
+        listViewHorarios.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         // comprobar si hay alguna zona seleccionada
         if (desplegableZona.getSelectionModel().getSelectedIndex() >= 0 && calendarioDesde.getValue() != null
@@ -74,7 +78,7 @@ public class Visualizar {
                 // horas y minutos.
                 // Añadimos a la fecha la hora del inicio del dia a los dos y al hasta,
                 // devolvemos un dia mas.
-                LocalDateTime diadesdelocal = diaDesde.atStartOfDay();
+                LocalDateTime diadesdelocal = diaDesde.atStartOfDay(); // se pondrá la hora y mm :(00:00)
                 LocalDateTime diahastalocal = diaHasta.atStartOfDay().plusDays(1);
 
                 // si seleccionamos atacciones:
@@ -112,6 +116,44 @@ public class Visualizar {
                 alerta("Datos erróneos");
             }
 
+        } else {
+             alerta("Debes completar los campos antes de buscar un horario");
+        }
+
+    }
+    
+    // metodo borrar del button borrar, que borra un horario seleccionado del
+    // listView.
+    @FXML
+    public void esborrar() throws SQLException, IOException {
+
+        // revisamos si hay alguna fila seleccionada
+        if (listViewHorarios.getSelectionModel().getSelectedIndex() != -1) {
+
+            // enviamos la alerta de confirmacion y vemos la opcion escogida por el usuario=
+            // 1.Borrar, 0.Cancelar
+            int confirmacion = Confirmacion();
+
+            // si el usuario decide borrar,
+            if (confirmacion == 1) {
+
+                // obtenemos los horarios seleccionados, ya que pueden ser varios.
+                ObservableList<Horari> horaris = listViewHorarios.getSelectionModel().getSelectedItems();
+
+                // enviamos la lista de horrarios a al metodo de gestiodades "esborrarhorari", y los borramos, recorriendo el array. 
+                for (int i = 0; i < horaris.size(); i++) {
+                    gestioDadesVisualitzar.esborraHorari(horaris.get(i));
+                }
+
+                // Limpiamos el listViewHorarios y lo actualizamos con el horario borrado.
+                listViewHorarios.getItems().clear();
+                buscar();
+
+            }
+
+            // Si no hay nada seleccionado enviamos una alerta
+        } else {
+            alerta("Selecciona un horario para borrarlo");
         }
 
     }
@@ -143,6 +185,25 @@ public class Visualizar {
         }
 
     }
+    // alerta de confirmación, para eliminar el horario.
+    private int Confirmacion() {
+        int valor;
+        Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
+        alerta.setContentText("¿Desea eliminar este horario?");
+        ButtonType buttonTypeAceptar = new ButtonType("Aceptar");
+        ButtonType buttonTypeCancelar = new ButtonType("Cancelar");
+        alerta.getButtonTypes().setAll(buttonTypeAceptar, buttonTypeCancelar);
+
+        Optional<ButtonType> result = alerta.showAndWait();
+        if (result.get() == buttonTypeAceptar) {
+            valor = 1;
+        } else {
+            valor = 0;
+        }
+
+        return valor;
+    }
+
 
     private void cargarAtracciones() {
 

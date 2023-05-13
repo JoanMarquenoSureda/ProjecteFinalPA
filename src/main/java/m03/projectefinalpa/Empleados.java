@@ -2,13 +2,13 @@ package m03.projectefinalpa;
 
 import javafx.scene.image.Image;
 import java.io.IOException;
-import java.io.InputStream;
 import java.sql.SQLException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import m03.projectefinalpa.model.GestioDadesEmpleados;
@@ -39,29 +39,24 @@ public class Empleados {
 
     @FXML
     public void buscar() throws SQLException {
+        horarios.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
-        horarios.getItems().clear();
         // comprobem que el camp no estigui buit
-        if (!dniEmpleado.equals("")) {
-            // guardem el text del nom
-             dni = dniEmpleado.getText();
-
-            // feim les dues consultes amb el nom cercat i retornem un empleat i una llista
-            // d'horaris.
+        if (!dniEmpleado.getText().equals("")) {
+            // guardem el text del dni
+            dni = dniEmpleado.getText();
+            // retornem l'empleat amb els camps
             empleado = gestioDades.dadesEmpleat(dni);
-            horaris = gestioDades.horariPerEmpleat(dni);
-
-            // si l'empleat retorna null és que no hi ha empleats amb el nom cercat
+            // si l'empleat és null és que no hi ha empleats amb el nom cercat
             if (empleado != null) {
-
                 // omplim els camps amb les dades de l'empleat
                 rellenarCampos(empleado);
+                //carreguem els seus horaris
+                CargarHorarios();
+                // si té foto assignada la posem dins el imageView
+                if (empleado.getFotoImage() != null) {
 
-                // si té foto assignada, la convertim en una Image i la posem dins el imageView
-                if (empleado.getFoto() != null) {
-                    InputStream is = empleado.getFoto().getBinaryStream();
-                    Image image = new Image(is);
-                    foto.setImage(image);
+                    foto.setImage(empleado.getFotoImage());
 
                     // Ajustem la image al recuadre del imageView
                     foto.setPreserveRatio(true);
@@ -69,18 +64,8 @@ public class Empleados {
 
                     // si no té foto, posem una imatge genèrica per defecte.
                 } else {
-                    Image image1 = new Image(
-                            getClass()
-                                    .getResourceAsStream(
-                                            "imagenes/fotoPersona.png"));
+                    Image image1 = new Image(getClass().getResourceAsStream("imagenes/fotoPersona.png"));
                     foto.setImage(image1);
-
-                }
-
-                // si hi ha horaris associats, els posem dins el listView dels horarios. Si no,
-                // posem missatge genèric
-                if (horaris != null) {
-                    horarios.getItems().addAll(horaris);
                 }
 
                 // si no troba l'empleat enviem una alerta
@@ -96,6 +81,39 @@ public class Empleados {
 
     }
 
+    @FXML
+    private void eliminarAsignacion() {
+        boolean exito= false;
+        // Obtenemos el índice del elemento seleccionado en el ListView
+        int index = horarios.getSelectionModel().getSelectedIndex();
+        if (index >= 0) { // Si se ha seleccionado un elemento
+
+            try {
+                horaris.clear();
+                // Obtenemos el elemento seleccionado en el ListView
+               horaris = horarios.getSelectionModel().getSelectedItems();
+
+                for (Horari horarioObjeto : horaris) {
+                    
+                    exito = gestioDades.eliminarAsociacionEmpleado(horarioObjeto, empleado);
+                }
+
+                if (exito) {
+                    alerta("Asignación eliminada");
+                    CargarHorarios();
+
+                } else {
+                    alerta("No se pudo eliminar la asignación");
+                }
+            } catch (IOException | SQLException e) {
+                alerta(e.getMessage());
+            }
+
+        } else {
+            alerta("Ningún horario seleccionado.");
+        }
+    }
+
     // en caso de que no haya datos, reiniciamos los campos por defecto.
     private void borrarCampos() {
         nombre.setText("");
@@ -104,6 +122,7 @@ public class Empleados {
         correo.setText("");
         Image image1 = new Image(getClass().getResourceAsStream("imagenes/fotoPersona.png"));
         foto.setImage(image1);
+        horarios.getItems().clear();
 
     }
 
@@ -142,6 +161,18 @@ public class Empleados {
     @FXML
     private void cambiarPantallaEditar() throws IOException {
         App.setRoot("Ingresar_Datos");
+    }
+
+    private void CargarHorarios() {
+        horarios.getItems().clear();
+
+        horaris = gestioDades.horariPerEmpleat(dni);
+        // si hi ha horaris associats, els posem dins el listView dels horarios. 
+
+        if (horaris != null) {
+            horarios.getItems().addAll(horaris);
+        }
+
     }
 
 }

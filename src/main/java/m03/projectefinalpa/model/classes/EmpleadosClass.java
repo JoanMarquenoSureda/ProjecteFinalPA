@@ -1,7 +1,6 @@
 
 package m03.projectefinalpa.model.classes;
 
-import java.sql.Blob;
 import java.util.ArrayList;
 import javafx.scene.image.Image;
 
@@ -15,20 +14,10 @@ public class EmpleadosClass {
     private String telefono;
     private String email;
     private String categoria;
-    private Blob fotoBlob;
     private Image fotoImage;
  
     private ArrayList<Horari> listaHorario;
 
-    public EmpleadosClass(String dni, String nombre, String direccion, String telefono, String email, String categoria, Blob foto) {
-        this.dni = dni;
-        this.nombre = nombre;
-        this.direccion = direccion;
-        this.telefono = telefono;
-        this.email = email;
-        this.fotoBlob = foto;
-        this.categoria = categoria;
-    }
 
     public EmpleadosClass(String dni, String nombre, String direccion, String telefono, String email, String categoria, Image fotoImage) {
         this.dni = dni;
@@ -39,9 +28,7 @@ public class EmpleadosClass {
         this.categoria = categoria;
         this.fotoImage = fotoImage;
     }
-    
-    
-
+  
     public EmpleadosClass(String dni, String nombre, String direccion, String telefono, String email, String categoria) {
         this.dni = dni;
         this.nombre = nombre;
@@ -50,20 +37,16 @@ public class EmpleadosClass {
         this.email = email;
         this.categoria = categoria;
     }
-    
-    
 
-    
-
-    public EmpleadosClass(String nombre, String direccion, String telefono, String email, Blob foto) {
+    public EmpleadosClass(int id, String nombre, String direccion, String telefono, String email, Image fotoImage) {
+        this.id = id;
         this.nombre = nombre;
         this.direccion = direccion;
         this.telefono = telefono;
         this.email = email;
-        this.fotoBlob = foto;
+        this.fotoImage = fotoImage;
     }
-    
-    
+     
     
     public EmpleadosClass(int id, String nombre) {
         this.id = id;
@@ -91,7 +74,6 @@ public class EmpleadosClass {
     public void setFotoImage(Image fotoImage) {
         this.fotoImage = fotoImage;
     }
-     
      
 
     public int getId() {
@@ -134,24 +116,7 @@ public class EmpleadosClass {
     public void setEmail(String email) {
         this.email = email;
     }
-
-    public Blob getFoto() {
-        return fotoBlob;
-    }
-
-    public void setFoto(Blob foto) {
-        this.fotoBlob = foto;
-    }
-
-
-    public void setFotoBlob(Blob fotoBlob) {
-        this.fotoBlob = fotoBlob;
-    }
-
     
-    
-
-   
     public String getCategoria() {
         return categoria;
     }
@@ -160,7 +125,6 @@ public class EmpleadosClass {
         this.categoria = categoria;
     }
 
-   
 
     public ArrayList<Horari> getListaHorario() {
         return listaHorario;

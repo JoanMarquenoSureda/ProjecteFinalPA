@@ -37,14 +37,14 @@
                         <Button id="botondos" mnemonicParsing="false" onAction="#cambiarPantallaAsignar" prefHeight="133.0" prefWidth="175.0" text="Button" GridPane.rowIndex="1" />
                         <Button id="botontres" mnemonicParsing="false" onAction="#cambiarPantallaVisualizar" prefHeight="137.0" prefWidth="174.0" text="Button" GridPane.rowIndex="2" />
                         <Button id="botoncuatro" mnemonicParsing="false" prefHeight="134.0" prefWidth="180.0" text="Button" GridPane.rowIndex="3" />
-                        <Button id="botoncuatro" mnemonicParsing="false" onAction="#cambiarPantallaEditar" prefHeight="134.0" prefWidth="180.0" text="Button" GridPane.rowIndex="4" />
+                        <Button id="botoncinco" mnemonicParsing="false" onAction="#cambiarPantallaEditar" prefHeight="134.0" prefWidth="180.0" text="Button" GridPane.rowIndex="4" />
                      </children>
                   </GridPane>
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="417.0" prefWidth="447.0">
                <children>
-                  <GridPane id="grid" fx:id="gridPane" prefHeight="453.6" prefWidth="447.2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <GridPane id="grid" fx:id="gridPane" prefHeight="648.0" prefWidth="522.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="111.20001220703125" minWidth="0.0" prefWidth="12.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="507.20001220703125" minWidth="10.0" prefWidth="493.0" />
@@ -58,8 +58,8 @@
                         <RowConstraints maxHeight="280.19998397827146" minHeight="15.0" prefHeight="15.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="280.0" minHeight="15.0" prefHeight="15.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="320.79998779296875" minHeight="15.0" prefHeight="15.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="320.79998779296875" minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="320.79998779296875" minHeight="40.0" prefHeight="124.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="320.79998779296875" minHeight="23.0" prefHeight="34.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="320.79998779296875" minHeight="40.0" prefHeight="177.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
                         <Button id="boton1" fx:id="boton1" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#buscar" prefHeight="30.0" prefWidth="516.0" text="BUSCAR" GridPane.columnIndex="1" GridPane.rowIndex="1">
@@ -78,7 +78,7 @@
                               <Image url="@imagenes/logo.png" />
                            </image>
                         </ImageView>
-                        <Label alignment="BOTTOM_CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="543.0" text="INFORMACIÓN EMPLEADOS" GridPane.columnSpan="4">
+                        <Label alignment="BOTTOM_CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="543.0" text="HORARIOS EMPLEADOS" GridPane.columnSpan="4">
                            <font>
                               <Font name="Gill Sans MT Bold" size="12.0" />
                            </font>
@@ -140,14 +140,22 @@
                               <Insets left="70.0" right="260.0" />
                            </GridPane.margin>
                         </TextField>
-                        <ListView fx:id="horarios" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                        <ListView fx:id="horarios" prefHeight="180.0" prefWidth="353.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
                            <opaqueInsets>
                               <Insets />
                            </opaqueInsets>
                            <GridPane.margin>
-                              <Insets bottom="10.0" />
+                              <Insets bottom="20.0" right="150.0" />
                            </GridPane.margin>
                         </ListView>
+                        <Button id="boton1" fx:id="boton11" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#eliminarAsignacion" prefHeight="51.0" prefWidth="128.0" text="ELIMINAR ASIGNACION" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                           <font>
+                              <Font name="Gill Sans MT Bold" size="12.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets bottom="20.0" left="350.0" />
+                           </GridPane.margin>
+                        </Button>
                      </children>
                   </GridPane>
                </children>

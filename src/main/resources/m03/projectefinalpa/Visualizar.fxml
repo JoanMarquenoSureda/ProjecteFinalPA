@@ -40,14 +40,14 @@
                         <Button id="botondos" mnemonicParsing="false" onAction="#cambiarPantallaAsignar" prefHeight="133.0" prefWidth="175.0" text="Button" GridPane.rowIndex="1" />
                         <Button id="botontres" mnemonicParsing="false" prefHeight="137.0" prefWidth="174.0" text="Button" GridPane.rowIndex="2" />
                         <Button id="botoncuatro" mnemonicParsing="false" onAction="#cambiarPantallaEmpleados" prefHeight="134.0" prefWidth="180.0" text="Button" GridPane.rowIndex="3" />
-                        <Button id="botoncuatro" mnemonicParsing="false" onAction="#cambiarPantallaEditar" prefHeight="134.0" prefWidth="180.0" text="Button" GridPane.rowIndex="4" />
+                        <Button id="botoncinco" mnemonicParsing="false" onAction="#cambiarPantallaEditar" prefHeight="134.0" prefWidth="180.0" text="Button" GridPane.rowIndex="4" />
                      </children>
                   </GridPane>
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="417.0" prefWidth="447.0">
                <children>
-                  <GridPane id="gridcuatro" fx:id="gridPane" prefHeight="453.6" prefWidth="447.2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <GridPane id="gridtres" fx:id="gridPane" prefHeight="453.6" prefWidth="447.2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="111.20001220703125" minWidth="2.4000244140625" prefWidth="12.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="254.0" minWidth="10.0" prefWidth="245.0" />
@@ -66,12 +66,12 @@
                         <RowConstraints maxHeight="320.79998779296875" minHeight="10.0" prefHeight="54.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <Button id="boton1" fx:id="boton1" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#buscar" prefHeight="30.0" prefWidth="115.0" text="BUSCAR" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="8">
+                        <Button id="boton1" fx:id="boton1" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#buscar" prefHeight="30.0" prefWidth="115.0" text="BUSCAR" GridPane.columnIndex="1" GridPane.rowIndex="8">
                            <font>
                               <Font name="Gill Sans MT Bold" size="12.0" />
                            </font>
                            <GridPane.margin>
-                              <Insets bottom="20.0" left="187.0" />
+                              <Insets bottom="20.0" left="110.0" />
                            </GridPane.margin>
                         </Button>
                         <ImageView fitHeight="23.0" fitWidth="444.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
@@ -135,7 +135,7 @@
                               <Font name="Gill Sans MT Bold" size="12.0" />
                            </font>
                         </Label>
-                        <DatePicker fx:id="calendarioDesde" disable="true" prefHeight="28.0" prefWidth="174.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                        <DatePicker fx:id="calendarioDesde" disable="true" editable="false" prefHeight="28.0" prefWidth="174.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
                         <Label prefHeight="72.0" prefWidth="226.0" text="Hasta:" GridPane.columnIndex="1" GridPane.rowIndex="5">
                            <padding>
                               <Insets left="20.0" />
@@ -144,7 +144,15 @@
                               <Font name="Gill Sans MT Bold" size="12.0" />
                            </font>
                         </Label>
-                        <DatePicker fx:id="calendarioHasta" disable="true" prefHeight="28.0" prefWidth="174.0" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                        <DatePicker fx:id="calendarioHasta" disable="true" editable="false" prefHeight="28.0" prefWidth="174.0" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                        <Button id="boton2" mnemonicParsing="false" onAction="#esborrar" prefHeight="30.0" prefWidth="115.0" text="BORRAR" GridPane.columnIndex="2" GridPane.rowIndex="8">
+                           <font>
+                              <Font name="Gill Sans MT Bold" size="12.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets bottom="20.0" left="20.0" />
+                           </GridPane.margin>
+                        </Button>
                      </children>
                   </GridPane>
                </children>

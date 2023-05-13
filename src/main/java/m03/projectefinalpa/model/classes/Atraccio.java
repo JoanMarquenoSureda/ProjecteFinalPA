@@ -9,7 +9,7 @@ public class Atraccio extends ZonaTrabajo {
 
     private String descripcion;
     private String tipo;
-    private String alturaminima;
+    private int alturaminima;
 
     public Atraccio(int id, String nombre, String descripcion, String tipo, String ubicacion) {
         super(id, nombre, ubicacion);
@@ -17,16 +17,13 @@ public class Atraccio extends ZonaTrabajo {
         this.tipo = tipo;
         
     }
-    
 
-    public Atraccio(String nombre, String tipo, String ubicacion, String alturaminima, String descripcion) {
+    public Atraccio(String nombre, String tipo, String ubicacion, int alturaminima, String descripcion) {
         super(nombre, ubicacion);
         this.descripcion = descripcion;
         this.tipo = tipo;
         this.alturaminima = alturaminima;
     }
-    
-    
 
     public String getDescripcion() {
         return descripcion;
@@ -44,19 +41,12 @@ public class Atraccio extends ZonaTrabajo {
         this.tipo = tipo;
     }
 
-    public String getAlturaminima() {
+    public int getAlturaminima() {
         return alturaminima;
     }
 
-    public void setAlturaminima(String alturaminima) {
+    public void setAlturaminima(int alturaminima) {
         this.alturaminima = alturaminima;
-    }
-
-    
-
-    @Override
-    public String toString() {
-        return super.toString();
     }
 
 }

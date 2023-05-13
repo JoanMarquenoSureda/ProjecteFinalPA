@@ -40,14 +40,14 @@
                         <Button id="botondos" mnemonicParsing="false" onAction="#cambiarPantallaAsignar" prefHeight="133.0" prefWidth="175.0" text="Button" GridPane.rowIndex="1" />
                         <Button id="botontres" mnemonicParsing="false" onAction="#cambiarPantallaVisualizar" prefHeight="137.0" prefWidth="174.0" text="Button" GridPane.rowIndex="2" />
                         <Button id="botoncuatro" mnemonicParsing="false" onAction="#cambiarPantallaEmpleados" prefHeight="134.0" prefWidth="180.0" text="Button" GridPane.rowIndex="3" />
-                        <Button id="botoncuatro" mnemonicParsing="false" onAction="#cambiarPantallaEditar" prefHeight="134.0" prefWidth="180.0" text="Button" GridPane.rowIndex="4" />
+                        <Button id="botoncinco" mnemonicParsing="false" onAction="#cambiarPantallaEditar" prefHeight="134.0" prefWidth="180.0" text="Button" GridPane.rowIndex="4" />
                      </children>
                   </GridPane>
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="417.0" prefWidth="447.0">
                <children>
-                  <GridPane id="grid" fx:id="gridPane" prefHeight="453.6" prefWidth="447.2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <GridPane id="griduno" fx:id="gridPane" prefHeight="453.6" prefWidth="447.2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="111.20001220703125" minWidth="2.4000244140625" prefWidth="23.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="235.0" minWidth="10.0" prefWidth="205.0" />
@@ -89,7 +89,7 @@
                               <Font name="Gill Sans MT Bold" size="12.0" />
                            </font>
                         </Label>
-                        <DatePicker fx:id="calendario" disable="true" prefHeight="28.0" prefWidth="174.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                        <DatePicker fx:id="calendario" disable="true" editable="false" prefHeight="28.0" prefWidth="174.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
                            <GridPane.margin>
                               <Insets left="10.0" right="75.0" />
                            </GridPane.margin>
@@ -110,7 +110,7 @@
                               <Insets left="100.0" />
                            </GridPane.margin>
                         </Button>
-                        <Button id="boton2" mnemonicParsing="false" onAction="#esborrar" prefHeight="30.0" prefWidth="115.0" text="BORRAR" GridPane.columnIndex="2" GridPane.rowIndex="6">
+                        <Button id="boton2" mnemonicParsing="false" onAction="#esborrar" prefHeight="30.0" prefWidth="115.0" text="LIMPIAR" GridPane.columnIndex="2" GridPane.rowIndex="6">
                            <GridPane.margin>
                               <Insets left="50.0" />
                            </GridPane.margin>
@@ -211,7 +211,7 @@
                               <Insets top="59.0" />
                            </GridPane.margin>
                         </Label>
-                        <Button fx:id="ayuda" alignment="CENTER" maxHeight="48.0" maxWidth="35.0" mnemonicParsing="false" onAction="#mandarAyuda" prefHeight="40.0" prefWidth="238.0" text="Button" GridPane.columnIndex="2">
+                        <Button id="ayuda" fx:id="ayuda" alignment="CENTER" maxHeight="48.0" maxWidth="35.0" mnemonicParsing="false" onAction="#mandarAyuda" prefHeight="40.0" prefWidth="238.0" text="Button" GridPane.columnIndex="2">
                            <GridPane.margin>
                               <Insets left="200.0" />
                            </GridPane.margin>

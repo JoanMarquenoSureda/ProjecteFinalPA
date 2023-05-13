@@ -11,7 +11,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import m03.projectefinalpa.model.Connexio;
-import m03.projectefinalpa.model.Usuario;
+
 
 public class Inici {
 
@@ -25,13 +25,13 @@ public class Inici {
     public Connexio connexio;
     public String usuariText;
     public String passwordText;
-    public Usuario usuario;
+  
 
     public void initialize(URL url, ResourceBundle rb) {
 
     }
 
-    @FXML
+    @FXML // hacemos un metodo para comprobar que el texto y el password sean compatibles con el usuario y que se pueda hacer una conexion real con la base de datos. 
     public void comprobar() throws IOException {
 
         if (!usuarioT.getText().equals("") || !password.getText().equals("")) {
@@ -73,7 +73,7 @@ public class Inici {
     private void cambiarPantallaCrear() throws IOException {
         App.setRoot("Crear");
     }
-    @FXML
+    @FXML// metodo que envia a la web de ayuda para la aplicacion
     private void mandarAyuda()  {
         File file = new File("src\\main\\resources\\m03\\projectefinalpa\\web\\inici.html");
         try {

@@ -4,15 +4,10 @@
  */
 package m03.projectefinalpa;
 
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.Optional;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -22,8 +17,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
-import javax.crypto.AEADBadTagException;
-import javax.imageio.ImageIO;
 import m03.projectefinalpa.model.GestioDadesDatosEmpleado;
 import m03.projectefinalpa.model.classes.EmpleadosClass;
 
@@ -51,13 +44,17 @@ public class CrearEmpleados {
     @FXML
     Button agregar;
     @FXML
+    Button buscar;
+    @FXML
     Button modificar;
     @FXML
     Button eliminar;
     @FXML
     ImageView foto;
 
+    //campos donde guardaremos el texto ingresado por el usuario
     String dniDatos;
+    String dniBuscado;
     String nombreDatos;
     String direccionDatos;
     String telefonoDatos;
@@ -68,46 +65,56 @@ public class CrearEmpleados {
     GestioDadesDatosEmpleado dades = new GestioDadesDatosEmpleado();
     EmpleadosClass empleado;
 
+    @FXML //metodo para agregar un empleado 
     public void agregarEmpleado() {
+
+        //comprobamos que los campos no estén vacios
         if (dni.getText().equals("") || nombre.getText().equals("") || direccion.getText().equals("") || telefono.getText().equals("") || email.getText().equals("") || categoria.getValue() == null) {
             alerta("Debe completar todos los campos");
 
         } else {
 
             try {
+
                 // Obtener los datos ingresados por el usuario
                 dniDatos = dni.getText();
-                nombreDatos = nombre.getText();
-                direccionDatos = direccion.getText();
-                telefonoDatos = telefono.getText();
-                emailDatos = email.getText();
-                categoriaDatos = categoria.getValue().toString();
-                fotoCargada = foto.getImage();
-
-                // Insertar el nuevo empleado en la base de datos
-                EmpleadosClass empleados = new EmpleadosClass(dniDatos, nombreDatos, direccionDatos, telefonoDatos, emailDatos, categoriaDatos, fotoCargada);
-                boolean exito = dades.insertarEmpleado(empleados);
-
-                if (exito) {
-                    alerta("Empleado agregado con éxito");
-                    vaciar();
+                if (dniDatos.length() == 8) {
+                    alerta("Formato DNI incorrecto");
                 } else {
-                    alerta("Usuario ya registrado");
+                    nombreDatos = nombre.getText();
+                    direccionDatos = direccion.getText();
+                    telefonoDatos = telefono.getText();
+                    emailDatos = email.getText();
+                    categoriaDatos = categoria.getValue().toString();
+                    fotoCargada = foto.getImage();
+
+                    // Insertar el nuevo empleado en la base de datos
+                    EmpleadosClass empleados = new EmpleadosClass(dniDatos, nombreDatos, direccionDatos, telefonoDatos, emailDatos, categoriaDatos, fotoCargada);
+                    boolean exito = dades.insertarEmpleado(empleados);
+
+                    if (exito) {
+                        alerta("Empleado agregado con éxito");
+                        vaciar();
+                    } else {
+                        alerta("El usuario no se ha registrado correctamente");
+                    }
                 }
             } catch (Exception e) {
                 alerta(e.getMessage());
             }
+
         }
+
     }
 
-    @FXML
+    @FXML //metodo para buscar un empleado por su dni
     public void buscarEmpleado() {
 
         if (dniBuscar.getText().equals("")) {
             alerta("Debe ingresar un número de DNI para buscar");
         } else {
             try {
-                String dniBuscado = dniBuscar.getText();
+                dniBuscado = dniBuscar.getText();
                 empleado = dades.datosEmpleado(dniBuscado);
 
                 if (empleado != null) {
@@ -120,14 +127,9 @@ public class CrearEmpleados {
                     email.setText(empleado.getEmail());
                     categoria.setValue(empleado.getCategoria());
 
-                    if (empleado.getFoto() != null) {
-                        InputStream is = empleado.getFoto().getBinaryStream();
-                        Image image = new Image(is);
-                        foto.setImage(image);
-                    } else {
-                        foto.setImage(null);
-                    }
+                    foto.setImage(empleado.getFotoImage());
 
+                    //cambiamos la configuración de los botones una vez se encuentra al empleado
                     ordenBotonesModificar();
 
                 } else {
@@ -139,37 +141,44 @@ public class CrearEmpleados {
         }
     }
 
+    @FXML //método para modificar un empleado, pasando su dni del campo buscar y pasando todo el objeto de nuevo con los campos modificados. 
     public void modificarEmpleado() {
 
-        if (dni.getText().equals("") || nombre.getText().equals("") || direccion.getText().equals("") || telefono.getText().equals("") || email.getText().equals("") || categoria.getValue() == null) {
+        if (dniBuscar.getText().equals("") || dni.getText().equals("") || nombre.getText().equals("") || direccion.getText().equals("") || telefono.getText().equals("") || email.getText().equals("") || categoria.getValue() == null) {
             alerta("Debe completar todos los campos");
         } else {
 
             int conf = Confirmacion("¿Desea modificar al empleado con DNI " + empleado.getDni() + "?");
             if (conf == 1) {
                 try {
+
                     // Obtener los datos ingresados por el usuario
+                    dniBuscado = dniBuscar.getText();
                     dniDatos = dni.getText();
-                    nombreDatos = nombre.getText();
-                    direccionDatos = direccion.getText();
-                    telefonoDatos = telefono.getText();
-                    emailDatos = email.getText();
-                    categoriaDatos = categoria.getValue().toString();
-                    fotoCargada = foto.getImage();
-
-                    // Crear el objeto empleado con los datos actualizados
-                    EmpleadosClass empleadoModificado = new EmpleadosClass(dniDatos, nombreDatos, direccionDatos, telefonoDatos, emailDatos, categoriaDatos, fotoCargada);
-
-                    // Actualizar el empleado en la base de datos pasando su antiguo dni para que sea la clave unica, y todos los datos modificados. 
-                    boolean exito = dades.modificarEmpleado(empleado, empleadoModificado);
-
-                    if (exito) {
-                        alerta("Empleado modificado con éxito");
-                        vaciar();
+                    if (dniDatos.length() == 8) {
+                        alerta("Formato DNI incorrecto");
                     } else {
-                        alerta("No se ha podido modificar el usuario");
+                        nombreDatos = nombre.getText();
+                        direccionDatos = direccion.getText();
+                        telefonoDatos = telefono.getText();
+                        emailDatos = email.getText();
+                        categoriaDatos = categoria.getValue().toString();
+                        fotoCargada = foto.getImage();
+
+                        // Crear el objeto empleado con los datos actualizados
+                        EmpleadosClass empleadoModificado = new EmpleadosClass(dniDatos, nombreDatos, direccionDatos, telefonoDatos, emailDatos, categoriaDatos, fotoCargada);
+
+                        // Actualizar el empleado en la base de datos pasando su antiguo dni para que sea la clave unica, y todos los datos modificados. 
+                        boolean exito = dades.modificarEmpleado(dniBuscado, empleadoModificado);
+
+                        if (exito) {
+                            alerta("Empleado modificado con éxito");
+                            vaciar();
+                        } else {
+                            alerta("No se ha podido modificar el usuario");
+                        }
                     }
-                } catch (Exception e) {
+                } catch (IOException | SQLException e) {
                     alerta(e.getMessage());
                 }
             }
@@ -177,8 +186,8 @@ public class CrearEmpleados {
         }
     }
 
-    @FXML
-    void eliminarEmpleado() {
+    @FXML //metodo para eliminar un empleado según si dni
+    public void eliminarEmpleado() {
 
         if (dniBuscar.getText().equals("")) {
             alerta("Debe buscar un empleado antes de poder eliminarlo");
@@ -194,20 +203,12 @@ public class CrearEmpleados {
                     } else {
                         alerta("No se pudo eliminar el empleado");
                     }
-                } catch (Exception e) {
+                } catch (SQLException e) {
                     alerta(e.getMessage());
                 }
             }
         }
 
-    }
-
-// Método para obtener un array de bytes a partir de una imagen
-    private byte[] getBytesFromImage(Image image) throws IOException {
-        BufferedImage bufferedImage = SwingFXUtils.fromFXImage(image, null);
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        ImageIO.write(bufferedImage, "jpg", outputStream);
-        return outputStream.toByteArray();
     }
 
     public void initialize() {
@@ -216,7 +217,7 @@ public class CrearEmpleados {
 
     }
 
-    @FXML
+    @FXML //metodo para cargar una foto mediante el boton seleccionar foto en formato JPG que es el formato que soporta BLOB y no da errores a la base de datos. 
     public void cargarFoto() throws IOException {
 
         FileChooser fileChooser = new FileChooser();
@@ -266,6 +267,7 @@ public class CrearEmpleados {
         App.setRoot("Ingresar_Datos");
     }
 
+    //mismos metodos que las demás vistas
     private void reiniciarCampos() {
 
         dni.setText("");
@@ -289,6 +291,9 @@ public class CrearEmpleados {
         agregar.setDisable(true);
         eliminar.setDisable(false);
         modificar.setDisable(false);
+        dniBuscar.setEditable(false);// ponemos que no se pueda editar ya que cuando modifiquemos los campos, se extraera de aqui por
+        //si se quiere tambien modificar el dni de la persona. 
+        buscar.setDisable(true);
 
     }
 
@@ -296,6 +301,9 @@ public class CrearEmpleados {
         agregar.setDisable(false);
         eliminar.setDisable(true);
         modificar.setDisable(true);
+        dniBuscar.setEditable(true);// ponemos que no se pueda editar ya que cuando modifiquemos los campos, se extraera de aqui por
+        //si se quiere tambien modificar el dni de la persona. 
+        buscar.setDisable(false);
 
     }
 

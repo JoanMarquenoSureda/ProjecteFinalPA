@@ -4,19 +4,15 @@
  */
 package m03.projectefinalpa.model;
 
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
+
 import java.io.IOException;
-import java.sql.Blob;
 import java.sql.Connection;
-import static java.sql.JDBCType.BLOB;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import javafx.embed.swing.SwingFXUtils;
-import javafx.scene.image.Image;
+
 import m03.projectefinalpa.model.classes.Atraccio;
-import m03.projectefinalpa.model.classes.EmpleadosClass;
+
 
 public class GestioDadesDatosAtraccion {
 
@@ -32,7 +28,7 @@ public class GestioDadesDatosAtraccion {
             ps.setString(1, atraccio.getNombre());
             ps.setString(2, atraccio.getTipo());
             ps.setString(3, atraccio.getUbicacion());
-            ps.setString(4, atraccio.getAlturaminima());
+            ps.setInt(4, atraccio.getAlturaminima());
             ps.setString(5, atraccio.getDescripcion());
    
             
@@ -70,7 +66,7 @@ public class GestioDadesDatosAtraccion {
                         resultSet.getString(1),
                         resultSet.getString(2),
                         resultSet.getString(3),
-                        resultSet.getString(4),
+                        resultSet.getInt(4),
                         resultSet.getString(5) 
                 );
                 
@@ -96,7 +92,7 @@ public class GestioDadesDatosAtraccion {
         
         ps.setString(1, atraccionNueva.getTipo());
         ps.setString(2, atraccionNueva.getUbicacion());
-        ps.setString(3, atraccionNueva.getAlturaminima());
+        ps.setInt(3, atraccionNueva.getAlturaminima());
         ps.setString(4, atraccionNueva.getDescripcion());
         ps.setString(5, atraccionNueva.getNombre());
         ps.setString(6, atraccionAnterior);

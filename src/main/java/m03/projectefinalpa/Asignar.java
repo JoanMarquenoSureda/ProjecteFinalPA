@@ -45,28 +45,19 @@ public class Asignar {
     @FXML
     ListView listViewEmpleados;
 
-    ObservableList<Horari> horariRestaurant = FXCollections.observableArrayList(); // llistem tots els horaris d'un
-                                                                                   // restaurant
-    ObservableList<Horari> horariAtraccio = FXCollections.observableArrayList();// llistem tots els horaris d'una
-                                                                                // atraccio
+    ObservableList<Horari> horariRestaurant = FXCollections.observableArrayList(); // llistem tots els horaris d'un restaurant
+    ObservableList<Horari> horariAtraccio = FXCollections.observableArrayList();// llistem tots els horaris d'una atraccio
     ArrayList<String> llistaHoraris = new ArrayList<>(); //
-
-    ObservableList<Atraccio> llistaAtraccions = gestioDades.llistaAtraccio(); // llistem totes les atraccions quan
-                                                                              // iniciem
-    ObservableList<Restaurant> llistaRestaurant = gestioDades.llistaRestaurants();// llistem tots els restaurants quan
-                                                                                  // iniciem
-    ObservableList<EmpleadosClass> llistaEmpleatsSQL = gestioDades.llistaEmpleatsHoraris(); // llistem tots els empleats
-                                                                                            // que son "Aprendiz" y
-                                                                                            // "Trabajador"
-
-    ObservableList<String> dadesHorarisSenseAssignar = FXCollections.observableArrayList(); // Llista on guardarem les
-                                                                                            // dades del horaris del
-                                                                                            // metode ToSring
-    private Timestamp fechaHoraSQL;
+    ObservableList<Atraccio> llistaAtraccions = gestioDades.llistaAtraccio(); // llistem totes les atraccions quan iniciem
+    ObservableList<Restaurant> llistaRestaurant = gestioDades.llistaRestaurants();// llistem tots els restaurants quan iniciem
+    ObservableList<EmpleadosClass> llistaEmpleatsSQL = gestioDades.llistaEmpleatsHoraris(); // llistem tots els empleats que son "Aprendiz" y "Trabajador"
+    ObservableList<String> dadesHorarisSenseAssignar = FXCollections.observableArrayList(); // Llista on guardarem les  dades del horaris del metode ToSring
+    private Timestamp fechaHoraSQL; //Data format MYsql
     private LocalDate diaCalendario;
     int idZona;
     int indice;
 
+    //método para buscar un horario asociado al boton buscar
     public void buscar() {
 
         listViewHorarios.setDisable(false);
@@ -79,6 +70,7 @@ public class Asignar {
         // comprobar si hay alguna zona seleccionada
         if (desplegableZona.getSelectionModel().getSelectedIndex() >= 0 && calendario.getValue() != null) {
 
+            // reiniciamos la lista de horarios y limpiamos los dos ListView
             inicializarvistas();
 
             // miramos el indice de la zona seleccionada
@@ -101,6 +93,8 @@ public class Asignar {
             // cargar la lista de horarios en la ListView
             cargarListasView();
 
+        } else {
+            alerta("Debes completar los campos antes de buscar un horario");
         }
 
     }
@@ -146,42 +140,6 @@ public class Asignar {
 
     }
 
-    // metodo borrar del button borrar, que borra un horario seleccionado del
-    // listView.
-    @FXML
-    public void esborrar() throws SQLException, IOException {
-
-        // revisamos si hay alguna fila seleccionada
-        if (listViewHorarios.getSelectionModel().getSelectedIndex() != -1) {
-
-            // enviamos la alerta de confirmacion y vemos la opcion escogida por el usuario=
-            // 1.Borrar, 0.Cancelar
-            int confirmacion = Confirmacion();
-
-            // si el usuario decide borrar,
-            if (confirmacion == 1) {
-
-                // obtenemos el horario seleccionado
-                ObservableList<Horari> horaris = listViewHorarios.getSelectionModel().getSelectedItems();
-
-                // enviamos la lista de horrarios al objeto GestioDades, y lo borramos con el
-                // metodo esborrarHorari.
-                for (int i = 0; i < horaris.size(); i++) {
-                    gestioDades.esborraHorari(horaris.get(i));
-                }
-
-                // Limpiamos el listViewHorarios y lo actualizamos con el horario borrado.
-                listViewHorarios.getItems().clear();
-                cargarListasView();
-
-            }
-
-            // Si no hay nada seleccionado enviamos una alerta
-        } else {
-            alerta("Selecciona un horario para borrarlo");
-        }
-
-    }
 
     private void initialize() {
         calendario.setPromptText("dd/MM/yyyy");
@@ -196,25 +154,7 @@ public class Asignar {
         alerta.show();
     }
 
-    // alerta de confirmación, para eliminar el horario.
-    private int Confirmacion() {
-        int valor;
-        Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
-        alerta.setContentText("¿Desea eliminar este horario?");
-        ButtonType buttonTypeAceptar = new ButtonType("Aceptar");
-        ButtonType buttonTypeCancelar = new ButtonType("Cancelar");
-        alerta.getButtonTypes().setAll(buttonTypeAceptar, buttonTypeCancelar);
-
-        Optional<ButtonType> result = alerta.showAndWait();
-        if (result.get() == buttonTypeAceptar) {
-            valor = 1;
-        } else {
-            valor = 0;
-        }
-
-        return valor;
-    }
-
+    
     // metodo que revisa si esta seleccionado el radiobutton atraccion o
     // restaurante, y habilita los botones y carga la lista de la zona en el
     // ComboBox.
@@ -282,8 +222,8 @@ public class Asignar {
 
     }
 
-    // metodo que devuelve los horarios de la zona seleccionada con los hora
-    // seleccionada.
+    // metodo que devuelve los horarios de la zona seleccionada con los horas
+    // seleccionada. Se ha trabajado diferenciando si es atraccion o restaurante, ya que ha habido la incidendia de que no está unificado con un solo id. 
     private void cargarListasView() {
 
         // revisa si las atracciones estan seleccionadas

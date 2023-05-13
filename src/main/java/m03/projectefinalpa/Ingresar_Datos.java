@@ -12,8 +12,7 @@ import javafx.fxml.FXML;
  * @author User
  */
 public class Ingresar_Datos {
-    
-    
+
     
     
     @FXML

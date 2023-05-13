@@ -4,6 +4,9 @@
  */
 package m03.projectefinalpa.model;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Blob;
 import m03.projectefinalpa.model.classes.Horari;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.image.Image;
 import m03.projectefinalpa.model.classes.EmpleadosClass;
 import m03.projectefinalpa.model.classes.ZonaTrabajo;
 
@@ -20,12 +24,12 @@ import m03.projectefinalpa.model.classes.ZonaTrabajo;
  */
 public class GestioDadesEmpleados {
 
-    // mètode que retorna les dades de l'horari i el nom més l'ubicació del restaurant o atracció, segons el nom de l'empleat cercat, ordenat els horaris de forma
+    // mètode que retorna les dades de l'horari i el nom més l'ubicació del restaurant o atracció, segons el dni de l'empleat cercat, ordenat els horaris de forma
     //accendent i desde el día d'avui, obviants els horaris anteriors. 
     public ObservableList<Horari> horariPerEmpleat(String dni) {
         ObservableList<Horari> horaris = FXCollections.observableArrayList();
 
-        String sql = "SELECT horario.fecha_inicio, horario.fecha_fin,\n"
+       String sql = "SELECT horario.id, horario.fecha_inicio, horario.fecha_fin,\n"
                 + "  IFNULL(restaurante.nombre, atraccion.nombre) AS nombre,\n"
                 + "  IFNULL(restaurante.ubicacion, atraccion.ubicacion) AS ubicacion\n"
                 + "FROM empleado\n"
@@ -45,9 +49,10 @@ public class GestioDadesEmpleados {
             while (resultSet.next()) {
 
                 horaris.add(new Horari(
-                        resultSet.getTimestamp(1).toLocalDateTime(), //convertim el DateTime de MySQL en un LocalDateTime, 
-                        resultSet.getTimestamp(2).toLocalDateTime(),
-                        new ZonaTrabajo(resultSet.getString(3), resultSet.getString(4)))
+                        resultSet.getInt(1),
+                        resultSet.getTimestamp(2).toLocalDateTime(), //convertim el DateTime de MySQL en un LocalDateTime, 
+                        resultSet.getTimestamp(3).toLocalDateTime(),
+                        new ZonaTrabajo(resultSet.getString(4), resultSet.getString(5)))
                 );
 
             }
@@ -58,12 +63,12 @@ public class GestioDadesEmpleados {
         return horaris;
     }
 
-    //mètode que retorna les dades d'un empleat segons el nom de l'empleat passat per paràmetres, només retorna un objecte ja que passem per paràmetres el =. 
+    //mètode que retorna les dades d'un empleat segons el dni de l'empleat passat per paràmetres
     public EmpleadosClass dadesEmpleat(String dni) {
 
         EmpleadosClass empleado = null;
 
-        String sql = "SELECT empleado.nombre, empleado.direccion, empleado.telefono, empleado.email, empleado.foto\n"
+        String sql = "SELECT empleado.id, empleado.nombre, empleado.direccion, empleado.telefono, empleado.email, empleado.foto\n"
                 + "FROM empleado \n"
                 + "WHERE empleado.dni = ?;";
 
@@ -79,12 +84,21 @@ public class GestioDadesEmpleados {
 
             if (resultSet.next()) {
 
+                Blob blob = resultSet.getBlob(6);
+                Image image = null;
+
+                if (blob != null) {
+                    InputStream is = blob.getBinaryStream();
+                    image = new Image(is);
+                }
+                
                 empleado = new EmpleadosClass(
-                        resultSet.getString(1),
+                        resultSet.getInt(1),
                         resultSet.getString(2),
                         resultSet.getString(3),
                         resultSet.getString(4),
-                        resultSet.getBlob(5)
+                        resultSet.getString(5),
+                        image
                 );
             }
 
@@ -93,5 +107,29 @@ public class GestioDadesEmpleados {
         }
 
         return empleado;
+    }
+
+    public boolean eliminarAsociacionEmpleado(Horari horario, EmpleadosClass empleado) throws SQLException, IOException {
+        boolean ok = false;
+        Connection connection = new Connexio().connecta();
+
+        String sql = "DELETE FROM asignacion WHERE idHorario =? and idEmpleado =?";
+
+        PreparedStatement ps = connection.prepareStatement(sql);
+
+        try {
+            ps.setInt(1, horario.getId());
+            ps.setInt(2, empleado.getId());
+
+           int filasEliminadas = ps.executeUpdate();
+        if (filasEliminadas > 0) {
+            ok = true;
+        }
+
+        } catch (SQLException throwables) {
+            System.out.println("Error:" + throwables.getMessage());
+        }
+
+        return ok;
     }
 }

@@ -11,13 +11,21 @@ package m03.projectefinalpa.model.classes;
 public class Restaurant extends ZonaTrabajo{
    
     private String tipoComida;
-
-    public Restaurant(int id, String nombre, String ubicacion, String tipoComida) {
+    private String descripcion;
+    
+    
+    public Restaurant(int id, String nombre, String ubicacion, String tipoComida, String descripcion) {
         super(id, nombre, ubicacion);
         this.tipoComida = tipoComida;
+        this.descripcion = descripcion;
     }
-    
-    
+
+    public Restaurant(String tipoComida, String descripcion, String nombre, String ubicacion) {
+        super(nombre, ubicacion);
+        this.tipoComida = tipoComida;
+        this.descripcion = descripcion;
+    }
+
 
     public String getTipoComida() {
         return tipoComida;
@@ -27,12 +35,13 @@ public class Restaurant extends ZonaTrabajo{
         this.tipoComida = tipoComida;
     }
 
-    @Override
-    public String toString() {
-        return super.toString() + "RESTAURANTE";
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
     
-
-
     
 }

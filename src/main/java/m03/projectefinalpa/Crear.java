@@ -63,10 +63,10 @@ public class Crear {
     private Month mes;
     private int año;
 
-    @FXML
-    public void guardar() throws MalformedURLException {
+    @FXML //metodo para guardar un horario mediante el button guardar
+    public void guardar() throws MalformedURLException, SQLException, IOException {
 
-        boolean errores = false;
+        boolean errores = false; //controlamos todos los errores, para poner un mensaje de cada uno de ellos. 
         String mensaje = "";
 
         try {
@@ -94,10 +94,12 @@ public class Crear {
 
                 } else {
 
-                    int indiceLista = desplegableZona.getSelectionModel().getSelectedIndex();
+                    int indiceLista = desplegableZona.getSelectionModel().getSelectedIndex(); //devolvemos el indice del combobox, que será el id para la consulta de sql
                     dia = data.getDayOfMonth();
                     mes = data.getMonth();
                     año = data.getYear();
+                    
+                    // lo convertimos a LocalDateTime con todos los campos de tiempo
                     fecha_inici = LocalDateTime.of(año, mes, dia, horasTextoE, minutosTextoE);
                     fecha_fin = LocalDateTime.of(año, mes, dia, horasTextoS, minutosTextoS);
 
@@ -114,21 +116,22 @@ public class Crear {
                         // lo creamos mediante el metodo afegeixHorariAtraccio, de la clase
                         // gestio de dades
                         if (opcionAtraccion.isSelected()) {
+                            
                             Atraccio atraccion = llistaAtraccions.get(indiceLista);
                             idZona = atraccion.getId();
                             horari = new Horari(fecha_inici, fecha_fin, idZona, 0);
                             ok = gestioDades.afegeixHorariAtraccio(horari); // nos devuelve si se ha guardado o no,
 
-                            // mismo metodo pero paralos restaurantes.
+                            // mismo metodo pero para los restaurantes.
                         } else if (opcionRestaurante.isSelected()) {
+                            
                             Restaurant restaurant = llistaRestaurant.get(indiceLista);
                             idZona = restaurant.getId();
                             horari = new Horari(fecha_inici, fecha_fin, 0, idZona);
                             ok = gestioDades.afegeixHorariRestaurant(horari);
                         }
 
-                        // si se ha añadido, mensaje de alerta y borramos las horas, para seguir
-                        // añadiendo.
+                        // si se ha añadido, mensaje de alerta y borramos las horas, para facilidad del usuario
                         if (ok) {
                             alerta("Añadido correctamente");
                             esborrarHores();
@@ -144,12 +147,12 @@ public class Crear {
             }
             // si encuentra la excepcion, enviara un mensaje de que no se ha podido
             // convertir el texto a valores.
-        } catch (IOException | NumberFormatException | SQLException e) {
+        } catch (NumberFormatException e) {
 
             errores = false;
             alerta("Sólo valores numéricos en HH:mm");
 
-        } // si hay otros errores, se envia el mensaje específico de cada error.
+        } // si hay otros errores, se envia el mensaje específico de cada error que hemos controlado anteriormente. 
         if (errores) {
 
             alerta(mensaje);
@@ -178,7 +181,7 @@ public class Crear {
     }
 
     private void initialize() {
-        calendario.setPromptText("dd/MM/yyyy");
+        calendario.setPromptText("dd/MM/yyyy");//formato fecha para el datepicker
     }
 
     private void alerta(String text) {
