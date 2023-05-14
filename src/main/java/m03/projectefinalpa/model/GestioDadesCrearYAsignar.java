@@ -149,8 +149,9 @@ public class GestioDadesCrearYAsignar {
 
     // feim un insert d'un horari dins una atracció, segons els valors de l'objecte
     // horari passats per paràmetres, que també té l'id de l'atracció inclòs.
-    public boolean afegeixHorariAtraccio(Horari horari) throws SQLException, FileNotFoundException, IOException {
-        boolean ok = false;
+    public String afegeixHorariAtraccio(Horari horari) throws SQLException, FileNotFoundException, IOException {
+        String missatge="";
+     
         Connection connection = new Connexio().connecta();
         String sql = "INSERT INTO horario (fecha_inicio, fecha_fin, idAtraccion) VALUES (?,?,?)";
         PreparedStatement ordre = connection.prepareStatement(sql);
@@ -159,19 +160,22 @@ public class GestioDadesCrearYAsignar {
             ordre.setTimestamp(2, Timestamp.valueOf(horari.getFecha_fin()));
             ordre.setInt(3, horari.getIdAtraccion());
             ordre.executeUpdate();
-            ok = true;
+  
 
-        } catch (SQLException throwables) {
-            System.out.println("Error:" + throwables.getMessage());
+        }catch (SQLException e) {
+            if ("45000".equals(e.getSQLState())) {
+               missatge = e.getMessage();
+            } 
         }
 
-        return ok;
+        return missatge;
     }
 
     // feim un insert d'un horari dins un restaurant, segons els valors de l'objecte
     // horari passats per paràmetres, que també té l'id del restaurant inclòs.
-    public boolean afegeixHorariRestaurant(Horari horari) throws SQLException, FileNotFoundException, IOException {
-        boolean ok = false;
+    public String afegeixHorariRestaurant(Horari horari) throws SQLException, FileNotFoundException, IOException {
+        String missatge="";
+  
         Connection connection = new Connexio().connecta();
         String sql = "INSERT INTO horario (fecha_inicio, fecha_fin, idRestaurante) VALUES (?,?,?)";
         PreparedStatement ordre = connection.prepareStatement(sql);
@@ -180,19 +184,20 @@ public class GestioDadesCrearYAsignar {
             ordre.setTimestamp(2, Timestamp.valueOf(horari.getFecha_fin()));
             ordre.setInt(3, horari.getIdRestaurante());
             ordre.executeUpdate();
-            ok = true;
+          
 
-        } catch (SQLException throwables) {
-            System.out.println("Error:" + throwables.getMessage());
+        } catch (SQLException e) {
+            if ("45000".equals(e.getSQLState())) {
+               missatge = e.getMessage();
+            } 
         }
-
-        return ok;
+        return missatge;
     }
 
     // mètode que inserta un horari a un empleat, passats per paràmetres, on agafa
     // l'id de cada un i ho afegeix a la taula asignación.
-    public String assignarHoraris(Horari horari, EmpleadosClass empleat)
-            throws SQLException, FileNotFoundException, IOException {
+    public String assignarHoraris(Horari horari, EmpleadosClass empleat) throws SQLException
+           {
         boolean ok = false;
         String missatge = "";
         Connection connection = new Connexio().connecta();

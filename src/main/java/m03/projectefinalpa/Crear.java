@@ -62,6 +62,7 @@ public class Crear {
     private int dia;
     private Month mes;
     private int año;
+    private String mensajeSQL;
 
     @FXML //metodo para guardar un horario mediante el button guardar
     public void guardar() throws MalformedURLException, SQLException, IOException {
@@ -110,8 +111,7 @@ public class Crear {
                         mensaje = "Entrada tiene que ser anterior a Salida";
 
                     } else {
-                        boolean ok = false;
-
+                        
                         // si la attraccion es seleccionada, guardamos la atraccion, conseguimos su id y
                         // lo creamos mediante el metodo afegeixHorariAtraccio, de la clase
                         // gestio de dades
@@ -120,7 +120,7 @@ public class Crear {
                             Atraccio atraccion = llistaAtraccions.get(indiceLista);
                             idZona = atraccion.getId();
                             horari = new Horari(fecha_inici, fecha_fin, idZona, 0);
-                            ok = gestioDades.afegeixHorariAtraccio(horari); // nos devuelve si se ha guardado o no,
+                            mensajeSQL = gestioDades.afegeixHorariAtraccio(horari); // nos devuelve si se ha guardado o no,
 
                             // mismo metodo pero para los restaurantes.
                         } else if (opcionRestaurante.isSelected()) {
@@ -128,11 +128,11 @@ public class Crear {
                             Restaurant restaurant = llistaRestaurant.get(indiceLista);
                             idZona = restaurant.getId();
                             horari = new Horari(fecha_inici, fecha_fin, 0, idZona);
-                            ok = gestioDades.afegeixHorariRestaurant(horari);
+                            mensajeSQL = gestioDades.afegeixHorariRestaurant(horari);
                         }
 
                         // si se ha añadido, mensaje de alerta y borramos las horas, para facilidad del usuario
-                        if (ok) {
+                        if (mensajeSQL.equals("")) {
                             alerta("Añadido correctamente");
                             esborrarHores();
 
@@ -140,7 +140,7 @@ public class Crear {
                             // mensaje en la variable mensaje.
                         } else {
                             errores = true;
-                            mensaje = "No añadido correctamente";
+                            mensaje = mensajeSQL;
                         }
                     }
                 }
