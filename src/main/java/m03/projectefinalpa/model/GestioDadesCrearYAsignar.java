@@ -189,6 +189,7 @@ public class GestioDadesCrearYAsignar {
         if (rowsAffected > 0) {
             missatge = "ok";
         }
+        //queremos que devuelva el mensaje del trigger de no se pueden repetir horarios con el mismo nombre de restaurante
     } catch (SQLException e) {
         if ("45000".equals(e.getSQLState())) {
             missatge = e.getMessage();
@@ -215,10 +216,13 @@ public class GestioDadesCrearYAsignar {
             missatge = "ok";
 
         } catch (SQLException e) {
+             //queremos que devuelva el mensaje del trigger de no se pueden repetir horarios con el mismo nombre de restaurante
             if ("45000".equals(e.getSQLState())) {
                missatge = e.getMessage();
+               // si aparece el mensaje de duplicate enviamos el mensaje de horario ya asignado, aunque primero se lanzara el trigger, así que este mensaje no de
+               //deberia aparecer nunca. 
             } else if (e.getMessage().contains("Duplicate entry")) {
-               missatge = e.getMessage();
+               missatge = "Horario ya asignado al empleado";
             } 
         }
         return missatge;

@@ -25,7 +25,6 @@ import m03.projectefinalpa.model.classes.EmpleadosClass;
  * @author User
  */
 public class CrearEmpleados {
-
     @FXML
     TextField dniBuscar;
     @FXML
@@ -64,6 +63,14 @@ public class CrearEmpleados {
     Image fotoCargada;
     GestioDadesDatosEmpleado dades = new GestioDadesDatosEmpleado();
     EmpleadosClass empleado;
+    
+    //caracteres que pueden soportar los textfield
+    private static final int MAX_CARACTERES_NOMBRE = 50;
+    private static final int MAX_CARACTERES_DESCRIPCION = 2000;
+    private static final int MAX_CARACTERES_DNI = 9;
+    private static final int MAX_CARACTERES_DIRECCION = 50;
+    private static final int MAX_CARACTERES_TELEFONO = 15;
+    private static final int MAX_CARACTERES_EMAIL= 50;
 
     @FXML //metodo para agregar un empleado 
     public void agregarEmpleado() {
@@ -78,9 +85,9 @@ public class CrearEmpleados {
 
                 // Obtener los datos ingresados por el usuario
                 dniDatos = dni.getText();
-                if (dniDatos.length() != 9) {
-                    alerta("Formato DNI incorrecto");
-                } else {
+                if (validarLongitudTexto()) {
+                    
+               
                     nombreDatos = nombre.getText();
                     direccionDatos = direccion.getText();
                     telefonoDatos = telefono.getText();
@@ -152,12 +159,13 @@ public class CrearEmpleados {
             if (conf == 1) {
                 try {
 
-                    // Obtener los datos ingresados por el usuario
+                  
+                  
+                    if (validarLongitudTexto()) {
+                        
+                         // Obtener los datos ingresados por el usuario
                     dniBuscado = dniBuscar.getText();
-                    dniDatos = dni.getText();
-                    if (dniDatos.length() != 9) {
-                        alerta("Formato DNI incorrecto");
-                    } else {
+                         dniDatos = dni.getText();
                         nombreDatos = nombre.getText();
                         direccionDatos = direccion.getText();
                         telefonoDatos = telefono.getText();
@@ -233,6 +241,45 @@ public class CrearEmpleados {
 
         }
     }
+    //validamos la longitud de los caracteres de cada campo, para no tener problemas con la base de datos
+   private boolean validarLongitudTexto() {
+    String dniTexto = dni.getText();
+    String nombreTexto = nombre.getText();
+    String direccionTexto = direccion.getText();
+    String telefonoTexto = telefono.getText();
+    String emailTexto = email.getText();
+
+
+    if (dniTexto.length() != MAX_CARACTERES_DNI) {
+        alerta("Formato DNI incorrecto");
+        return false;
+    }
+
+    if (nombreTexto.length() > MAX_CARACTERES_NOMBRE) {
+        alerta("El nombre no puede exceder los " + MAX_CARACTERES_NOMBRE + " caracteres.");
+        return false;
+    }
+
+    if (direccionTexto.length() > MAX_CARACTERES_DIRECCION) {
+        alerta("La dirección no puede exceder los " + MAX_CARACTERES_DIRECCION + " caracteres.");
+        return false;
+    }
+
+    if (telefonoTexto.length() > MAX_CARACTERES_TELEFONO) {
+        alerta("El teléfono no puede exceder los " + MAX_CARACTERES_TELEFONO + " caracteres.");
+        return false;
+    }
+
+    if (emailTexto.length() > MAX_CARACTERES_EMAIL) {
+        alerta("El email no puede exceder los " + MAX_CARACTERES_EMAIL + " caracteres.");
+        return false;
+    }
+
+
+    return true;
+}
+
+
 
     private void alerta(String text) {
         Alert alerta = new Alert(Alert.AlertType.INFORMATION);

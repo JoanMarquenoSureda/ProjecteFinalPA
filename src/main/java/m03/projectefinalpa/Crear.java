@@ -112,7 +112,7 @@ public class Crear {
 
                     } else {
                         
-                        // si la attraccion es seleccionada, guardamos la atraccion, conseguimos su id y
+                        // si la attraccion es seleccionada, guardamos la atraccion, conseguimos su nombre y
                         // lo creamos mediante el metodo afegeixHorariAtraccio, de la clase
                         // gestio de dades
                         if (opcionAtraccion.isSelected()) {
@@ -135,15 +135,22 @@ public class Crear {
                         }
 
                         // si se ha añadido, mensaje de alerta y borramos las horas, para facilidad del usuario
-                        if (mensajeSQL.equals("ok")) {
-                            alerta("Añadido correctamente");
-                            esborrarHores();
-
-                            // si no se ha añadido, ponemos los mensajes de error como true, y guardos un
-                            // mensaje en la variable mensaje.
-                        } else {
-                            errores = true;
-                            mensaje = mensajeSQL;
+                        switch (mensajeSQL) {
+                            case "ok":
+                                alerta("Añadido correctamente");
+                                esborrarHores(); 
+                               
+                                break;
+                                 // si no se ha añadido, ponemos los mensajes de error como true, y guardos un
+                                // mensaje en la variable mensaje.
+                            case "":
+                                errores = true;
+                                mensaje = "No añadido correctamente";
+                                break;
+                            default:
+                                errores = true;
+                                mensaje = mensajeSQL;
+                                break;
                         }
                     }
                 }
@@ -157,7 +164,6 @@ public class Crear {
 
         } // si hay otros errores, se envia el mensaje específico de cada error que hemos controlado anteriormente. 
         if (errores) {
-
             alerta(mensaje);
         }
     }

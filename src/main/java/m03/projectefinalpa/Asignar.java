@@ -121,15 +121,22 @@ public class Asignar {
 
             }
 
-            if (missatge.equals("ok")) {
-                alerta("Horario asignado correctamente");
-
-                // limpiamos las celdas seleccionadas, para que así no confunda al usuario una
-                // vez asignado.
-                listViewEmpleados.getSelectionModel().clearSelection();
-                listViewHorarios.getSelectionModel().clearSelection();
-            } else {
-                alerta(missatge);
+            switch (missatge) {
+                case "ok":
+                    alerta("Horario asignado correctamente");
+                    // limpiamos las celdas seleccionadas, para que así no confunda al usuario una
+                    // vez asignado.
+                    listViewEmpleados.getSelectionModel().clearSelection();
+                    listViewHorarios.getSelectionModel().clearSelection();
+                    break;
+                case "":
+                    //controlamos primero si el mensaje se devuelve vacío, ya que no se ha assignado correctamente
+                    alerta("Horario no asignado correctamente");
+                    break;
+                    // si devuelve un mensaje específico, lo mandamos por alerta
+                default:
+                    alerta(missatge);
+                    break;
             }
 
         } else {

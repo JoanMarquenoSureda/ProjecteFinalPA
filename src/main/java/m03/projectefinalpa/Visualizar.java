@@ -113,7 +113,7 @@ public class Visualizar {
                 }
 
             } else {
-                alerta("Datos erróneos");
+                alerta("Fechas incorrectas");
             }
 
         } else {

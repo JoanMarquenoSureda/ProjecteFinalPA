@@ -40,7 +40,8 @@ public class CrearAtracciones {
     Button eliminar;
     @FXML
     Button buscar;
-
+    
+    String nombreBuscado;
     String nombreDatos; //guardaremos el nombre de la Atraccion del textfield nombre
     int alturaDatos; // guardaremos la altura
     String descripcionDatos; // los datos del campo de descripcion
@@ -49,6 +50,10 @@ public class CrearAtracciones {
 
     GestioDadesDatosAtraccion dades = new GestioDadesDatosAtraccion(); // gestionaremos la base de datos desde datosAtraccion
     Atraccio atraccion; //para guardar el objeto atraccion
+
+    // Caracteres máximos permitidos para los campos de texto
+    private static final int MAX_CARACTERES_NOMBRE_ATRACCION = 50;
+    private static final int MAX_CARACTERES_DESCRIPCION = 2000;
 
     @FXML
     public void agregarAtraccion() {
@@ -62,24 +67,27 @@ public class CrearAtracciones {
                 tipoDatos = tipo.getValue().toString();
                 ubicacionDatos = ubicacion.getValue().toString();
                 alturaDatos = Integer.parseInt(altura.getText());
+                descripcionDatos = descripcion.getText();
                 
-                //comprobamos que el dato no sea superior a 200cm
-                if (alturaDatos < 0 || alturaDatos > 200) {
-                    alerta("La altura no puede superar los 200 cm");
-                } else {
-                    descripcionDatos = descripcion.getText();
-
-                    // Crear el objeto atraccion con los datos ingresados
-                    atraccion = new Atraccio(nombreDatos, tipoDatos, ubicacionDatos, alturaDatos, descripcionDatos);
-
-                    // Insertar la nueva atracción en la base de datos
-                    boolean exito = dades.insertarAtraccion(atraccion);
-
-                    if (exito) {
-                        alerta("Atracción agregada con éxito");
-                        vaciar();
+                if (validarLongitudTexto()) {
+                    //comprobamos que el dato no sea superior a 200cm
+                    if (alturaDatos < 0 || alturaDatos > 200) {
+                        alerta("La altura no puede superar los 200 cm");
                     } else {
-                        alerta("La atracción ya está registrada");
+                        
+
+                        // Crear el objeto atraccion con los datos ingresados
+                        atraccion = new Atraccio(nombreDatos, tipoDatos, ubicacionDatos, alturaDatos, descripcionDatos);
+
+                        // Insertar la nueva atracción en la base de datos
+                        boolean exito = dades.insertarAtraccion(atraccion);
+
+                        if (exito) {
+                            alerta("Atracción agregada con éxito");
+                            vaciar();
+                        } else {
+                            alerta("La atracción ya está registrada");
+                        }
                     }
                 }
             }
@@ -107,17 +115,20 @@ public class CrearAtracciones {
                 if (conf == 1) {
                     try {
                         // Obtener los datos ingresados por el usuario
-                        String nombreBuscado = nombreAtraccion.getText();
+                        nombreBuscado = nombreAtraccion.getText();
                         nombreDatos = nombre.getText();
                         tipoDatos = tipo.getValue().toString();
                         ubicacionDatos = ubicacion.getValue().toString();
                         alturaDatos = Integer.parseInt(altura.getText());
+                        descripcionDatos = descripcion.getText();
+                        
+                        if (validarLongitudTexto()) {
                         //comprobamos que el dato no sea superior a 200cm
                         if (alturaDatos < 0 || alturaDatos > 200) {
                             alerta("La altura no puede superar los 200 cm");
 
                         } else {
-                            descripcionDatos = descripcion.getText();
+                            
 
                             // Crear el objeto atraccion con los datos actualizados
                             Atraccio atraccionModificada = new Atraccio(nombreDatos, tipoDatos, ubicacionDatos, alturaDatos, descripcionDatos);
@@ -132,6 +143,7 @@ public class CrearAtracciones {
                             } else {
                                 alerta("No se ha podido modificar la atracción");
                             }
+                        }
                         }
                         //comprobamos que el valor en altura sea numérico. 
                     } catch (NumberFormatException e) {
@@ -175,7 +187,7 @@ public class CrearAtracciones {
             alerta("Debe ingresar un nombre de atracción para buscar");
         } else {
             try {
-                String nombreBuscado = nombreAtraccion.getText();
+                nombreBuscado = nombreAtraccion.getText();
                 atraccion = dades.datosAtraccion(nombreBuscado);
 
                 if (atraccion != null) {
@@ -272,6 +284,21 @@ public class CrearAtracciones {
 
         return valor;
     }
+    
+     private boolean validarLongitudTexto() {
+
+        if (nombreDatos.length() > MAX_CARACTERES_NOMBRE_ATRACCION) {
+            alerta("El nombre de la atracción no puede exceder los " + MAX_CARACTERES_NOMBRE_ATRACCION + " caracteres.");
+            return false;
+        }
+
+        if (descripcionDatos.length() > MAX_CARACTERES_DESCRIPCION) {
+            alerta("La descripción no puede exceder los " + MAX_CARACTERES_DESCRIPCION + " caracteres.");
+            return false;
+        }
+
+        return true;
+     }
 
     @FXML
     private void cambiarPantallaAsignar() throws IOException {

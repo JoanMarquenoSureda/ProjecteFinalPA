@@ -48,13 +48,17 @@ public class CrearRestaurante {
 
     GestioDadesDatosRestaurantes dades = new GestioDadesDatosRestaurantes();
     Restaurant restaurante;
+    //caracteres que pueden soportar los textfield
+    private static final int MAX_CARACTERES_NOMBRE_RESTAURANTE = 50;
+    private static final int MAX_CARACTERES_DESCRIPCION = 2000;
 
     @FXML
-    public void agregarRestaurante() {
-
-        if (tipoComida.getValue() == null || ubicacion.getValue() == null || descripcion.getText().equals("") || nombre.getText().equals("")) {
-            alerta("Debe completar todos los campos");
-        } else {
+public void agregarRestaurante() {
+    if (tipoComida.getValue() == null || ubicacion.getValue() == null || descripcion.getText().equals("") || nombre.getText().equals("")) {
+        alerta("Debe completar todos los campos");
+    } else {
+        boolean ok = validarLongitudTexto();
+        if (ok) {
             try {
                 // Obtener los datos ingresados por el usuario
                 nombreDatos = nombre.getText();
@@ -67,26 +71,27 @@ public class CrearRestaurante {
                 boolean exito = dades.insertarRestaurante(restaurante);
 
                 if (exito) {
-                    alerta("Restaurante agregada con éxito");
+                    alerta("Restaurante agregado con éxito");
                     vaciar();
                 } else {
-                    alerta("El Restaurante ya está registrada");
+                    alerta("El Restaurante ya está registrado");
                 }
             } catch (IOException | SQLException e) {
                 alerta(e.getMessage());
             }
         }
     }
+}
 
-    @FXML
-    public void modificarRestaurante() {
-        if (tipoComida.getValue() == null || ubicacion.getValue() == null || descripcion.getText().equals("") || nombre.getText().equals("")) {
-            alerta("Debe completar todos los campos");
+@FXML
+public void modificarRestaurante() {
+    if (tipoComida.getValue() == null || ubicacion.getValue() == null || descripcion.getText().equals("") || nombre.getText().equals("")) {
+        alerta("Debe completar todos los campos");
+    } else {
+        if (nombreRestaurante.getText().equals("")) {
+            alerta("Debe añadir un valor a buscar para modificarlo");
         } else {
-            if (nombreRestaurante.getText().equals("")) {
-                alerta("Debes añadir un valor a buscar para modificarlo");
-
-            } else {
+            if (validarLongitudTexto()) {
                 int conf = Confirmacion("¿Desea modificar el restaurante " + nombreRestaurante.getText() + "?");
                 if (conf == 1) {
                     try {
@@ -116,6 +121,8 @@ public class CrearRestaurante {
             }
         }
     }
+}
+
 
     @FXML
     public void eliminarRestaurante() {
@@ -168,6 +175,24 @@ public class CrearRestaurante {
                 alerta(e.getMessage());
             }
         }
+    }
+    
+    //validamos la longitud de los caracteres de cada campo, para no tener problemas con la base de datos
+     private boolean validarLongitudTexto() {
+        String nombreRestauranteTexto = nombre.getText();
+        String descripcionTexto = descripcion.getText();
+
+        if (nombreRestauranteTexto.length() > MAX_CARACTERES_NOMBRE_RESTAURANTE) {
+            alerta("El nombre no puede exceder los " + MAX_CARACTERES_NOMBRE_RESTAURANTE + " caracteres.");
+            return false;
+        }
+
+        if (descripcionTexto.length() > MAX_CARACTERES_DESCRIPCION) {
+            alerta("La descripción no puede exceder los " + MAX_CARACTERES_DESCRIPCION + " caracteres.");
+            return false;
+        }
+
+        return true;
     }
 
     public void initialize() {
