@@ -20,7 +20,7 @@ public class App extends Application {
 
         Image favicon = new Image(getClass().getResourceAsStream("imagenes/fav.png"));
 
-        scene = new Scene(loadFXML("Inici"), 700, 650);
+        scene = new Scene(loadFXML("Crear"), 700, 650);
         stage.setScene(scene);
         stage.getIcons().add(favicon);
         // stage.setResizable(false);

@@ -11,8 +11,8 @@ public class Atraccio extends ZonaTrabajo {
     private String tipo;
     private int alturaminima;
 
-    public Atraccio(int id, String nombre, String descripcion, String tipo, String ubicacion) {
-        super(id, nombre, ubicacion);
+    public Atraccio(String nombre, String descripcion, String tipo, String ubicacion) {
+        super(nombre, ubicacion);
         this.descripcion = descripcion;
         this.tipo = tipo;
         
@@ -48,5 +48,6 @@ public class Atraccio extends ZonaTrabajo {
     public void setAlturaminima(int alturaminima) {
         this.alturaminima = alturaminima;
     }
+    
 
 }

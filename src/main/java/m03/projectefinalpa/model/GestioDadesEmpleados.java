@@ -33,10 +33,10 @@ public class GestioDadesEmpleados {
                 + "  IFNULL(restaurante.nombre, atraccion.nombre) AS nombre,\n"
                 + "  IFNULL(restaurante.ubicacion, atraccion.ubicacion) AS ubicacion\n"
                 + "FROM empleado\n"
-                + "INNER JOIN asignacion ON asignacion.idEmpleado = empleado.id\n"
+                + "INNER JOIN asignacion ON asignacion.dniEmpleado = empleado.dni\n"
                 + "INNER JOIN horario ON asignacion.idHorario = horario.id AND horario.fecha_inicio >= CURRENT_DATE()\n"
-                + "LEFT JOIN restaurante ON restaurante.id = horario.idRestaurante\n"
-                + "LEFT JOIN atraccion ON atraccion.id = horario.idAtraccion\n"
+                + "LEFT JOIN restaurante ON restaurante.nombre = horario.nombreRes\n"
+                + "LEFT JOIN atraccion ON atraccion.nombre = horario.nombreAtr\n"
                 + "WHERE empleado.dni = ? \n"
                 + "ORDER BY horario.fecha_inicio ASC;";
 
@@ -68,7 +68,7 @@ public class GestioDadesEmpleados {
 
         EmpleadosClass empleado = null;
 
-        String sql = "SELECT empleado.id, empleado.nombre, empleado.direccion, empleado.telefono, empleado.email, empleado.foto\n"
+        String sql = "SELECT empleado.dni, empleado.nombre, empleado.direccion, empleado.telefono, empleado.email, empleado.foto\n"
                 + "FROM empleado \n"
                 + "WHERE empleado.dni = ?;";
 
@@ -93,7 +93,7 @@ public class GestioDadesEmpleados {
                 }
                 
                 empleado = new EmpleadosClass(
-                        resultSet.getInt(1),
+                        resultSet.getString(1),
                         resultSet.getString(2),
                         resultSet.getString(3),
                         resultSet.getString(4),
@@ -113,13 +113,13 @@ public class GestioDadesEmpleados {
         boolean ok = false;
         Connection connection = new Connexio().connecta();
 
-        String sql = "DELETE FROM asignacion WHERE idHorario =? and idEmpleado =?";
+        String sql = "DELETE FROM asignacion WHERE idHorario =? and dniEmpleado =?";
 
         PreparedStatement ps = connection.prepareStatement(sql);
 
         try {
             ps.setInt(1, horario.getId());
-            ps.setInt(2, empleado.getId());
+            ps.setString(2, empleado.getDni());
 
            int filasEliminadas = ps.executeUpdate();
         if (filasEliminadas > 0) {

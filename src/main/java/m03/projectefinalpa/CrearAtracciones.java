@@ -220,8 +220,8 @@ public class CrearAtracciones {
         nombre.setText("");
         descripcion.setText("");
         altura.setText("");
-        tipo.getSelectionModel().clearSelection();
-        ubicacion.getSelectionModel().clearSelection();
+        tipo.setValue("");
+        ubicacion.setValue("");
 
     }
 

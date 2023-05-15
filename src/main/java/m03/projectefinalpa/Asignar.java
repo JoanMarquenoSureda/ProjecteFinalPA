@@ -11,12 +11,10 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Optional;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
@@ -54,7 +52,7 @@ public class Asignar {
     ObservableList<String> dadesHorarisSenseAssignar = FXCollections.observableArrayList(); // Llista on guardarem les  dades del horaris del metode ToSring
     private Timestamp fechaHoraSQL; //Data format MYsql
     private LocalDate diaCalendario;
-    int idZona;
+    String nombreZona;
     int indice;
 
     //método para buscar un horario asociado al boton buscar
@@ -123,7 +121,7 @@ public class Asignar {
 
             }
 
-            if (missatge.equals("")) {
+            if (missatge.equals("ok")) {
                 alerta("Horario asignado correctamente");
 
                 // limpiamos las celdas seleccionadas, para que así no confunda al usuario una
@@ -230,11 +228,11 @@ public class Asignar {
         if (opcionAtraccion.isSelected()) {
 
             // devuelve el id de la atraccion sobre la lista de atracciones.
-            idZona = llistaAtraccions.get(indice).getId();
+            nombreZona = llistaAtraccions.get(indice).getNombre();
 
             // devuelve una lista con los horaris de la atraccion , a través de la clase
             // gestioDades.
-            horariAtraccio = gestioDades.llistaHorarisAtraccions(idZona, fechaHoraSQL);
+            horariAtraccio = gestioDades.llistaHorarisAtraccions(nombreZona, fechaHoraSQL);
 
             // cargar los horarios en la listView Horarios, que lo visualiza con el metodo
             // toString de la classe Horarios.
@@ -243,9 +241,9 @@ public class Asignar {
             // para la opcio restaurante
         } else if (opcionRestaurante.isSelected()) {
 
-            idZona = llistaRestaurant.get(indice).getId();
+            nombreZona = llistaRestaurant.get(indice).getNombre();
 
-            horariRestaurant = gestioDades.llistaHorarisRestaurants(idZona, fechaHoraSQL);
+            horariRestaurant = gestioDades.llistaHorarisRestaurants(nombreZona, fechaHoraSQL);
 
             listViewHorarios.getItems().addAll(horariRestaurant);
 

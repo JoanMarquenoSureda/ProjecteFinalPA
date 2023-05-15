@@ -10,18 +10,20 @@ public class Horari {
     private int id;
     private LocalDateTime fecha_inici;
     private LocalDateTime fecha_fin;
-    private int idAtraccion;
-    private int idRestaurante;
+    private String nombreAtr;
+    private String nombreRes;
     private ZonaTrabajo zona;// he trabajado tambien con esta variable, para unificar el idAtraccion e idRestaurante en la clase "GestioDadesEmpleados", ya
                              // que con la consulta, podia controlar los nulos y que solo devolviera uno de los dos valores. 
     private ArrayList<EmpleadosClass> Empleado;
 
-    public Horari(LocalDateTime fecha_inici, LocalDateTime fecha_fin, int idAtraccion, int idRestaurante) {
+    public Horari(LocalDateTime fecha_inici, LocalDateTime fecha_fin, String nombreAtr, String nombreRes) {
         this.fecha_inici = fecha_inici;
         this.fecha_fin = fecha_fin;
-        this.idAtraccion = idAtraccion;
-        this.idRestaurante = idRestaurante;
+        this.nombreAtr = nombreAtr;
+        this.nombreRes = nombreRes;
     }
+    
+    
 
     public Horari(LocalDateTime fecha_inici, LocalDateTime fecha_fin, ZonaTrabajo zona) {
         this.fecha_inici = fecha_inici;
@@ -60,22 +62,6 @@ public class Horari {
         this.fecha_fin = fecha_fin;
     }
 
-    public int getIdAtraccion() {
-        return idAtraccion;
-    }
-
-    public void setIdAtraccion(int idAtraccion) {
-        this.idAtraccion = idAtraccion;
-    }
-
-    public int getIdRestaurante() {
-        return idRestaurante;
-    }
-
-    public void setIdRestaurante(int idRestaurante) {
-        this.idRestaurante = idRestaurante;
-    }
-
     public int getId() {
         return id;
     }
@@ -95,6 +81,24 @@ public class Horari {
     public ArrayList<EmpleadosClass> getEmpleado() {
         return Empleado;
     }
+
+    public String getNombreAtr() {
+        return nombreAtr;
+    }
+
+    public void setNombreAtr(String nombreAtr) {
+        this.nombreAtr = nombreAtr;
+    }
+
+    public String getNombreRes() {
+        return nombreRes;
+    }
+
+    public void setNombreRes(String nombreRes) {
+        this.nombreRes = nombreRes;
+    }
+    
+    
 
     public void setEmpleado(ArrayList<EmpleadosClass> Empleado) {
         this.Empleado = Empleado;

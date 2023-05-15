@@ -31,13 +31,13 @@ public class GestioDadesCrearYAsignar {
     // ordenat de forma ascendent per horari. Es busca lhorari entre dues dates
     // concretes enviades
     // per paràmetre.
-    public ObservableList<Horari> llistaHorarisRestaurants(int id, Timestamp fechaHoraSQL) {
+    public ObservableList<Horari> llistaHorarisRestaurants(String nombre, Timestamp fechaHoraSQL) {
 
         ObservableList<Horari> horaris = FXCollections.observableArrayList();
         String sql = "SELECT horario.id, fecha_inicio, fecha_fin\n"
                 + "FROM horario\n"
-                + "INNER JOIN restaurante ON restaurante.id = horario.idRestaurante\n"
-                + "WHERE fecha_inicio >= ? AND fecha_inicio < ? AND restaurante.id = ? ORDER BY fecha_inicio ASC;";
+                + "INNER JOIN restaurante ON restaurante.nombre = horario.nombreRes\n"
+                + "WHERE fecha_inicio >= ? AND fecha_inicio < ? AND restaurante.nombre = ? ORDER BY fecha_inicio ASC;";
 
         Connection connection = new Connexio().connecta();
         try {
@@ -45,7 +45,7 @@ public class GestioDadesCrearYAsignar {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setDate(1, Date.valueOf(fechaSinTiempo));
             statement.setDate(2, Date.valueOf(fechaSinTiempo.plusDays(1)));
-            statement.setInt(3, id);
+            statement.setString(3, nombre);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 horaris.add(
@@ -67,13 +67,13 @@ public class GestioDadesCrearYAsignar {
     // igual que la llista d'horaris de ¡restaurant pero només amb atraccions. A les
     // següents consultes, ho he agrupat amb una classe Zona perque sigui més òptim
     // el còdi.
-    public ObservableList<Horari> llistaHorarisAtraccions(int id, Timestamp fechaHoraSQL) {
+    public ObservableList<Horari> llistaHorarisAtraccions(String nombre, Timestamp fechaHoraSQL) {
 
         ObservableList<Horari> horaris = FXCollections.observableArrayList();
         String sql = "SELECT horario.id, fecha_inicio, fecha_fin\n"
                 + "FROM horario\n"
-                + "INNER JOIN atraccion ON atraccion.id = horario.idAtraccion\n"
-                + "WHERE fecha_inicio >= ? AND fecha_inicio < ? AND atraccion.id = ? ORDER BY fecha_inicio ASC;";
+                + "INNER JOIN atraccion ON atraccion.nombre = horario.nombreAtr\n"
+                + "WHERE fecha_inicio >= ? AND fecha_inicio < ? AND atraccion.nombre = ? ORDER BY fecha_inicio ASC;";
 
         Connection connection = new Connexio().connecta();
         try {
@@ -81,7 +81,7 @@ public class GestioDadesCrearYAsignar {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setDate(1, Date.valueOf(fechaSinTiempo));
             statement.setDate(2, Date.valueOf(fechaSinTiempo.plusDays(1)));
-            statement.setInt(3, id);
+            statement.setString(3, nombre);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 horaris.add(
@@ -102,7 +102,7 @@ public class GestioDadesCrearYAsignar {
     // llista totes les atraccions de la taula atraccions, afegint tots els camps.
     public ObservableList<Atraccio> llistaAtraccio() {
         ObservableList<Atraccio> itemList = FXCollections.observableArrayList();
-        String sql = "SELECT id, nombre, descripcion, tipo, ubicacion FROM atraccion";
+        String sql = "SELECT nombre, descripcion, tipo, ubicacion FROM atraccion";
         Connection connection = new Connexio().connecta();
         try {
             Statement statement = connection.createStatement();
@@ -110,11 +110,11 @@ public class GestioDadesCrearYAsignar {
             while (resultSet.next()) {
                 itemList.add(
                         new Atraccio(
-                                resultSet.getInt(1),
+                               
+                                resultSet.getString(1),
                                 resultSet.getString(2),
                                 resultSet.getString(3),
-                                resultSet.getString(4),
-                                resultSet.getString(5)));
+                                resultSet.getString(4)));
             }
             connection.close();
         } catch (SQLException throwables) {
@@ -126,18 +126,18 @@ public class GestioDadesCrearYAsignar {
     // llista tots els restaurant amb tots els camps dels restautants.
     public ObservableList<Restaurant> llistaRestaurants() {
         ObservableList<Restaurant> llistaRestaurants = FXCollections.observableArrayList();
-        String sql = "SELECT id, nombre, tipoComida, ubicacion, descripcion FROM restaurante";
+        String sql = "SELECT nombre, tipoComida, ubicacion, descripcion FROM restaurante";
         Connection connection = new Connexio().connecta();
         try {
             Statement ordre = connection.createStatement();
             ResultSet resultSet = ordre.executeQuery(sql);
             while (resultSet.next()) {
                 Restaurant restaurante = new Restaurant(
-                        resultSet.getInt(1),
+                        
+                        resultSet.getString(1),
                         resultSet.getString(2),
                         resultSet.getString(3),
-                        resultSet.getString(4),
-                        resultSet.getString(5));
+                        resultSet.getString(4));
                 llistaRestaurants.add(restaurante);
             }
             connection.close();
@@ -150,64 +150,69 @@ public class GestioDadesCrearYAsignar {
     // feim un insert d'un horari dins una atracció, segons els valors de l'objecte
     // horari passats per paràmetres, que també té l'id de l'atracció inclòs.
     public String afegeixHorariAtraccio(Horari horari) throws SQLException, FileNotFoundException, IOException {
-        String missatge="";
-     
-        Connection connection = new Connexio().connecta();
-        String sql = "INSERT INTO horario (fecha_inicio, fecha_fin, idAtraccion) VALUES (?,?,?)";
-        PreparedStatement ordre = connection.prepareStatement(sql);
-        try {
-            ordre.setTimestamp(1, Timestamp.valueOf(horari.getFecha_inici()));
-            ordre.setTimestamp(2, Timestamp.valueOf(horari.getFecha_fin()));
-            ordre.setInt(3, horari.getIdAtraccion());
-            ordre.executeUpdate();
-  
-
-        }catch (SQLException e) {
-            if ("45000".equals(e.getSQLState())) {
-               missatge = e.getMessage();
-            } 
+    String missatge = "";
+    Connection connection = new Connexio().connecta();
+    String sql = "INSERT INTO horario (fecha_inicio, fecha_fin, nombreAtr) VALUES (?,?,?)";
+    PreparedStatement ordre = connection.prepareStatement(sql);
+    try {
+        ordre.setTimestamp(1, Timestamp.valueOf(horari.getFecha_inici()));
+        ordre.setTimestamp(2, Timestamp.valueOf(horari.getFecha_fin()));
+        ordre.setString(3, horari.getNombreAtr().trim());
+        
+        int rowsAffected = ordre.executeUpdate();
+        if (rowsAffected > 0) {
+            missatge = "ok";
         }
+    } catch (SQLException e) {
+        if ("45000".equals(e.getSQLState())) {
+            missatge = e.getMessage();
+        }
+    } 
+    return missatge;
+}
 
-        return missatge;
-    }
 
     // feim un insert d'un horari dins un restaurant, segons els valors de l'objecte
     // horari passats per paràmetres, que també té l'id del restaurant inclòs.
-    public String afegeixHorariRestaurant(Horari horari) throws SQLException, FileNotFoundException, IOException {
-        String missatge="";
-  
-        Connection connection = new Connexio().connecta();
-        String sql = "INSERT INTO horario (fecha_inicio, fecha_fin, idRestaurante) VALUES (?,?,?)";
-        PreparedStatement ordre = connection.prepareStatement(sql);
-        try {
-            ordre.setTimestamp(1, Timestamp.valueOf(horari.getFecha_inici()));
-            ordre.setTimestamp(2, Timestamp.valueOf(horari.getFecha_fin()));
-            ordre.setInt(3, horari.getIdRestaurante());
-            ordre.executeUpdate();
-          
-
-        } catch (SQLException e) {
-            if ("45000".equals(e.getSQLState())) {
-               missatge = e.getMessage();
-            } 
+   public String afegeixHorariRestaurant(Horari horari) throws SQLException, FileNotFoundException, IOException {
+    String missatge = "";
+    Connection connection = new Connexio().connecta();
+    String sql = "INSERT INTO horario (fecha_inicio, fecha_fin, nombreRes) VALUES (?,?,?)";
+    PreparedStatement ordre = connection.prepareStatement(sql);
+    try {
+        ordre.setTimestamp(1, Timestamp.valueOf(horari.getFecha_inici()));
+        ordre.setTimestamp(2, Timestamp.valueOf(horari.getFecha_fin()));
+        ordre.setString(3, horari.getNombreRes());
+        
+        int rowsAffected = ordre.executeUpdate();
+        
+        if (rowsAffected > 0) {
+            missatge = "ok";
         }
-        return missatge;
-    }
+    } catch (SQLException e) {
+        if ("45000".equals(e.getSQLState())) {
+            missatge = e.getMessage();
+        }
+    } 
+    
+    return missatge;
+}
+
 
     // mètode que inserta un horari a un empleat, passats per paràmetres, on agafa
     // l'id de cada un i ho afegeix a la taula asignación.
     public String assignarHoraris(Horari horari, EmpleadosClass empleat) throws SQLException
            {
-        boolean ok = false;
+      
         String missatge = "";
         Connection connection = new Connexio().connecta();
-        String sql = "INSERT INTO asignacion (idHorario, idEmpleado) VALUES (?, ?);";
+        String sql = "INSERT INTO asignacion (idHorario, dniEmpleado) VALUES (?, ?);";
         PreparedStatement ordre = connection.prepareStatement(sql);
         try {
             ordre.setInt(1, horari.getId());
-            ordre.setInt(2, empleat.getId());
+            ordre.setString(2, empleat.getDni());
             ordre.executeUpdate();
-            ok = true;
+            missatge = "ok";
 
         } catch (SQLException e) {
             if ("45000".equals(e.getSQLState())) {
@@ -223,14 +228,14 @@ public class GestioDadesCrearYAsignar {
     // són els que treballen a les zones del parc.
     public ObservableList<EmpleadosClass> llistaEmpleatsHoraris() {
         ObservableList<EmpleadosClass> llistaEmpleats = FXCollections.observableArrayList();
-        String sql = "SELECT id, nombre FROM empleado WHERE categoria = 'Aprendiz' or categoria = 'Trabajador'";
+        String sql = "SELECT dni, nombre FROM empleado WHERE categoria = 'Aprendiz' or categoria = 'Trabajador'";
         Connection connection = new Connexio().connecta();
         try {
             Statement ordre = connection.createStatement();
             ResultSet resultSet = ordre.executeQuery(sql);
             while (resultSet.next()) {
                 EmpleadosClass empleado = new EmpleadosClass(
-                        resultSet.getInt(1),
+                        resultSet.getString(1),
                         resultSet.getString(2));
                 llistaEmpleats.add(empleado);
             }

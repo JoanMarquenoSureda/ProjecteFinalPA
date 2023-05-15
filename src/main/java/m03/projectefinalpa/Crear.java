@@ -56,7 +56,7 @@ public class Crear {
     private int minutosTextoE;
     private int horasTextoS;
     private int minutosTextoS;
-    private int idZona;
+    private String nombreZona;
     private LocalDateTime fecha_inici;
     private LocalDateTime fecha_fin;
     private int dia;
@@ -118,21 +118,24 @@ public class Crear {
                         if (opcionAtraccion.isSelected()) {
                             
                             Atraccio atraccion = llistaAtraccions.get(indiceLista);
-                            idZona = atraccion.getId();
-                            horari = new Horari(fecha_inici, fecha_fin, idZona, 0);
+                            nombreZona = atraccion.getNombre();
+                           
+                            horari = new Horari(fecha_inici, fecha_fin, nombreZona, "");
+                           
                             mensajeSQL = gestioDades.afegeixHorariAtraccio(horari); // nos devuelve si se ha guardado o no,
 
                             // mismo metodo pero para los restaurantes.
                         } else if (opcionRestaurante.isSelected()) {
                             
                             Restaurant restaurant = llistaRestaurant.get(indiceLista);
-                            idZona = restaurant.getId();
-                            horari = new Horari(fecha_inici, fecha_fin, 0, idZona);
+                            nombreZona = restaurant.getNombre();
+                            horari = new Horari(fecha_inici, fecha_fin, "", nombreZona);
+                            System.out.println(horari.getNombreAtr());
                             mensajeSQL = gestioDades.afegeixHorariRestaurant(horari);
                         }
 
                         // si se ha añadido, mensaje de alerta y borramos las horas, para facilidad del usuario
-                        if (mensajeSQL.equals("")) {
+                        if (mensajeSQL.equals("ok")) {
                             alerta("Añadido correctamente");
                             esborrarHores();
 

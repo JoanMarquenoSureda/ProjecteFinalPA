@@ -14,13 +14,7 @@ public class Restaurant extends ZonaTrabajo{
     private String descripcion;
     
     
-    public Restaurant(int id, String nombre, String ubicacion, String tipoComida, String descripcion) {
-        super(id, nombre, ubicacion);
-        this.tipoComida = tipoComida;
-        this.descripcion = descripcion;
-    }
-
-    public Restaurant(String tipoComida, String descripcion, String nombre, String ubicacion) {
+    public Restaurant(String nombre, String ubicacion, String tipoComida, String descripcion) {
         super(nombre, ubicacion);
         this.tipoComida = tipoComida;
         this.descripcion = descripcion;

@@ -2,12 +2,12 @@
 package m03.projectefinalpa.model.classes;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import javafx.scene.image.Image;
 
 
 public class EmpleadosClass {
     
-    private int id;
     private String dni;
     private String nombre;
     private String direccion;
@@ -38,8 +38,8 @@ public class EmpleadosClass {
         this.categoria = categoria;
     }
 
-    public EmpleadosClass(int id, String nombre, String direccion, String telefono, String email, Image fotoImage) {
-        this.id = id;
+    public EmpleadosClass(String dni, String nombre, String direccion, String telefono, String email, Image fotoImage) {
+       this.dni = dni;
         this.nombre = nombre;
         this.direccion = direccion;
         this.telefono = telefono;
@@ -48,13 +48,13 @@ public class EmpleadosClass {
     }
      
     
-    public EmpleadosClass(int id, String nombre) {
-        this.id = id;
+    public EmpleadosClass(String dni, String nombre) {
+       this.dni = dni;
         this.nombre = nombre;
     }
     
-     public EmpleadosClass(int id, String nombre, String email) {
-       this.id = id;
+     public EmpleadosClass(String dni, String nombre, String email) {
+       this.dni = dni;
        this.nombre = nombre;
        this.email = email;
     }
@@ -63,6 +63,7 @@ public class EmpleadosClass {
         return dni;
     }
 
+    
     public void setDni(String dni) {
         this.dni = dni;
     }
@@ -75,15 +76,6 @@ public class EmpleadosClass {
         this.fotoImage = fotoImage;
     }
      
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getNombre() {
         return nombre;
     }
@@ -134,11 +126,10 @@ public class EmpleadosClass {
         this.listaHorario = listaHorario;
     }
 
-
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 97 * hash + this.id;
+        int hash = 3;
+        hash = 97 * hash + Objects.hashCode(this.dni);
         return hash;
     }
 
@@ -154,9 +145,11 @@ public class EmpleadosClass {
             return false;
         }
         final EmpleadosClass other = (EmpleadosClass) obj;
-        return this.id == other.id;
+        return Objects.equals(this.dni, other.dni);
     }
-    
+
+
+       
  
     @Override
     public String toString() {

@@ -78,7 +78,7 @@ public class CrearEmpleados {
 
                 // Obtener los datos ingresados por el usuario
                 dniDatos = dni.getText();
-                if (dniDatos.length() == 8) {
+                if (dniDatos.length() != 9) {
                     alerta("Formato DNI incorrecto");
                 } else {
                     nombreDatos = nombre.getText();
@@ -155,7 +155,7 @@ public class CrearEmpleados {
                     // Obtener los datos ingresados por el usuario
                     dniBuscado = dniBuscar.getText();
                     dniDatos = dni.getText();
-                    if (dniDatos.length() == 8) {
+                    if (dniDatos.length() != 9) {
                         alerta("Formato DNI incorrecto");
                     } else {
                         nombreDatos = nombre.getText();

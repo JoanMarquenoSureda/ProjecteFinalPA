@@ -17,14 +17,14 @@ public class GestioDadesDatosRestaurantes {
         boolean ok = false;
         Connection connection = new Connexio().connecta();
 
-        String sql = "insert into restaurante (nombre, tipoComida, ubicacion, descripcion) values (?,?,?,?)";
+        String sql = "insert into restaurante (nombre, ubicacion, tipoComida, descripcion) values (?,?,?,?)";
 
         PreparedStatement ps = connection.prepareStatement(sql);
         try {
 
             ps.setString(1, restaurante.getNombre());
-            ps.setString(2, restaurante.getTipoComida());
             ps.setString(3, restaurante.getUbicacion());
+             ps.setString(2, restaurante.getTipoComida());
             ps.setString(4, restaurante.getDescripcion());
            
    

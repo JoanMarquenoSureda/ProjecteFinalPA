@@ -29,7 +29,7 @@ public class GestioDadesVisualitzar {
     
     //listamos todos los horarios de un restaurante durante un periodo de tiempo entre dos fechas pasadas. 
     
-    public ObservableList<Horari> llistaHorarisRestaurants(int id, LocalDateTime fechaEntrada, LocalDateTime fechasalida) {
+    public ObservableList<Horari> llistaHorarisRestaurants(String nombreRes, LocalDateTime fechaEntrada, LocalDateTime fechasalida) {
         int contador = 0;
         int identificador;
 
@@ -37,11 +37,11 @@ public class GestioDadesVisualitzar {
         
         
         //consulta que devuelve todos los horarios y el nombre de los empleados assignados, si no hay assignacion devuelve null en el campo nombre
-        String sql = "SELECT horario.id, horario.fecha_inicio, horario.fecha_fin, empleado.id, empleado.nombre, empleado.email \n"
+        String sql = "SELECT horario.id, horario.fecha_inicio, horario.fecha_fin, empleado.dni, empleado.nombre, empleado.email \n"
                 + "from horario\n"
                 + "left join asignacion on asignacion.idHorario = horario.id\n"
-                + "left join empleado on asignacion.idEmpleado = empleado.id\n"
-                + "where horario.idRestaurante = ? and horario.fecha_inicio >= ? AND horario.fecha_fin <= ?\n"
+                + "left join empleado on asignacion.dniEmpleado = empleado.dni\n"
+                + "where horario.nombreRes = ? and horario.fecha_inicio >= ? AND horario.fecha_fin <= ?\n"
                 + "order by horario.fecha_inicio asc;";
 
         Connection connection = new Connexio().connecta();
@@ -52,7 +52,7 @@ public class GestioDadesVisualitzar {
             LocalDate fechaSalidaSQL = fechasalida.toLocalDate();
             PreparedStatement statement = connection.prepareStatement(sql);
 
-            statement.setInt(1, id);
+            statement.setString(1, nombreRes);
             statement.setDate(2, Date.valueOf(fechaEntradaSQL));
             statement.setDate(3, Date.valueOf(fechaSalidaSQL));
 
@@ -60,14 +60,14 @@ public class GestioDadesVisualitzar {
 
             while (resultSet.next()) {
                 //revisamos primero los empleados y lo creamos en caso de que el nombre no sea null
-                int idEmpleado = resultSet.getInt(4);
+                String dniEmpleado = resultSet.getString(4);
                 String nombreEmpleado = resultSet.getString(5);
                 String email = resultSet.getString(6);
                 EmpleadosClass empleado = null;
 
                // si el nombre es diferente e null, se crea el objeto empleado.
                 if (nombreEmpleado != null) {
-                    empleado = new EmpleadosClass(idEmpleado, nombreEmpleado, email);
+                    empleado = new EmpleadosClass(dniEmpleado, nombreEmpleado, email);
                 }
                 //ahora leemos el horario de entrada y salida, y lo convertimos a un LocalDateTime de la clase java
                 identificador = resultSet.getInt(1);
@@ -109,17 +109,17 @@ public class GestioDadesVisualitzar {
     }
 
     //llista tots els horaris de les atraccions, i dins la classe horaris tenim un arrayList d'empleats que anem afegint tots els empleats que fan aquell horari. 
-    public ObservableList<Horari> llistaHorarisAtraccions(int id, LocalDateTime fechaEntrada, LocalDateTime fechasalida) {
+    public ObservableList<Horari> llistaHorarisAtraccions(String nombreAtr, LocalDateTime fechaEntrada, LocalDateTime fechasalida) {
         int contador = 0;
         int identificador;
 
         ObservableList<Horari> horariosList = FXCollections.observableArrayList();
        
-        String sql = "SELECT horario.id, horario.fecha_inicio, horario.fecha_fin, empleado.id, empleado.nombre, empleado.email \n"
+        String sql = "SELECT horario.id, horario.fecha_inicio, horario.fecha_fin, empleado.dni, empleado.nombre, empleado.email \n"
                 + "from horario\n"
                 + "left join asignacion on asignacion.idHorario = horario.id\n"
-                + "left join empleado on asignacion.idEmpleado = empleado.id\n"
-                + "where horario.idAtraccion = ? and horario.fecha_inicio >= ? AND horario.fecha_fin <= ?\n"
+                + "left join empleado on asignacion.dniEmpleado = empleado.dni\n"
+                + "where horario.nombreAtr = ? and horario.fecha_inicio >= ? AND horario.fecha_fin <= ?\n"
                 + "order by horario.fecha_inicio asc;";
 
         Connection connection = new Connexio().connecta();
@@ -128,7 +128,7 @@ public class GestioDadesVisualitzar {
             LocalDate fechaSalidaSQL = fechasalida.toLocalDate();
             PreparedStatement statement = connection.prepareStatement(sql);
 
-            statement.setInt(1, id);
+            statement.setString(1, nombreAtr);
             statement.setDate(2, Date.valueOf(fechaEntradaSQL));
             statement.setDate(3, Date.valueOf(fechaSalidaSQL));
 
@@ -136,13 +136,13 @@ public class GestioDadesVisualitzar {
 
             while (resultSet.next()) {
 
-                int idEmpleado = resultSet.getInt(4);
+                String dniEmpleado = resultSet.getString(4);
                 String nombreEmpleado = resultSet.getString(5);
                 String email = resultSet.getString(6);
                 EmpleadosClass empleado = null;
                 // si l'empleat no retorna null volem guardar les seves dades creant una instancia d'empleant.
                 if (nombreEmpleado != null) {
-                    empleado = new EmpleadosClass(idEmpleado, nombreEmpleado, email);
+                    empleado = new EmpleadosClass(dniEmpleado, nombreEmpleado, email);
                 }
                 // guardem les dades de l'horari dins variables
                 identificador = resultSet.getInt(1);

@@ -63,7 +63,7 @@ public class CrearRestaurante {
                 descripcionDatos = descripcion.getText();
 
                 // Insertar la nueva atracción en la base de datos
-                restaurante = new Restaurant(tipoComidaDatos, descripcionDatos, nombreDatos, ubicacionDatos);
+                restaurante = new Restaurant(nombreDatos, ubicacionDatos, tipoComidaDatos, descripcionDatos);
                 boolean exito = dades.insertarRestaurante(restaurante);
 
                 if (exito) {
@@ -98,7 +98,7 @@ public class CrearRestaurante {
                         descripcionDatos = descripcion.getText();
 
                         // Crear el objeto atraccion con los datos actualizados
-                        Restaurant restauranteModificado = new Restaurant(tipoComidaDatos, descripcionDatos, nombreDatos, ubicacionDatos);
+                        Restaurant restauranteModificado = new Restaurant(nombreDatos, ubicacionDatos, tipoComidaDatos, descripcionDatos);
 
                         // Actualizar la atracción en la base de datos pasando su antiguo nombre para que sea la clave única, y todos los datos modificados.
                         boolean exito = dades.modificarRestaurante(nombreBuscado, restauranteModificado);
@@ -190,8 +190,9 @@ public class CrearRestaurante {
         nombreRestaurante.setText("");
         nombre.setText("");
         descripcion.setText("");
-        tipoComida.getSelectionModel().clearSelection();
-        ubicacion.getSelectionModel().clearSelection();
+      
+        tipoComida.setValue("");
+        ubicacion.setValue("");
 
     }
 

@@ -45,7 +45,7 @@ public class Visualizar {
     ListView listViewHorarios;
 
     int indice;
-    int idZona;
+    String nombreZona;
     ObservableList<Horari> horariRestaurants = FXCollections.observableArrayList();
     ObservableList<Horari> horariAtraccions = FXCollections.observableArrayList();
     ObservableList<Atraccio> llistaAtraccions = gestioDades.llistaAtraccio(); // llistem totes les atraccions quan iniciem
@@ -85,10 +85,10 @@ public class Visualizar {
                 if (opcionAtraccion.isSelected()) {
 
                     // devolvemos el id de la atraccion
-                    idZona = llistaAtraccions.get(indice).getId();
+                    nombreZona = llistaAtraccions.get(indice).getNombre();
                     // pasamos a gestion de dades el id de la zona, la fecha de inicio y final y
                     // devolvemos la lista de los horarios juntos los trabajadores asignados.
-                    horariAtraccions = gestioDadesVisualitzar.llistaHorarisAtraccions(idZona, diadesdelocal,
+                    horariAtraccions = gestioDadesVisualitzar.llistaHorarisAtraccions(nombreZona, diadesdelocal,
                             diahastalocal);
 
                     // si la lista no es vacía, lo añadimos a la listView. Si es vacía añadimos un
@@ -101,8 +101,8 @@ public class Visualizar {
 
                 } else if (opcionRestaurante.isSelected()) {
 
-                    idZona = llistaRestaurant.get(indice).getId();
-                    horariRestaurants = gestioDadesVisualitzar.llistaHorarisRestaurants(idZona, diadesdelocal,
+                    nombreZona = llistaRestaurant.get(indice).getNombre();
+                    horariRestaurants = gestioDadesVisualitzar.llistaHorarisRestaurants(nombreZona, diadesdelocal,
                             diahastalocal);
 
                     if (!horariRestaurants.isEmpty()) {
