@@ -46,26 +46,40 @@
                 
                 <h6>Esquema lógico relacional</h6>
                 
-                <p><strong>ATRACCION</strong>(<u>id</u>, nombre, descripción, tipo, alturaminima, ubicacion)</p>
+                <p><strong>ATRACCION</strong>(<u>nombre</u>, descripción, tipo, alturaminima, ubicacion)</p>
 
-                <p><strong>RESTAURANTE</strong>(<u>id</u>, nombre, tipoComida, ubicacion, descripción)</p>
+                <p><strong>RESTAURANTE</strong>(<u>nombre</u>, tipoComida, ubicacion, descripción)</p>
 
-                <p><strong>EMPLEADO</strong>(<u>id</u>, nombre, direccion, telefono, email, foto)</p>
+                <p><strong>EMPLEADO</strong>(<u>dni</u>, nombre, direccion, telefono, email, categoría, foto)</p>
 
-                <p><strong>HORARIO</strong>(<u>id</u>, fecha_inicio, fecha_fina, idRestaurante, idAtraccion)</p>
+                <p><strong>HORARIO</strong>(<u>id</u>, fecha_inicio, fecha_fina, nombreAtr, nombreRes)</p>
 
-                <p>HORARIO.idRestaurante es la clave aliena a RESTAURANTE.<br>
-                HORARIO.idAtraccion es la clave aliena a ATRACCION</p>
+                <p>HORARIO.nombreRes es la clave aliena a RESTAURANTE.<br>
+                HORARIO.nombreAtr es la clave aliena a ATRACCION</p>
 
-                <p><strong>ASIGNACION</strong>(<u>idHorario</u>, <u>idEmpleado</u>)</p>
+                <p><strong>ASIGNACION</strong>(<u>idHorario</u>, <u>idniEmpleado</u>)</p>
 
                 <p>ASIGNACION.idHorario es la clave aliena a HORARIO.<br>
-                ASIGNACION.idEmpleado es la clave aliena a ATRACCION.</p>
+                ASIGNACION.dniEmpleado es la clave aliena a ATRACCION.</p>
                     
                 <h6>Enlace base de datos</h6>
                 <p>Clica encima de la imagen para descargarte la base de datos para poderla importar en mySQL.</p>
                 <a style="color: #323392; font-weight:700; font-size: 20px; " href="imagenesWeb/bd_portaventura.sql" download="bd_portaventura.sql"><img src="imagenesWeb/botonmysql.png" alt="imagen mysql"></a>
-              
+                
+                <h4>MODELO-VISTA-CONTROLADOR</h4>
+
+                <p>Para crear el patrón MVC en mi proyecto, he organizado las diferentes partes de la siguiente manera:</p>
+                <p>En el <strong>modelo</strong>, he incluido todas las clases que tienen conexión a la base de datos MySQL. 
+                Las he nombrado de acuerdo al controlador correspondiente para facilitar su localización. 
+                Adjunto una imagen que muestra la estructura de organización.</p>
+                <img src="">
+                <p>En el <strong>controlador</strong>, he creado controladores individuales para cada vista de la aplicación. 
+                Cada clase controladora tiene el mismo nombre que su vista asociada. 
+                Además, he creado una carpeta llamada "clases" para incluir cada clase-objeto que se ha derivado del diagrama UML.
+                En esta sección, me gustaría destacar que he creado una clase llamada "Zona" que tiene dos subclases: "Atraccion" y "Restaurante".
+                Estas subclases no existen en el diagrama UML ni en la base de datos, pero me han ayudado a agrupar estos dos objetos de manera lógica.</p>
+                <p>Las <strong>vistas</strong> están ubicadas en la carpeta "resources", junto con las imágenes,
+                los estilos CSS y una página web que he creado como manual de la aplicación.</p>
                 
                 <h4>CONCLUSIÓN</h4>
                 <p>Durante el proceso del desarrollo de la aplicación se me han presentado diversos desafíos técnicos. Uno de los retos más importantes ha sido la elección y uso adecuado de los controles,

@@ -23,8 +23,8 @@ public class GestioDadesDatosRestaurantes {
         try {
 
             ps.setString(1, restaurante.getNombre());
-            ps.setString(3, restaurante.getUbicacion());
-             ps.setString(2, restaurante.getTipoComida());
+            ps.setString(2, restaurante.getUbicacion());
+             ps.setString(3, restaurante.getTipoComida());
             ps.setString(4, restaurante.getDescripcion());
            
    
@@ -44,9 +44,9 @@ public class GestioDadesDatosRestaurantes {
 
         Restaurant restaurante = null;
 
-        String sql = "SELECT tipoComida, descripcion, nombre,  ubicacion FROM restaurante \n"
+        String sql = "SELECT nombre, ubicacion, tipoComida, descripcion FROM restaurante \n"
                 + "WHERE nombre = ?;";
-
+       
         Connection connection = new Connexio().connecta();
 
         try {

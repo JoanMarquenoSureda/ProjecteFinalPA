@@ -44,19 +44,20 @@ public class Visualizar {
     @FXML
     ListView listViewHorarios;
 
-    int indice;
-    String nombreZona;
     ObservableList<Horari> horariRestaurants = FXCollections.observableArrayList();
     ObservableList<Horari> horariAtraccions = FXCollections.observableArrayList();
-    ObservableList<Atraccio> llistaAtraccions = gestioDades.llistaAtraccio(); // llistem totes les atraccions quan iniciem
-    ObservableList<Restaurant> llistaRestaurant = gestioDades.llistaRestaurants();// llistem tots els restaurants quan iniciem
+    ObservableList<Atraccio> llistaAtraccions;
+    ObservableList<Restaurant> llistaRestaurant;
+
+    private String nombreZona; //guardamos el valor del nombre de la zona.
+    private int indice; // guardamos el indice del combobox seleccionado
 
     @FXML //metodo para buscar un horario de una zona entre varias fechas. 
     public void buscar() {
-        
-         // para hacer seleccion multiple de horarios.        
-        listViewHorarios.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
+        // para hacer seleccion multiple de horarios.        
+        listViewHorarios.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        
         // comprobar si hay alguna zona seleccionada
         if (desplegableZona.getSelectionModel().getSelectedIndex() >= 0 && calendarioDesde.getValue() != null
                 && calendarioHasta.getValue() != null) {
@@ -79,14 +80,14 @@ public class Visualizar {
                 // Añadimos a la fecha la hora del inicio del dia a los dos y al hasta,
                 // devolvemos un dia mas.
                 LocalDateTime diadesdelocal = diaDesde.atStartOfDay(); // se pondrá la hora y mm :(00:00)
-                LocalDateTime diahastalocal = diaHasta.atStartOfDay().plusDays(1);
+                LocalDateTime diahastalocal = diaHasta.atStartOfDay().plusDays(1); // pondra la fecha con 1 día más para que sean las 23:59
 
                 // si seleccionamos atacciones:
                 if (opcionAtraccion.isSelected()) {
 
-                    // devolvemos el id de la atraccion
+                    // devolvemos el nombre de la atraccion
                     nombreZona = llistaAtraccions.get(indice).getNombre();
-                    // pasamos a gestion de dades el id de la zona, la fecha de inicio y final y
+                    // pasamos a gestion de dades el nombre de la zona, la fecha de inicio y final y
                     // devolvemos la lista de los horarios juntos los trabajadores asignados.
                     horariAtraccions = gestioDadesVisualitzar.llistaHorarisAtraccions(nombreZona, diadesdelocal,
                             diahastalocal);
@@ -95,10 +96,13 @@ public class Visualizar {
                     // mensaje de horarios sin asignar.
                     if (!horariAtraccions.isEmpty()) {
                         listViewHorarios.getItems().addAll(horariAtraccions);
+                        listViewHorarios.setDisable(false);
                     } else {
                         listViewHorarios.getItems().add("Sin horarios asignados");
+                        listViewHorarios.setDisable(true);
                     }
 
+                    //igual que para Atraccion pero para Restaurante
                 } else if (opcionRestaurante.isSelected()) {
 
                     nombreZona = llistaRestaurant.get(indice).getNombre();
@@ -107,21 +111,25 @@ public class Visualizar {
 
                     if (!horariRestaurants.isEmpty()) {
                         listViewHorarios.getItems().addAll(horariRestaurants);
+                        listViewHorarios.setDisable(false);
+                        
                     } else {
+                    
                         listViewHorarios.getItems().add("Sin horarios asignados");
+                        listViewHorarios.setDisable(true);
                     }
                 }
-
+                 // si las fechas son giradas dará un mensaje.
             } else {
                 alerta("Fechas incorrectas");
             }
 
         } else {
-             alerta("Debes completar los campos antes de buscar un horario");
+            alerta("Debes completar los campos antes de buscar un horario");
         }
 
     }
-    
+
     // metodo borrar del button borrar, que borra un horario seleccionado del
     // listView.
     @FXML
@@ -158,12 +166,13 @@ public class Visualizar {
 
     }
 
-    private void initialize() {
-        calendarioDesde.setPromptText("dd/MM/yyyy");
-        calendarioHasta.setPromptText("dd/MM/yyyy");
-    }
-
     // mismos métodos que en las otras clases
+    public void initialize() {
+        llistaAtraccions = gestioDades.llistaAtraccio();
+        llistaRestaurant = gestioDades.llistaRestaurants();
+         listViewHorarios.setDisable(true); //hacer inaccesible el listview
+
+    }
 
     private void alerta(String text) {
         Alert alerta = new Alert(Alert.AlertType.INFORMATION);
@@ -173,7 +182,7 @@ public class Visualizar {
         alerta.show();
     }
 
-    public void getOpcion(javafx.event.ActionEvent event) {
+    public void obtenerOpcionZona(javafx.event.ActionEvent event) {
 
         if (opcionAtraccion.isSelected()) {
             habilitarBotones();
@@ -185,6 +194,7 @@ public class Visualizar {
         }
 
     }
+
     // alerta de confirmación, para eliminar el horario.
     private int Confirmacion() {
         int valor;
@@ -203,7 +213,6 @@ public class Visualizar {
 
         return valor;
     }
-
 
     private void cargarAtracciones() {
 
@@ -224,13 +233,6 @@ public class Visualizar {
 
     }
 
-    private void deshabilitarBotones() {
-        desplegableZona.setDisable(true);
-        calendarioDesde.setDisable(true);
-        calendarioHasta.setDisable(true);
-
-    }
-
     private void cargarRestaurantes() {
 
         ObservableList<String> nomRestaurant = FXCollections.observableArrayList();
@@ -244,22 +246,22 @@ public class Visualizar {
     }
 
     @FXML
-    private void cambiarPantallaCrear() throws IOException {
+    public void cambiarPantallaCrear() throws IOException {
         App.setRoot("Crear");
     }
 
     @FXML
-    private void cambiarPantallaAsignar() throws IOException {
+    public void cambiarPantallaAsignar() throws IOException {
         App.setRoot("Asignar");
     }
 
     @FXML
-    private void cambiarPantallaEmpleados() throws IOException {
+    public void cambiarPantallaEmpleados() throws IOException {
         App.setRoot("Empleados");
     }
-    
-     @FXML
-    private void cambiarPantallaEditar() throws IOException {
+
+    @FXML
+    public void cambiarPantallaEditar() throws IOException {
         App.setRoot("Ingresar_Datos");
     }
 

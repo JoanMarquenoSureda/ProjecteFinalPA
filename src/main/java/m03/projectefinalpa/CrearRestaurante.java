@@ -48,11 +48,12 @@ public class CrearRestaurante {
 
     GestioDadesDatosRestaurantes dades = new GestioDadesDatosRestaurantes();
     Restaurant restaurante;
+    
     //caracteres que pueden soportar los textfield
     private static final int MAX_CARACTERES_NOMBRE_RESTAURANTE = 50;
     private static final int MAX_CARACTERES_DESCRIPCION = 2000;
 
-    @FXML
+@FXML
 public void agregarRestaurante() {
     if (tipoComida.getValue() == null || ubicacion.getValue() == null || descripcion.getText().equals("") || nombre.getText().equals("")) {
         alerta("Debe completar todos los campos");
@@ -176,6 +177,12 @@ public void modificarRestaurante() {
             }
         }
     }
+     @FXML //funcion del boton limpiar, para reinicar campos sin texto y cambiar orden botones para buscar restaurante
+    public void vaciar() {
+
+        reiniciarCampos();
+        ordenBotonesHabilitar();
+    }
     
     //validamos la longitud de los caracteres de cada campo, para no tener problemas con la base de datos
      private boolean validarLongitudTexto() {
@@ -220,12 +227,7 @@ public void modificarRestaurante() {
         ubicacion.setValue("");
 
     }
-
-    public void vaciar() {
-
-        reiniciarCampos();
-        ordenBotonesHabilitar();
-    }
+   
 
     private void ordenBotonesModificar() {
         agregar.setDisable(true);
@@ -266,27 +268,27 @@ public void modificarRestaurante() {
     }
 
     @FXML
-    private void cambiarPantallaAsignar() throws IOException {
+    public void cambiarPantallaAsignar() throws IOException {
         App.setRoot("Asignar");
     }
 
     @FXML
-    private void cambiarPantallaVisualizar() throws IOException {
+    public void cambiarPantallaVisualizar() throws IOException {
         App.setRoot("Visualizar");
     }
 
     @FXML
-    private void cambiarPantallaEmpleados() throws IOException {
+    public void cambiarPantallaEmpleados() throws IOException {
         App.setRoot("Empleados");
     }
 
     @FXML
-    private void cambiarPantallaCrear() throws IOException {
+    public void cambiarPantallaCrear() throws IOException {
         App.setRoot("Crear");
     }
 
     @FXML
-    private void cambiarPantallaEditar() throws IOException {
+    public void cambiarPantallaEditar() throws IOException {
         App.setRoot("Ingresar_Datos");
     }
     

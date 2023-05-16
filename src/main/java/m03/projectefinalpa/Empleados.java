@@ -28,73 +28,78 @@ public class Empleados {
     @FXML
     TextField correo;
     @FXML
-    ListView horarios;
+    ListView horariosView;
     @FXML
     ImageView foto;
 
-    private String dni; // guardar el dni de la persona cercada.
+    private String dni; // guardar el dni de la persona buscada
     GestioDadesEmpleados gestioDades = new GestioDadesEmpleados();
-    ObservableList<Horari> horaris = FXCollections.observableArrayList(); // guardem els horaris de la consulta
-    EmpleadosClass empleado; // guardem les dades de l'empleat de la consulta
+    ObservableList<Horari> listaHorarios = FXCollections.observableArrayList(); // guardamos los datos de los horarios de la consulta
+    EmpleadosClass empleado; // guardamos los datos el empleado buscado o enviado
 
+    //metodo para buscar un empleado
     @FXML
     public void buscar() throws SQLException {
-        horarios.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
-        // comprobem que el camp no estigui buit
+        // la seleccion de filas podrá ser múltiple
+        horariosView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
+        // comprobamos que el campo dni no esté vacío
         if (!dniEmpleado.getText().equals("")) {
-            // guardem el text del dni
+            // guardamos el texto del dni
             dni = dniEmpleado.getText();
-            // retornem l'empleat amb els camps
+            // enviamos el dni a la gestion de datos de empleados y devolvemos el objeto del empleado
             empleado = gestioDades.dadesEmpleat(dni);
-            // si l'empleat és null és que no hi ha empleats amb el nom cercat
+            // si el empleado es nul, no existe
             if (empleado != null) {
-                // omplim els camps amb les dades de l'empleat
+
+                // con esta funciona, llenamos los campos con sus datos en la vista
                 rellenarCampos(empleado);
-                //carreguem els seus horaris
+                //cargamos tambien sus horarios
                 CargarHorarios();
-                // si té foto assignada la posem dins el imageView
+                // si tiene foto también la ponemos en el imageView
                 if (empleado.getFotoImage() != null) {
 
                     foto.setImage(empleado.getFotoImage());
 
-                    // Ajustem la image al recuadre del imageView
+                    // Ajustem la imagen 
                     foto.setPreserveRatio(true);
                     foto.setFitWidth(161);
 
-                    // si no té foto, posem una imatge genèrica per defecte.
+                    // si no tiene foto, ponemos una standard con el formato d ela vista
                 } else {
                     Image image1 = new Image(getClass().getResourceAsStream("imagenes/fotoPersona.png"));
                     foto.setImage(image1);
                 }
 
-                // si no troba l'empleat enviem una alerta
+                // enviamos alerta de no encontrado
             } else {
                 alerta("Empleado no encontrado");
                 borrarCampos();
             }
-            // si el camp per cercar està buit, enviem una alerta.
+            // si el campo dni està vacío, enviamos una alerta.
         } else {
             alerta("Introduce el nombre de un empleado");
 
         }
 
     }
+    
 
     @FXML
-    private void eliminarAsignacion() {
-        boolean exito= false;
+    public void eliminarAsignacion() {
+        boolean exito = false;
         // Obtenemos el índice del elemento seleccionado en el ListView
-        int index = horarios.getSelectionModel().getSelectedIndex();
+        int index = horariosView.getSelectionModel().getSelectedIndex();
+
         if (index >= 0) { // Si se ha seleccionado un elemento
-
             try {
-                horaris.clear();
-                // Obtenemos el elemento seleccionado en el ListView
-               horaris = horarios.getSelectionModel().getSelectedItems();
+                // Obtenemos los elementos seleccionado del ListView
+                listaHorarios = horariosView.getSelectionModel().getSelectedItems();
 
-                for (Horari horarioObjeto : horaris) {
-                    
+                //recorremos la lista para ir eliminado uno por uno
+                for (Horari horarioObjeto : listaHorarios) {
+
                     exito = gestioDades.eliminarAsociacionEmpleado(horarioObjeto, empleado);
                 }
 
@@ -113,6 +118,32 @@ public class Empleados {
             alerta("Ningún horario seleccionado.");
         }
     }
+    
+     public void initialize() {
+        
+         horariosView.setDisable(true); //hacer inaccesible el listview
+
+    }
+
+    
+    private void CargarHorarios() {
+
+        horariosView.getItems().clear(); //limpiamos la lista de los horarios.
+
+        //volvemos a buscar por el dni los horarios dentro de la conexión de mysql
+        listaHorarios = gestioDades.horariPerEmpleat(dni);
+
+        // si hay horarios asociados, los ponemos dentro el listView de los horarios. 
+        if (!listaHorarios.isEmpty()) {
+            horariosView.getItems().addAll(listaHorarios);
+            horariosView.setDisable(false);
+        } else {
+     
+            horariosView.getItems().add("Sin horarios asignados");
+            horariosView.setDisable(true);
+        }
+
+    }
 
     // en caso de que no haya datos, reiniciamos los campos por defecto.
     private void borrarCampos() {
@@ -122,7 +153,7 @@ public class Empleados {
         correo.setText("");
         Image image1 = new Image(getClass().getResourceAsStream("imagenes/fotoPersona.png"));
         foto.setImage(image1);
-        horarios.getItems().clear();
+        horariosView.getItems().clear();
 
     }
 
@@ -144,35 +175,25 @@ public class Empleados {
     }
 
     @FXML
-    private void cambiarPantallaCrear() throws IOException {
+    public void cambiarPantallaCrear() throws IOException {
         App.setRoot("Crear");
     }
 
     @FXML
-    private void cambiarPantallaAsignar() throws IOException {
+    public void cambiarPantallaAsignar() throws IOException {
         App.setRoot("Asignar");
     }
 
     @FXML
-    private void cambiarPantallaVisualizar() throws IOException {
+    public void cambiarPantallaVisualizar() throws IOException {
         App.setRoot("Visualizar");
     }
 
     @FXML
-    private void cambiarPantallaEditar() throws IOException {
+    public void cambiarPantallaEditar() throws IOException {
         App.setRoot("Ingresar_Datos");
     }
 
-    private void CargarHorarios() {
-        horarios.getItems().clear();
-
-        horaris = gestioDades.horariPerEmpleat(dni);
-        // si hi ha horaris associats, els posem dins el listView dels horarios. 
-
-        if (horaris != null) {
-            horarios.getItems().addAll(horaris);
-        }
-
-    }
+    
 
 }

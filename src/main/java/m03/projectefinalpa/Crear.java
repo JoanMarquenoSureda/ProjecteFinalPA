@@ -47,8 +47,8 @@ public class Crear {
 
     GestioDadesCrearYAsignar gestioDades = new GestioDadesCrearYAsignar();
     // lista de los datos de la zona para los desplegables.
-    ObservableList<Atraccio> llistaAtraccions = gestioDades.llistaAtraccio();
-    ObservableList<Restaurant> llistaRestaurant = gestioDades.llistaRestaurants();
+    ObservableList<Atraccio> llistaAtraccions;
+    ObservableList<Restaurant> llistaRestaurant;
 
     // variables para guardar los datos de los usuarios introducidos por teclado.
     private Horari horari;
@@ -64,73 +64,51 @@ public class Crear {
     private int año;
     private String mensajeSQL;
 
+    
     @FXML //metodo para guardar un horario mediante el button guardar
     public void guardar() throws MalformedURLException, SQLException, IOException {
 
-        boolean errores = false; //controlamos todos los errores, para poner un mensaje de cada uno de ellos. 
-        String mensaje = "";
-
         try {
-            LocalDate data = calendario.getValue();
+            //comprobamos que los campos no estén vacíos
+            if (comprobarCampos()) {
 
-            // comprueba los campos si estan llenos
-            if (data == null || horasE.getText().isEmpty() || minutosE.getText().isEmpty() || horasS.getText().isEmpty()
-                    || minutosS.getText().isEmpty()) {
-                errores = true;
-                mensaje = "Campos vacíos";
-
-            } else {
                 // guardamos el texto introducido por el usuario
                 horasTextoE = Integer.parseInt(horasE.getText());
                 minutosTextoE = Integer.parseInt(minutosE.getText());
                 horasTextoS = Integer.parseInt(horasS.getText());
                 minutosTextoS = Integer.parseInt(minutosS.getText());
+                LocalDate data = calendario.getValue();
 
-                // comprueba que los valores en el campo de horas y minutos sea correcto
-                if (horasTextoE < 0 || horasTextoE > 23 || horasTextoS < 0 || horasTextoS > 23 || minutosTextoE < 0
-                        || minutosTextoE > 59 || minutosTextoS < 0 || minutosTextoS > 59) {
-
-                    errores = true;
-                    mensaje = "Horas (00-23) y Minutos(00-60)";
-
-                } else {
+                if (comprobarFormatoHoras()) {
 
                     int indiceLista = desplegableZona.getSelectionModel().getSelectedIndex(); //devolvemos el indice del combobox, que será el id para la consulta de sql
                     dia = data.getDayOfMonth();
                     mes = data.getMonth();
                     año = data.getYear();
-                    
+
                     // lo convertimos a LocalDateTime con todos los campos de tiempo
                     fecha_inici = LocalDateTime.of(año, mes, dia, horasTextoE, minutosTextoE);
                     fecha_fin = LocalDateTime.of(año, mes, dia, horasTextoS, minutosTextoS);
-
-                    // comprueba que el horario de entrada sea anterior al de salida
-                    if (fecha_inici.isAfter(fecha_fin)) {
-
-                        errores = true;
-                        mensaje = "Entrada tiene que ser anterior a Salida";
-
-                    } else {
-                        
+                    //comprobamos que las fechas sean correctas, con inicio anterior a fin
+                    if (comprobarFecha()) {
                         // si la attraccion es seleccionada, guardamos la atraccion, conseguimos su nombre y
                         // lo creamos mediante el metodo afegeixHorariAtraccio, de la clase
                         // gestio de dades
                         if (opcionAtraccion.isSelected()) {
-                            
+
                             Atraccio atraccion = llistaAtraccions.get(indiceLista);
                             nombreZona = atraccion.getNombre();
-                           
+
                             horari = new Horari(fecha_inici, fecha_fin, nombreZona, "");
-                           
-                            mensajeSQL = gestioDades.afegeixHorariAtraccio(horari); // nos devuelve si se ha guardado o no,
+
+                            mensajeSQL = gestioDades.afegeixHorariAtraccio(horari); // nos devuelve mensaje de texto que luego comprobaremos mediante un switch
 
                             // mismo metodo pero para los restaurantes.
                         } else if (opcionRestaurante.isSelected()) {
-                            
+
                             Restaurant restaurant = llistaRestaurant.get(indiceLista);
                             nombreZona = restaurant.getNombre();
                             horari = new Horari(fecha_inici, fecha_fin, "", nombreZona);
-                            System.out.println(horari.getNombreAtr());
                             mensajeSQL = gestioDades.afegeixHorariRestaurant(horari);
                         }
 
@@ -138,34 +116,32 @@ public class Crear {
                         switch (mensajeSQL) {
                             case "ok":
                                 alerta("Añadido correctamente");
-                                esborrarHores(); 
-                               
+                                esborrarHores();
+
                                 break;
-                                 // si no se ha añadido, ponemos los mensajes de error como true, y guardos un
-                                // mensaje en la variable mensaje.
+                            // si no se ha añadido, ponemos los mensajes de error como true, y guardos un
+                            // mensaje en la variable mensaje.
                             case "":
-                                errores = true;
-                                mensaje = "No añadido correctamente";
+
+                                alerta("No añadido correctamente");
                                 break;
                             default:
-                                errores = true;
-                                mensaje = mensajeSQL;
+
+                                alerta(mensajeSQL);
                                 break;
                         }
                     }
+
                 }
             }
             // si encuentra la excepcion, enviara un mensaje de que no se ha podido
             // convertir el texto a valores.
         } catch (NumberFormatException e) {
 
-            errores = false;
             alerta("Sólo valores numéricos en HH:mm");
 
-        } // si hay otros errores, se envia el mensaje específico de cada error que hemos controlado anteriormente. 
-        if (errores) {
-            alerta(mensaje);
         }
+
     }
 
     // inicializamos la apliacion como un reset.
@@ -180,6 +156,46 @@ public class Crear {
         deshabilitarBotones();
 
     }
+    
+    public void initialize() {
+           llistaAtraccions = gestioDades.llistaAtraccio();
+           llistaRestaurant = gestioDades.llistaRestaurants();
+    }
+
+    // comprueba los campos si estan llenos
+    public boolean comprobarCampos() {
+
+        if (calendario.getValue() == null || horasE.getText().isEmpty() || minutosE.getText().isEmpty() || horasS.getText().isEmpty()
+                || minutosS.getText().isEmpty()) {
+
+            alerta("Completar campos vacíos");
+            return false;
+        }
+
+        return true;
+    }
+
+    // comprueba que el horario de entrada sea anterior al de salida
+    public boolean comprobarFecha() {
+
+        if (fecha_inici.isAfter(fecha_fin)) {
+            alerta("Entrada tiene que ser anterior a Salida");
+            return false;
+        }
+        return true;
+    }
+    // comprueba que los valores en el campo de horas y minutos sea correcto
+
+    public boolean comprobarFormatoHoras() {
+
+        if (horasTextoE < 0 || horasTextoE > 23 || horasTextoS < 0 || horasTextoS > 23 || minutosTextoE < 0
+                || minutosTextoE > 59 || minutosTextoS < 0 || minutosTextoS > 59) {
+
+            alerta("Horas (00-23) y Minutos(00-59)");
+            return false;
+        }
+        return true;
+    }
 
     private void esborrarHores() {
         horasE.setText("");
@@ -189,9 +205,7 @@ public class Crear {
 
     }
 
-    private void initialize() {
-        calendario.setPromptText("dd/MM/yyyy");//formato fecha para el datepicker
-    }
+  
 
     private void alerta(String text) {
         Alert alerta = new Alert(Alert.AlertType.INFORMATION);
@@ -204,7 +218,8 @@ public class Crear {
     // metodo que revisa si esta seleccionado el radiobutton atraccion o
     // restaurante, y habilita los botones y carga la lista de la zona en el
     // ComboBox.
-    public void getOpcion(ActionEvent event) {
+    @FXML
+    public void obtenerOpcionZona(ActionEvent event) {
 
         if (opcionAtraccion.isSelected()) {
 
@@ -269,33 +284,31 @@ public class Crear {
     }
 
     @FXML
-    private void cambiarPantallaAsignar() throws IOException {
+    public void cambiarPantallaAsignar() throws IOException {
         App.setRoot("Asignar");
     }
 
     @FXML
-    private void cambiarPantallaVisualizar() throws IOException {
+    public void cambiarPantallaVisualizar() throws IOException {
         App.setRoot("Visualizar");
     }
 
     @FXML
-    private void cambiarPantallaEmpleados() throws IOException {
+    public void cambiarPantallaEmpleados() throws IOException {
         App.setRoot("Empleados");
     }
-     @FXML
-    private void cambiarPantallaEditar() throws IOException {
-        App.setRoot("Ingresar_Datos");
-    }
-    
-    
 
     @FXML
-    private void mandarAyuda() {
+    public void cambiarPantallaEditar() throws IOException {
+        App.setRoot("Ingresar_Datos");
+    }
+
+    @FXML
+    public void mandarAyuda() {
         File file = new File("src\\main\\resources\\m03\\projectefinalpa\\web\\inici.html");
         try {
             Desktop.getDesktop().browse(file.toURI());
         } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 

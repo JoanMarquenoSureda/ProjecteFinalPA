@@ -140,7 +140,7 @@
                               <Insets left="70.0" right="260.0" />
                            </GridPane.margin>
                         </TextField>
-                        <ListView fx:id="horarios" prefHeight="180.0" prefWidth="353.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                        <ListView fx:id="horariosView" prefHeight="180.0" prefWidth="353.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
                            <opaqueInsets>
                               <Insets />
                            </opaqueInsets>

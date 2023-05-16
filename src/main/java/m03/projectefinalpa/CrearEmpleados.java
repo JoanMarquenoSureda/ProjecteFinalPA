@@ -25,6 +25,7 @@ import m03.projectefinalpa.model.classes.EmpleadosClass;
  * @author User
  */
 public class CrearEmpleados {
+
     @FXML
     TextField dniBuscar;
     @FXML
@@ -63,14 +64,13 @@ public class CrearEmpleados {
     Image fotoCargada;
     GestioDadesDatosEmpleado dades = new GestioDadesDatosEmpleado();
     EmpleadosClass empleado;
-    
+
     //caracteres que pueden soportar los textfield
     private static final int MAX_CARACTERES_NOMBRE = 50;
-    private static final int MAX_CARACTERES_DESCRIPCION = 2000;
     private static final int MAX_CARACTERES_DNI = 9;
     private static final int MAX_CARACTERES_DIRECCION = 50;
     private static final int MAX_CARACTERES_TELEFONO = 15;
-    private static final int MAX_CARACTERES_EMAIL= 50;
+    private static final int MAX_CARACTERES_EMAIL = 50;
 
     @FXML //metodo para agregar un empleado 
     public void agregarEmpleado() {
@@ -83,17 +83,7 @@ public class CrearEmpleados {
 
             try {
 
-                // Obtener los datos ingresados por el usuario
-                dniDatos = dni.getText();
                 if (validarLongitudTexto()) {
-                    
-               
-                    nombreDatos = nombre.getText();
-                    direccionDatos = direccion.getText();
-                    telefonoDatos = telefono.getText();
-                    emailDatos = email.getText();
-                    categoriaDatos = categoria.getValue().toString();
-                    fotoCargada = foto.getImage();
 
                     // Insertar el nuevo empleado en la base de datos
                     EmpleadosClass empleados = new EmpleadosClass(dniDatos, nombreDatos, direccionDatos, telefonoDatos, emailDatos, categoriaDatos, fotoCargada);
@@ -106,7 +96,7 @@ public class CrearEmpleados {
                         alerta("El usuario no se ha registrado correctamente");
                     }
                 }
-            } catch (Exception e) {
+            } catch (IOException | SQLException e) {
                 alerta(e.getMessage());
             }
 
@@ -159,19 +149,7 @@ public class CrearEmpleados {
             if (conf == 1) {
                 try {
 
-                  
-                  
                     if (validarLongitudTexto()) {
-                        
-                         // Obtener los datos ingresados por el usuario
-                    dniBuscado = dniBuscar.getText();
-                         dniDatos = dni.getText();
-                        nombreDatos = nombre.getText();
-                        direccionDatos = direccion.getText();
-                        telefonoDatos = telefono.getText();
-                        emailDatos = email.getText();
-                        categoriaDatos = categoria.getValue().toString();
-                        fotoCargada = foto.getImage();
 
                         // Crear el objeto empleado con los datos actualizados
                         EmpleadosClass empleadoModificado = new EmpleadosClass(dniDatos, nombreDatos, direccionDatos, telefonoDatos, emailDatos, categoriaDatos, fotoCargada);
@@ -241,45 +219,44 @@ public class CrearEmpleados {
 
         }
     }
+
     //validamos la longitud de los caracteres de cada campo, para no tener problemas con la base de datos
-   private boolean validarLongitudTexto() {
-    String dniTexto = dni.getText();
-    String nombreTexto = nombre.getText();
-    String direccionTexto = direccion.getText();
-    String telefonoTexto = telefono.getText();
-    String emailTexto = email.getText();
+    private boolean validarLongitudTexto() {
+        dniDatos = dni.getText();
+        nombreDatos = nombre.getText();
+        direccionDatos = direccion.getText();
+        telefonoDatos = telefono.getText();
+        emailDatos = email.getText();
+        categoriaDatos = categoria.getValue().toString();
+        fotoCargada = foto.getImage();
 
+        if (dniDatos.length() != MAX_CARACTERES_DNI) {
+            alerta("Formato DNI incorrecto");
+            return false;
+        }
 
-    if (dniTexto.length() != MAX_CARACTERES_DNI) {
-        alerta("Formato DNI incorrecto");
-        return false;
+        if (nombreDatos.length() > MAX_CARACTERES_NOMBRE) {
+            alerta("El nombre no puede exceder los " + MAX_CARACTERES_NOMBRE + " caracteres.");
+            return false;
+        }
+
+        if (direccionDatos.length() > MAX_CARACTERES_DIRECCION) {
+            alerta("La dirección no puede exceder los " + MAX_CARACTERES_DIRECCION + " caracteres.");
+            return false;
+        }
+
+        if (telefonoDatos.length() > MAX_CARACTERES_TELEFONO) {
+            alerta("El teléfono no puede exceder los " + MAX_CARACTERES_TELEFONO + " caracteres.");
+            return false;
+        }
+
+        if (emailDatos.length() > MAX_CARACTERES_EMAIL) {
+            alerta("El email no puede exceder los " + MAX_CARACTERES_EMAIL + " caracteres.");
+            return false;
+        }
+
+        return true;
     }
-
-    if (nombreTexto.length() > MAX_CARACTERES_NOMBRE) {
-        alerta("El nombre no puede exceder los " + MAX_CARACTERES_NOMBRE + " caracteres.");
-        return false;
-    }
-
-    if (direccionTexto.length() > MAX_CARACTERES_DIRECCION) {
-        alerta("La dirección no puede exceder los " + MAX_CARACTERES_DIRECCION + " caracteres.");
-        return false;
-    }
-
-    if (telefonoTexto.length() > MAX_CARACTERES_TELEFONO) {
-        alerta("El teléfono no puede exceder los " + MAX_CARACTERES_TELEFONO + " caracteres.");
-        return false;
-    }
-
-    if (emailTexto.length() > MAX_CARACTERES_EMAIL) {
-        alerta("El email no puede exceder los " + MAX_CARACTERES_EMAIL + " caracteres.");
-        return false;
-    }
-
-
-    return true;
-}
-
-
 
     private void alerta(String text) {
         Alert alerta = new Alert(Alert.AlertType.INFORMATION);

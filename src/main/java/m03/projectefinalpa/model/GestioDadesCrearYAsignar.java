@@ -160,6 +160,7 @@ public class GestioDadesCrearYAsignar {
         ordre.setString(3, horari.getNombreAtr().trim());
         
         int rowsAffected = ordre.executeUpdate();
+        
         if (rowsAffected > 0) {
             missatge = "ok";
         }
@@ -198,7 +199,6 @@ public class GestioDadesCrearYAsignar {
     
     return missatge;
 }
-
 
     // mètode que inserta un horari a un empleat, passats per paràmetres, on agafa
     // l'id de cada un i ho afegeix a la taula asignación.

@@ -20,16 +20,12 @@ public class Inici {
     @FXML
     private PasswordField password;
 
-    public Connection conexion;
+    private Connection conexion;
 
-    public Connexio connexio;
-    public String usuariText;
-    public String passwordText;
-  
-
-    public void initialize(URL url, ResourceBundle rb) {
-
-    }
+    private Connexio connexio;
+    private String usuariText;
+    private String passwordText;
+ 
 
     @FXML // hacemos un metodo para comprobar que el texto y el password sean compatibles con el usuario y que se pueda hacer una conexion real con la base de datos. 
     public void comprobar() throws IOException {
@@ -74,12 +70,11 @@ public class Inici {
         App.setRoot("Crear");
     }
     @FXML// metodo que envia a la web de ayuda para la aplicacion
-    private void mandarAyuda()  {
+    public void mandarAyuda()  {
         File file = new File("src\\main\\resources\\m03\\projectefinalpa\\web\\inici.html");
         try {
             Desktop.getDesktop().browse(file.toURI());
         } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 }

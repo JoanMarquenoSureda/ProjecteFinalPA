@@ -46,14 +46,15 @@ public class Asignar {
     ObservableList<Horari> horariRestaurant = FXCollections.observableArrayList(); // llistem tots els horaris d'un restaurant
     ObservableList<Horari> horariAtraccio = FXCollections.observableArrayList();// llistem tots els horaris d'una atraccio
     ArrayList<String> llistaHoraris = new ArrayList<>(); //
-    ObservableList<Atraccio> llistaAtraccions = gestioDades.llistaAtraccio(); // llistem totes les atraccions quan iniciem
-    ObservableList<Restaurant> llistaRestaurant = gestioDades.llistaRestaurants();// llistem tots els restaurants quan iniciem
+    ObservableList<Atraccio> llistaAtraccions; // llistem totes les atraccions quan iniciem
+    ObservableList<Restaurant> llistaRestaurant;// llistem tots els restaurants quan iniciem
     ObservableList<EmpleadosClass> llistaEmpleatsSQL = gestioDades.llistaEmpleatsHoraris(); // llistem tots els empleats que son "Aprendiz" y "Trabajador"
     ObservableList<String> dadesHorarisSenseAssignar = FXCollections.observableArrayList(); // Llista on guardarem les  dades del horaris del metode ToSring
+
     private Timestamp fechaHoraSQL; //Data format MYsql
     private LocalDate diaCalendario;
-    String nombreZona;
-    int indice;
+    private String nombreZona;
+    private int indice;
 
     //método para buscar un horario asociado al boton buscar
     public void buscar() {
@@ -133,7 +134,7 @@ public class Asignar {
                     //controlamos primero si el mensaje se devuelve vacío, ya que no se ha assignado correctamente
                     alerta("Horario no asignado correctamente");
                     break;
-                    // si devuelve un mensaje específico, lo mandamos por alerta
+                // si devuelve un mensaje específico, lo mandamos por alerta
                 default:
                     alerta(missatge);
                     break;
@@ -145,9 +146,9 @@ public class Asignar {
 
     }
 
-
-    private void initialize() {
-        calendario.setPromptText("dd/MM/yyyy");
+    public void initialize() {
+        llistaAtraccions = gestioDades.llistaAtraccio();
+        llistaRestaurant = gestioDades.llistaRestaurants();
     }
 
     // alerta general de errores.
@@ -159,11 +160,11 @@ public class Asignar {
         alerta.show();
     }
 
-    
     // metodo que revisa si esta seleccionado el radiobutton atraccion o
     // restaurante, y habilita los botones y carga la lista de la zona en el
     // ComboBox.
-    public void getOpcion(javafx.event.ActionEvent event) {
+    @FXML
+    public void obtenerOpcionZona(javafx.event.ActionEvent event) {
 
         if (opcionAtraccion.isSelected()) {
             habilitarBotones();
@@ -180,13 +181,6 @@ public class Asignar {
     private void habilitarBotones() {
         desplegableZona.setDisable(false);
         calendario.setDisable(false);
-
-    }
-
-    // método para deshabilitar los botones del desplegable y calendario.
-    private void deshabilitarBotones() {
-        desplegableZona.setDisable(true);
-        calendario.setDisable(true);
 
     }
 
@@ -268,21 +262,22 @@ public class Asignar {
     }
 
     @FXML
-    private void cambiarPantallaCrear() throws IOException {
+    public void cambiarPantallaCrear() throws IOException {
         App.setRoot("Crear");
     }
 
     @FXML
-    private void cambiarPantallaViusalizar() throws IOException {
+    public void cambiarPantallaViusalizar() throws IOException {
         App.setRoot("Visualizar");
     }
 
     @FXML
-    private void cambiarPantallaEmpleados() throws IOException {
+    public void cambiarPantallaEmpleados() throws IOException {
         App.setRoot("Empleados");
     }
-     @FXML
-    private void cambiarPantallaEditar() throws IOException {
+
+    @FXML
+    public void cambiarPantallaEditar() throws IOException {
         App.setRoot("Ingresar_Datos");
     }
 

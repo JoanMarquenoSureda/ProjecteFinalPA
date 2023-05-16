@@ -41,8 +41,8 @@ public class CrearAtracciones {
     @FXML
     Button buscar;
     
-    String nombreBuscado;
-    String nombreDatos; //guardaremos el nombre de la Atraccion del textfield nombre
+    String nombreBuscado; //datos del nombre buscado de la atracción
+    String nombreDatos; // nombre de la atraccion encontrada
     int alturaDatos; // guardaremos la altura
     String descripcionDatos; // los datos del campo de descripcion
     String tipoDatos; // los datos de tipo atraccion
@@ -55,7 +55,7 @@ public class CrearAtracciones {
     private static final int MAX_CARACTERES_NOMBRE_ATRACCION = 50;
     private static final int MAX_CARACTERES_DESCRIPCION = 2000;
 
-    @FXML
+    @FXML //metodo para agregar una atracción del formulario
     public void agregarAtraccion() {
         try {
             // Comprobar que no estén vacíos los campos
@@ -69,12 +69,12 @@ public class CrearAtracciones {
                 alturaDatos = Integer.parseInt(altura.getText());
                 descripcionDatos = descripcion.getText();
                 
+                //metodo para validar la longitud mediante los parámetros staticos
                 if (validarLongitudTexto()) {
                     //comprobamos que el dato no sea superior a 200cm
                     if (alturaDatos < 0 || alturaDatos > 200) {
                         alerta("La altura no puede superar los 200 cm");
                     } else {
-                        
 
                         // Crear el objeto atraccion con los datos ingresados
                         atraccion = new Atraccio(nombreDatos, tipoDatos, ubicacionDatos, alturaDatos, descripcionDatos);
@@ -98,7 +98,7 @@ public class CrearAtracciones {
         }
     }
 
-    @FXML
+    @FXML //metodo para modificar una atraccion previamente buscada
     public void modificarAtraccion() {
 
         //comprobamos que no estén vacios los campos
@@ -128,7 +128,6 @@ public class CrearAtracciones {
                             alerta("La altura no puede superar los 200 cm");
 
                         } else {
-                            
 
                             // Crear el objeto atraccion con los datos actualizados
                             Atraccio atraccionModificada = new Atraccio(nombreDatos, tipoDatos, ubicacionDatos, alturaDatos, descripcionDatos);
@@ -186,6 +185,7 @@ public class CrearAtracciones {
         if (nombreAtraccion.getText().equals("")) {
             alerta("Debe ingresar un nombre de atracción para buscar");
         } else {
+            
             try {
                 nombreBuscado = nombreAtraccion.getText();
                 atraccion = dades.datosAtraccion(nombreBuscado);
@@ -284,7 +284,7 @@ public class CrearAtracciones {
 
         return valor;
     }
-    
+     //metodo para validar los campos según los parametros. 
      private boolean validarLongitudTexto() {
 
         if (nombreDatos.length() > MAX_CARACTERES_NOMBRE_ATRACCION) {
@@ -301,27 +301,27 @@ public class CrearAtracciones {
      }
 
     @FXML
-    private void cambiarPantallaAsignar() throws IOException {
+    public void cambiarPantallaAsignar() throws IOException {
         App.setRoot("Asignar");
     }
 
     @FXML
-    private void cambiarPantallaVisualizar() throws IOException {
+    public void cambiarPantallaVisualizar() throws IOException {
         App.setRoot("Visualizar");
     }
 
     @FXML
-    private void cambiarPantallaEmpleados() throws IOException {
+    public void cambiarPantallaEmpleados() throws IOException {
         App.setRoot("Empleados");
     }
 
     @FXML
-    private void cambiarPantallaCrear() throws IOException {
+    public void cambiarPantallaCrear() throws IOException {
         App.setRoot("Crear");
     }
 
     @FXML
-    private void cambiarPantallaEditar() throws IOException {
+    public void cambiarPantallaEditar() throws IOException {
         App.setRoot("Ingresar_Datos");
     }
 }
